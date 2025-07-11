@@ -1,0 +1,96 @@
+{% extends 'templates\base\base.html' %}
+
+{% block title %}>List of Customers{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Audit List</h3>
+
+    <!-- Cluster Dropdown -->
+    <label for="clusterSelect">Select Cluster:</label>
+    <select id="clusterSelect">
+        <option value="">-- Select Cluster --</option>
+        {% for cluster in clusters %}
+            <option value="{{ cluster.id }}">{{ cluster.name }}</option>
+        {% endfor %}
+    </select>
+
+    <!-- Customer Dropdown -->
+    <label for="customerSelect">Select Customer:</label>
+    <select id="customerSelect">
+        <option value="">-- Select Customer --</option>
+    </select>
+
+    <button onclick="filterAudits()">Filter Audits</button>
+
+    <hr>
+
+    {% if audits %}
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>UDIN</th>
+                    <th>Start Year</th>
+                    <th>End Year</th>
+                    <th>Date</th>
+                    <th>Actions</th> <!-- Action column -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for audit in audits %}
+                <tr>
+                    <td>{{ audit.customer.nameOfOrganization }}</td>
+                    <td>{{ audit.Udin }}</td>
+                    <td>{{ audit.yearStart }}</td>
+                    <td>{{ audit.yearEnd }}</td>
+                    <td>{{ audit.date }}</td>
+                    <td>
+                        <a href="{% url 'edit_audit' audit.id %}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{% url 'delete_audit' audit.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No audits found. Select a cluster and customer to view audits.</p>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const clusterSelect = document.getElementById("clusterSelect");
+        const customerSelect = document.getElementById("customerSelect");
+
+        clusterSelect.addEventListener("change", function () {
+            const clusterId = this.value;
+            if (clusterId) {
+                fetch(`/get-customers/?cluster_id=${clusterId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        customerSelect.innerHTML = '<option value="">-- Select Customer --</option>';
+                        data.customers.forEach(c => {
+                            customerSelect.innerHTML += `<option value="${c.id}">${c.nameOfOrganization}</option>`;
+                        });
+                    });
+            } else {
+                customerSelect.innerHTML = '<option value="">-- Select Customer --</option>';
+            }
+        });
+    });
+
+    function filterAudits() {
+        const clusterId = document.getElementById("clusterSelect").value;
+        const customerId = document.getElementById("customerSelect").value;
+
+        if (clusterId && customerId) {
+            const url = `{% url 'list_audits' %}?cluster_id=${clusterId}&customer_id=${customerId}`;
+            window.location.href = url;
+        } else {
+            alert("Please select both Cluster and Customer.");
+        }
+    }
+</script>
+{% endblock %}
+

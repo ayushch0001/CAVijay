@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modify and Update All Data</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchData(); // Load dropdown data on page load
+        });
+
+        function fetchData() {
+            fetch("/dropdown/")  // Fetch JSON data from Django
+                .then(response => response.json())
+                .then(data => {
+                    let container = document.getElementById("inputContainer");
+                    container.innerHTML = ""; // Clear old fields
+
+                    for (let key in data) {
+                        let div = document.createElement("div");
+                        div.innerHTML = `
+                            <label>${key}:</label>
+                            <input type="text" name="${key}" value="${data[key]}">
+                        `;
+                        container.appendChild(div);
+                    }
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        }
+
+        function updateValues() {
+            let inputs = document.querySelectorAll("#inputContainer input");
+            let updatedData = {};
+
+            inputs.forEach(input => {
+                updatedData[input.name] = input.value;
+            });
+
+            fetch("/update/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCSRFToken()  // Include CSRF token
+                },
+                body: JSON.stringify(updatedData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || data.error);
+                fetchData(); // Refresh after update
+            })
+            .catch(error => console.error("Error updating data:", error));
+        }
+
+        function getCSRFToken() {
+            return document.querySelector("[name=csrfmiddlewaretoken]").value;
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Edit All Fruit Colors</h2>
+    
+    <form method="post" action="{% url 'update' %}">
+        {% csrf_token %} <!-- Add CSRF Token for security -->
+        <div id="inputContainer"></div> <!-- Input fields added dynamically -->
+        <br>
+        <button type="button" onclick="updateValues()">Update All</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Report</title>
+
+    <!-- jQuery (Required for AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #aac4d5; }
+        th[colspan] { text-align: center; }
+        .total-row { font-weight: bold; background-color: #eaeaea; }
+        .grand-total-row { font-weight: bold; background-color: #d3d3d3; }
+        input { width: 80px; text-align: center; border: none; background: transparent; }
+        input:focus { background: #fff; border: 1px solid #999; }
+        button { margin-top: 10px; padding: 10px; cursor: pointer; }
+    </style>
+
+</head>
+<body>
+
+    <h1>Generate & Edit Report</h1>
+
+    <label for="auditYear">Select Year:</label>
+    <input type="text" id="auditYear" placeholder="Enter Year">
+    <button id="generateReport">Get Report</button>
+    <button id="submitReport" style="display: none;">Submit Updates</button>
+
+    <div id="reportResult">
+        <h2>Report Data</h2>
+        <table id="reportTable">
+            <thead>
+                <tr>
+                    <th rowspan="2">Month</th>
+                    <th rowspan="2">Office Ex</th>
+                    <th colspan="4">Mislileneous Ex</th>
+                    <th colspan="2">Stationary Ex</th>
+                </tr>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>Pencil</th>
+                    <th>Pen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here -->
+            </tbody>
+            <tfoot>
+                <tr class="total-row">
+                    <td>Total</td>
+                    <td id="totalOffice">0</td>
+                    <td id="totalA">0</td>
+                    <td id="totalB">0</td>
+                    <td id="totalC">0</td>
+                    <td id="totalD">0</td>
+                    <td id="totalPencil">0</td>
+                    <td id="totalPen">0</td>
+                </tr>
+                <tr class="grand-total-row">
+                    <td>Gtotal</td>
+                    <td id="grandTotalOffice">0</td>
+                    <td colspan="4" id="grandTotalMisc">0</td>
+                    <td id="grandTotalPencil">0</td>
+                    <td id="grandTotalPen">0</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#generateReport").click(function () {
+                let auditYear = $("#auditYear").val();
+
+                if (!auditYear) {
+                    alert("Please enter a year.");
+                    return;
+                }
+
+                $.ajax({
+                    url: "/view_json_data/",  // Django API endpoint to fetch data
+                    type: "POST",
+                    headers: { "X-CSRFToken": getCSRFToken() },
+                    data: { year: auditYear },
+                    success: function (response) {
+                        let tableBody = $("#reportTable tbody");
+                        tableBody.empty();  // Clear existing rows
+                        $("#submitReport").show(); // Show submit button
+
+                        let totalOffice = 0, totalA = 0, totalB = 0, totalC = 0, totalD = 0, totalPencil = 0, totalPen = 0;
+
+                        if (response.reports && response.reports.length > 0) {
+                            response.reports.forEach(report => {
+                                let row = `
+                                    <tr>
+                                        <td>${report.month}</td>
+                                        <td><input type="number" value="${report["Office Ex"]}" class="office"></td>
+                                        <td><input type="number" value="${report["Mislileneous Ex"].A}" class="a"></td>
+                                        <td><input type="number" value="${report["Mislileneous Ex"].B}" class="b"></td>
+                                        <td><input type="number" value="${report["Mislileneous Ex"].C}" class="c"></td>
+                                        <td><input type="number" value="${report["Mislileneous Ex"].D}" class="d"></td>
+                                        <td><input type="number" value="${report["Stationary Ex"].Pencil}" class="pencil"></td>
+                                        <td><input type="number" value="${report["Stationary Ex"].Pen}" class="pen"></td>
+                                    </tr>
+                                `;
+                                tableBody.append(row);
+                            });
+                        } else {
+                            tableBody.append("<tr><td colspan='8'>No data found for this year.</td></tr>");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", error);
+                    }
+                });
+            });
+
+            $("#submitReport").click(function () {
+                let reportData = [];
+                $("#reportTable tbody tr").each(function () {
+                    let row = $(this);
+                    let rowData = {
+                        month: row.find("td:eq(0)").text(),
+                        office: row.find(".office").val(),
+                        A: row.find(".a").val(),
+                        B: row.find(".b").val(),
+                        C: row.find(".c").val(),
+                        D: row.find(".d").val(),
+                        pencil: row.find(".pencil").val(),
+                        pen: row.find(".pen").val(),
+                    };
+                    reportData.push(rowData);
+                });
+
+                $.ajax({
+                    url: "/update_json_data/",  // Django API endpoint to update data
+                    type: "POST",
+                    headers: { "X-CSRFToken": getCSRFToken() },
+                    data: JSON.stringify({ reports: reportData }),
+                    contentType: "application/json",
+                    success: function (response) {
+                        alert("Report updated successfully!");
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", error);
+                        alert("Failed to update the report.");
+                    }
+                });
+            });
+        });
+
+        function getCSRFToken() {
+            let cookieValue = null;
+            let cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.startsWith("csrftoken=")) {
+                    cookieValue = cookie.substring("csrftoken=".length, cookie.length);
+                    break;
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+</body>
+</html>

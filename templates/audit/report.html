@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Table</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 5px;
+            width: 200px;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .editable {
+            cursor: pointer;
+        }
+        .editable:hover {
+            background-color: #f9f9f9;
+        }
+        .edit-input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        tfoot td {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Report Table for Year: {{ year }}</h1>
+    <!--<form method="POST">
+        {% csrf_token %}
+        <input type="text" name="year" placeholder="Enter Year" required>
+        <button type="submit">Fetch Data</button>
+    </form>-->
+
+    {% if data_items %}
+    <table>
+        <thead>
+            <tr>
+                <th>Month</th>
+                {% for title, keys in data_items.0.1.items %}
+                    <th colspan="{{ keys.dict|length }}" rowspan="1">{{ title }}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th></th>
+                {% for title, keys in data_items.0.1.items %}
+                    {% for key in keys.dict %}
+                        <th>{{ key }}</th>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for month, titles in data_items %}
+                <tr>
+                    <td>{{ month }}</td>
+                    {% for title, keys in titles.items %}
+                        {% for key, value in keys.dict.items %}
+                            <td class="editable" data-pk="{{ keys.pk }}" data-key="{{ key }}">
+                                <span class="value">{{ value }}</span>
+                                <input type="text" class="edit-input" value="{{ value }}" style="display: none;">
+                            </td>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><strong>Grand Total</strong></td>
+                {% for title, keys in data_items.0.1.items %}
+                    {% for key in keys.dict %}
+                        <!-- Use a custom filter or modify the key directly -->
+                        <td id="total-{{ key|lower|slugify }}">0</td>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        </tfoot>
+    </table>
+    {% else %}
+    <p>No data available for the selected year.</p>
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Add CSRF token to AJAX requests
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            const csrftoken = getCookie('csrftoken');
+
+            // Make cells editable
+            $('.editable').on('click', function() {
+                const $cell = $(this);
+                const $valueSpan = $cell.find('.value');
+                const $input = $cell.find('.edit-input');
+
+                $valueSpan.hide();
+                $input.show().focus();
+            });
+
+            // Save value when input loses focus or Enter is pressed
+            $('.edit-input').on('blur keypress', function(e) {
+                if (e.type === 'blur' || (e.type === 'keypress' && e.which === 13)) {
+                    const $input = $(this);
+                    const $cell = $input.closest('.editable');
+                    const $valueSpan = $cell.find('.value');
+
+                    const pk = $cell.data('pk'); // Get the primary key
+                    const key = $cell.data('key'); // Get the dict key
+                    const value = $input.val(); // Get the new value
+
+                    // Validate the data before sending the request
+                    if (!pk || !key || value === undefined) {
+                        alert('Error: Missing required fields');
+                        return;
+                    }
+
+                    // Send AJAX request to save the value
+                    $.ajax({
+                        url: '/save-report-value/', // URL to the Django view
+                        method: 'POST',
+                        contentType: 'application/json',
+                        headers: {
+                            'X-CSRFToken': csrftoken // Include CSRF token
+                        },
+                        data: JSON.stringify({
+                            pk: pk,
+                            key: key,
+                            value: value
+                        }),
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                $valueSpan.text(value).show(); // Update the displayed value
+                                $input.hide(); // Hide the input field
+                                calculateTotals(); // Recalculate totals after saving
+                            } else {
+                                alert('Error: ' + response.message); // Show error message
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Error saving value: ' + error); // Show AJAX error
+                        }
+                    });
+                }
+            });
+
+            // Function to calculate totals
+            function calculateTotals() {
+                console.log("Calculating totals..."); // Debugging
+
+                // Initialize an object to store totals for each column
+                const totals = {};
+
+                // Iterate over the second header row (actual keys)
+                $('thead tr').eq(1).find('th').each(function(index) {
+                    if (index === 0) return; // Skip the first column (Month)
+
+                    const key = $(this).text().trim(); // Get the column header (key)
+                    const sanitizedKey = key.toLowerCase().replace(/\s+/g, '-'); // Sanitize key for ID
+                    console.log(`Processing column: ${key} (Sanitized: ${sanitizedKey})`); // Debugging
+
+                    if (!key) return; // Skip empty keys
+
+                    totals[key] = 0; // Initialize the total for this column
+
+                    // Iterate over each row in the table body
+                    $('tbody tr').each(function() {
+                        const cellValue = $(this).find('td').eq(index).text().trim(); // Get the cell value
+                        const numericValue = parseFloat(cellValue) || 0; // Convert to a number
+                        console.log(`Row value for ${key}: ${numericValue}`); // Debugging
+
+                        totals[key] += numericValue; // Add the value to the total
+                    });
+
+                    // Update the footer cell with the total
+                    const totalCell = $(`#total-${sanitizedKey}`);
+                    if (totalCell.length) {
+                        totalCell.text(totals[key].toFixed(2)); // Display the total
+                        console.log(`Total for ${key}: ${totals[key].toFixed(2)}`); // Debugging
+                    } else {
+                        console.error(`Footer cell not found for key: ${key} (Sanitized: ${sanitizedKey})`); // Debugging
+                    }
+                });
+            }
+
+            // Calculate totals when the page loads
+            calculateTotals();
+        });
+    </script>
+</body>
+</html>

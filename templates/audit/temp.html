@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Report Table Preview</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .btn-container {
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 2px 2px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>{{ data }}</h2>
+
+    <div id="pdf-content">
+        <table>
+            <tr>
+                <td colspan="2" rowspan="2">Receipt</td>
+                <td>FY 2023-24</td>
+                <td>FY 2022-23</td>
+                <td>FY 2021-22</td>
+                <td colspan="2">Payment</td>
+                <td>FY 2023-24</td>
+                <td>FY 2022-23</td>
+                <td>FY 2021-22</td>
+            </tr>
+            <tr>
+                <td colspan="3">Rs</td>
+                <td></td>
+                <td></td>
+                <td colspan="3">Rs</td>
+            </tr> 
+            <tr>
+                <td colspan="2">Opening balance cash (in hand)</td>
+                <td>2377</td>
+                <td>4567</td>
+                <td>6789</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">Opening balance cash (in bank)</td>
+                <td>2377</td>
+                <td>4567</td>
+                <td>6789</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td rowspan="9">1</td>
+                <td colspan="3"> Receipts of capital Fund (which form part of Corpus or Permanent capital of the CBO)</td>
+                <td></td>
+                <td rowspan="9">1.</td>
+                <td>Expenditure (Capital)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>CIF grant received from mission</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>Fixed Assests purchased</td>
+                <td>4780</td>
+                <td>41300</td>
+                <td>10433</td>
+            </tr>
+            <tr>
+      
+            <td>Saving from member organisation</td>
+            <td></td>
+            <td>0</td>
+            <td>0</td>
+            
+            <td>Stock inventories purchased</td>
+            <td></td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr>
+       
+            <td>Share capital paid by member organisations</td>
+            <td></td>
+            <td>0</td>
+            <td>0</td>
+            
+            <td> </td>
+            <td></td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr>
+       
+            <td>Other receipts received by CLF as capitalgrants</td>
+            <td></td>
+            <td></td>
+            <td></td>
+           
+            <td> </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+       
+            <td>CEF grant for Enterprise promotion</td>
+            <td>6030013</td>
+            <td>4265811</td>
+            <td>3444427</td>
+          
+            <td> </td>
+            <td>4280000</td>
+            <td>9250000</td>
+            <td>3950000</td>
+        </tr>
+        <tr>
+        
+            <td>Grant for promotion of PGs (including workingcapital and infrastructure)</td>
+            <td>1413824</td>
+            <td>1705510</td>
+            <td>1391067</td>
+            
+            <td></td>
+            <td>535000</td>
+            <td>972000</td>
+            <td>9927500</td>
+        </tr>
+        <tr>
+   
+            <td>Other grants received for onward lending</td>
+            <td></td>
+            <td>0</td>
+            <td>0</td>
+           
+            <td></td>
+            <td></td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr>
+      
+            <td>Loan principal amount received from other grants</td>
+            <td>124688</td>
+            <td>72994</td>
+            <td>16000</td>
+           
+           <td> </td>
+            <td rowspan="2"> </td>
+            <td rowspan="2"> </td>
+            <td rowspan="2"> </td>
+        </tr>
+   
+         <tr>
+            <td rowspan="10"> 2 </td>
+            <td colspan="3"> Income Recepits during the said period </td>
+            <td >  </td>
+            <td rowspan="10"> 1. </td>
+            <td>Expenditure (Recurings) </td>
+                    
+        </tr>
+        <tr>
+         
+            <td>Bank Interest received</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+           
+            <td> Remuneration to CBO Staff</td>
+            <td>4780</td>
+            <td>41300</td>
+            <td>10433</td>
+        </tr>
+        <tr>
+      
+            <td>Penalty collected</td>
+            <td></td>
+            <td>0</td>
+            <td>0</td>
+            
+            <td>Remuneration paid to CRPs/cadres</td>
+            <td></td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        </table>
+
+        
+
+    </div>
+
+   
+
+    <script>
+      async function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4'); // A4 Portrait mode
+
+    const content = document.getElementById("pdf-content");
+
+    await html2canvas(content, { scale: 2.5 }).then(canvas => {
+        const imgData = canvas.toDataURL("image/png");
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        
+        const imgWidth = pageWidth - 20; // Leave some margin
+        let imgHeight = (canvas.height * imgWidth) / canvas.width; // Adjust height dynamically
+
+        let yPosition = 10; // Initial Y position
+
+        // If content is too long, split into multiple pages
+        while (imgHeight > 0) {
+            pdf.addImage(imgData, 'PNG', 10, yPosition, imgWidth, pageHeight - 20);
+            imgHeight -= pageHeight - 20; // Reduce remaining height
+            if (imgHeight > 0) {
+                pdf.addPage();
+                yPosition = 10; // Reset position for next page
+            }
+        }
+
+        pdf.save("Audit_Report.pdf");
+    });
+}
+
+
+
+    </script>
+
+</body>
+</html>

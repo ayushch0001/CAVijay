@@ -1,0 +1,2349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audit Report</title>
+  <style>
+    @page {
+      
+      
+    }
+    button[type="submit"] {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background: #45a049;
+      transform: scale(1.05);
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+    }
+
+    .page {
+      width: 250mm;
+      min-height: 345mm;
+      background: white;
+      margin: 0 auto;
+      padding: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      page-break-after: always;
+      position: relative;
+      box-sizing: border-box;
+      padding-left: 15px;
+      border: 2px solid black;
+    }
+
+    .table1 {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 17px;
+      page-break-inside: auto;
+    }
+
+    .table1 input[type="number"] 
+        {
+      width: 80px;          /* Fixed width */
+      max-width: 90px;     /* Maximum width */
+      border : none;
+      font-size: 12px;      /* Slightly smaller text */
+      box-sizing: border-box; /* Include padding in width */
+    }
+    th, td {
+      border: 2px solid black;
+      padding: 4px;
+      text-align: center;
+      
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    .auditor-box {
+      border: 2px solid black;
+      padding: 10px;
+      font-weight: bold;
+      margin: 15px 0;
+      width: 93%;
+    }
+
+    h2 { font-size: 18px; margin: 10px 0; }
+    h3 { font-size: 16px; margin: 8px 0; }
+    h4 { font-size: 14px; margin: 6px 0; }
+    h5 { font-size: 12px; margin: 4px 0; }
+
+    .signature-section {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      width: calc(100% - 40px);
+      text-align: center;
+    }   
+
+    .details {
+        display: flex;
+        justify-content: space-between;
+    }
+    @media print {
+      body { background: none; }
+      .page { 
+        box-shadow: none;
+        margin: 0;
+        padding: 15mm;
+      }
+    }
+  </style>
+</head>
+<body>
+<form method="POST" action="{% url 'report' %}?audit_id={{ audit.id }}">
+{% csrf_token %}
+  <!-- Page 1 -->
+  <div class="page">
+     
+            <h1 style="text-align:center;">
+              AUDIT REPORT <br>
+              of<br>
+              NATIONAL RURAL LIVELIHOOD MISSION (NRLM)<br>
+            </h1>
+
+          <br><br><br>
+
+            <h2 style="text-align:center;position: center;bottom: 700px;">
+               {{audit.customer.nameOfOrganization}}, {{audit.customer.address}}
+            </h2>
+
+            <h2 style="text-align:center;center: absolute;bottom: 643px;">
+              Cluster: {{audit.customer.cluster}}, Block: {{audit.customer.block}}, District: ,{{audit.customer.district}}, Chhattisgarh
+            </h2>
+
+             <h1 style="text-align:center;position: absolute;bottom: 570px;padding-left: 300px;">Financial Year: 20{{ year1 }}</h1>
+
+            <div class="auditor-box" style="position: absolute;bottom: 243px;"><h3 style="text-align:center;">Auditor</h3></div>
+
+        
+        
+          <h4 style="text-align:center;position: absolute;bottom: 113px;padding-left: 350px;">
+            Vijay Chandrakar & Co.<br>
+            Chartered Accountants<br>
+            Near SBI, Main Road Gariaband<br>
+            Gariaband (C.G.) - 493889<br>
+            Mob: - 97541-19991 <br>
+            Email: cavijay1018@gmail.com
+          </h4>
+      
+  </div>
+  
+  <!-- Page 2 -->
+  <div class="page">
+      <h2>Vijay Chandrakar & Co.</h2>
+      
+      <h5>Chartered Accountants</h5>
+      <div class="address" style="position: absolute;padding-top:40px">
+        <p>To,<br>
+          The Members,<br>
+          {{audit.customer.nameOfOrganization}},{{audit.customer.address}}<br>  
+          Dist - Gariaband (C.G.)
+        </p>
+      </div>
+      <br> <br> 
+      <div class="content" style="position: absolute;padding-top:120px">
+        <p>We have audited the attached Balance Sheet of {{audit.customer.nameOfOrganization}}
+          ,{{audit.customer.address}}, DIST – {{audit.customer.district}} (C.G.)  as at 31st March, 20{{year}} and also the Income & Expenditure
+          Account of the office for the period ended on that date annexed there to. These financial statements are
+          the responsibility of the entity’s management. Our responsibility is to express an opinion on these
+          financial statements based on our audit.</p>
+
+        <p>We have conducted audit in accordance with auditing standards generally accepted in India. Those
+          Standards require that we plan and perform the audit to obtain reasonable assurance about whether
+          the financial statements are free of material misstatement. An audit includes examining, on a test basis,
+          evidence supporting the amounts and disclosures in the financial statements. An audit also includes
+          assessing the accounting principles and significant estimates made by management, as well as
+          evaluating the overall financial statement presentation. We believe that our audit provides a reasonable
+          basis for our opinion. We enclose in the Annexure “I” statement of observations.</p>
+
+        <p>Further we report that:</p>
+        <ul>
+          <li>We have obtained all the information and explanations, which to the best of our knowledge and belief were necessary for the purposes of our audit.</li>
+          <li>In our opinion, proper books of accounts as required by law have been kept by the CLF so far as appears from our examination of such books.</li>
+          <li>The Balance Sheet and Income & Expenditure dealt with by this report are in agreement with the books of account.</li>
+          <li>In our opinion and to the best of our information and according to the explanations given to us, the accounts read with our observation in annexure “I” give a true and fair view:
+            <ul>
+              <li>A. In the case of the Balance Sheet, of the state of affairs of the CLF as at 31st March, 20{{year}}.</li>
+              <li>B. In the case of the Income and Expenditure Account, of the excess of income over expenditure for the year ended on that date.</li>
+              <li>C. In the case of Receipt and Payment Account, of the receipts and payments for the year ended on that date.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="signature"  style="position: absolute;bottom: 120px; width : 90%;">
+        
+            <table style="width: 100%; border: none; border-collapse: collapse;">
+              <tr>
+                  <td style="text-align: left;border: none;"><br><br><br><br><br>
+                  </td>
+              
+                  <td style="text-align: right;border: none;">
+                  <h3>For' VIJAY CHANDRAKAR & CO.</h3>
+                  (Chartered Accountants)<br>
+                  <h3>F.R.N. 029323C</h3></td>
+              </tr>
+            </table>
+
+
+
+    
+          <table style="width: 100%; border: none; border-collapse: collapse;">
+              <tr >
+                  <td style="text-align: left;border: none;padding-left:40px;">
+                      Place: Gariaband<br>
+                      Date : {{audit.date}} <br>
+                  </td>
+              </div>
+
+              <td style="text-align: right;border: none;">
+                
+                      <h3>CA Vijay Chandrakar</h3>
+                      Proprietor <br>
+                      <h2>M.No. 444225 </h2>
+                      <h2>UDIN: {{audit.Udin}} </h2><br>
+
+                  </td>
+              </tr>
+          </table>
+
+      </div>
+      <hr>
+      <h2 style="text-align:center;position: absolute;bottom: 50px;padding-left: 240px;">Near SBI, Main Road Gariaband, Gariaband (C.G.)</h2>
+      <h5 style="text-align:center;position: absolute;bottom: 20px;padding-left: 280px;">Mobile: 97541-19991 , Email: cavijay1018@gmail.com</h5>
+  </div>
+
+
+
+  <!-- Page 4 (First Table Page) -->
+  <div class="page"> 
+           <h3 style="text-align:right;padding-top:20px;"> Annexure -"A" </h3>
+        <h2 style="text-align:center;">Name of CLF: {{audit.customer.nameOfOrganization}},{{audit.customer.address}}</h2><br>
+        <h2 style="text-align:center;">Cluster:  {{audit.customer.cluster}}, Block: {{audit.customer.block}}, District: {{audit.customer.district}}, Chhattisgarh
+      </h2> 
+      <h3 style="text-align:left;"> a.        Receipt and Payment Statement – for the year ended 20{{year1}}</h3>
+    {% csrf_token %}
+    <table class ="table1">
+            <tr>
+                <td colspan="2" rowspan="2" style="font-weight: bold;">Receipt</td>
+                <td style="font-weight: bold;">FY {{ year1}}</td>
+                <td style="font-weight: bold;">FY {{ year2}}</td>
+                <td style="font-weight: bold;">FY {{ year3}}</td>
+                <td colspan="2" style="font-weight: bold;">Payment</td>
+                <td style="font-weight: bold;">FY {{ year1}}</td>
+                <td style="font-weight: bold;">FY {{ year2}}</td>
+                <td style="font-weight: bold;">FY {{ year3}}</td>
+            </tr>
+            <tr>
+                <td colspan="3">Rs</td>
+                <td></td>
+                <td></td>
+                <td colspan="3">Rs</td>
+            </tr> 
+            <tr>
+                <td colspan="2" style="font-weight: bold;">Opening balance cash (in hand)</td>
+                <td>
+          <input type="number" name="year1-A0" value="{{ yearReport1.A0|default:0 }}">
+        </td>
+        <td>
+          <input type="number" name="year2-A0" value="{{ yearReport2.A0|default:0 }}">
+        </td>
+        <td>
+          <input type="number" name="year3-A0" value="{{ yearReport3.A0|default:0 }}">
+        </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-weight: bold;">Opening balance cash (in bank)</td>
+        <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-B0" value="{{ yearReport1.B0|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B0" value="{{ yearReport2.B0|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-B0" value="{{ yearReport3.B0|default:0 }}">
+        </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+          
+            <tr>
+                <td rowspan="8">1</td>
+                <td colspan="3" style="font-weight: bold;"> Receipts of capital Fund (which form part of Corpus or Permanent capital of the CBO)</td>
+                <td></td>
+                <td rowspan="8">1.</td>
+                <td style="font-weight: bold;">Expenditure (Capital)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>CIF grant received from mission</td>
+                 <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-A1" value="{{ yearReport1.A1|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A1" value="{{ yearReport2.A1|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-A1" value="{{ yearReport3.A1|default:0 }}">
+        </td>
+                <td>Fixed Assests purchased</td>
+                 <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-B1" value="{{ yearReport1.B1|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B1" value="{{ yearReport2.B1|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-B1" value="{{ yearReport3.B1|default:0 }}">
+        </td>
+            </tr>
+            <tr>
+      
+            <td>Saving from member organisation</td>
+            <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-A2" value="{{ yearReport1.A2|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A2" value="{{ yearReport2.A2|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-A2" value="{{ yearReport3.A2|default:0 }}">
+        </td>
+            <td>Stock inventories purchased</td>
+            <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-B2" value="{{ yearReport1.B2|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B2" value="{{ yearReport2.B2|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-B2" value="{{ yearReport3.B2|default:0 }}">
+        </td>
+        </tr>
+        <tr>
+       
+            <td>Share capital paid by member organisations</td>
+              <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-A3" value="{{ yearReport1.A3|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A3" value="{{ yearReport2.A3|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-A3" value="{{ yearReport3.A3|default:0 }}">
+        </td>
+            
+            <td> </td>
+            <td></td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+       
+            <td>Other receipts received by CLF as capitalgrants</td>
+              <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-A4" value="{{ yearReport1.A4|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A4" value="{{ yearReport2.A4|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-A4" value="{{ yearReport3.A4|default:0 }}">
+        </td>
+            <td> </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+       
+            <td>CEF grant for Enterprise promotion</td>
+        <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-A5" value="{{ yearReport1.A5|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A5" value="{{ yearReport2.A5|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-A5" value="{{ yearReport3.A5|default:0 }}">
+        </td>
+          
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+        
+            <td>Grant for promotion of PGs (including workingcapital and infrastructure)</td>
+            <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-A6" value="{{ yearReport1.A6|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A6" value="{{ yearReport2.A6|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-A6" value="{{ yearReport3.A6|default:0 }}">
+        </td>
+            
+            <td></td>
+            <td></td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+   
+            <td>Other grants received for onward lending</td>
+        <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-A7" value="{{ yearReport1.A7|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A7" value="{{ yearReport2.A7|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-A7" value="{{ yearReport3.A7|default:0 }}">
+        </td>
+           
+      
+           <td> </td>
+            <td rowspan="2"> </td>
+            <td rowspan="2"> </td>
+            <td rowspan="2"> </td>
+        </tr>
+   
+         <tr>
+            <td rowspan="10"> 2 </td>
+            <td colspan="3" style="font-weight: bold;"> Income Recepits during the said period </td>
+            <td >  </td>
+            <td rowspan="10"> 2. </td>
+            <td style="font-weight: bold;">Expenditure (Recurings) </td>
+                    
+        </tr>
+        <tr>
+         
+            <td>Bank Interest received</td>
+            <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-A8" value="{{ yearReport1.A8|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A8" value="{{ yearReport2.A8|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-A8" value="{{ yearReport3.A8|default:0 }}">
+        </td>
+           
+            <td> Remuneration to CBO Staff</td>
+        <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-B3" value="{{ yearReport1.B3|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B3" value="{{ yearReport2.B3|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-B3" value="{{ yearReport3.B3|default:0 }}">
+        </td>
+        </tr>
+
+        <tr>
+      
+            <td>Penalty collected</td>
+            <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-A9" value="{{ yearReport1.A9|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A9" value="{{ yearReport2.A9|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-A9" value="{{ yearReport3.A9|default:0 }}">
+        </td>
+            
+            <td>Remuneration paid to CRPs/cadres</td>
+            <!-- Year 1 -->
+        <td>
+          <input type="number" name="year1-B4" value="{{ yearReport1.B4|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B4" value="{{ yearReport2.B4|default:0 }}">
+        </td>
+        <!-- Year 3 -->
+        <td>
+          <input type="number" name="year3-B4" value="{{ yearReport3.B4|default:0 }}">
+        </td>
+        
+        </tr>
+        </table>
+        
+    <!-- Certification blocks -->
+  </div>
+
+  <!-- Page 5 -->
+  <div class="page">
+        <table class ="table1">
+                <tr>
+                    <td colspan="2" rowspan="2" style="font-weight: bold;">Receipt</td>
+                    <td style="font-weight: bold;">FY {{year1}} </td>
+                    <td style="font-weight: bold;">FY {{year2}}</td>
+                    <td style="font-weight: bold;">FY {{year3}}</td>
+                    <td colspan="2" style="font-weight: bold;">Payment</td>
+                    <td style="font-weight: bold;">FY {{year1}} </td>
+                    <td style="font-weight: bold;">FY {{year2}}</td>
+                    <td style="font-weight: bold;">FY {{year3}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Rs.</td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="3">Rs.</td>
+                </tr> 
+              
+                <tr>
+                    <td rowspan="11"></td>
+                    <td >Resource fee/ Institutional charges received</td>
+                    <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-A10" value="{{ yearReport1.A10|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A10" value="{{ yearReport2.A10|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A10" value="{{ yearReport3.A10|default:0 }}">
+            </td>
+                    <td rowspan="11"></td>
+                    <td>Office rent, water, Electricity, telephone, communication, internet etc</td>
+                      <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-B5" value="{{ yearReport1.B5|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B5" value="{{ yearReport2.B5|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B5" value="{{ yearReport3.B5|default:0 }}">
+            </td>
+                </tr>
+                <tr>
+                    <td>Interest on CIF</td>
+                        <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-A11" value="{{ yearReport1.A11|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A11" value="{{ yearReport2.A11|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A11" value="{{ yearReport3.A11|default:0 }}">
+            </td>
+                    <td>Stationary purchased</td>
+                                    <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-B6" value="{{ yearReport1.B6|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B6" value="{{ yearReport2.B6|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B6" value="{{ yearReport3.B6|default:0 }}">
+            </td>
+                </tr>
+                <tr>
+          
+                <td>CEF Interest on loans</td>
+                                <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-A12" value="{{ yearReport1.A12|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A12" value="{{ yearReport2.A12|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A12" value="{{ yearReport3.A12|default:0 }}">
+            </td>
+                
+                <td>Travel expenses</td>
+                                <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-B7" value="{{ yearReport1.B7|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B7" value="{{ yearReport2.B7|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B7" value="{{ yearReport3.B7|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+          
+                <td>Interest on PG loans</td>
+                                <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-A13" value="{{ yearReport1.A13|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A13" value="{{ yearReport2.A13|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A13" value="{{ yearReport3.A13|default:0 }}">
+            </td>
+                
+                <td> Bank/commission Charges</td>
+                                <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-B8" value="{{ yearReport1.B8|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B8" value="{{ yearReport2.B8|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B8" value="{{ yearReport3.B8|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+          
+                <td>Interest received on loans given from other grants</td>
+                                <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-A14" value="{{ yearReport1.A14|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A14" value="{{ yearReport2.A14|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A14" value="{{ yearReport3.A14|default:0 }}">
+            </td>
+              
+                <td>Other expenditures</td>
+                                <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-B9" value="{{ yearReport1.B9|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B9" value="{{ yearReport2.B9|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B9" value="{{ yearReport3.B9|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+          
+                <td>Recurring Subscription fee received from member organisations</td>
+                                <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-A15" value="{{ yearReport1.A15|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A15" value="{{ yearReport2.A15|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A15" value="{{ yearReport3.A15|default:0 }}">
+            </td>
+              
+                <td>Subscription Fee to paid higher level federations</td>
+                                <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-B10" value="{{ yearReport1.B10|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B10" value="{{ yearReport2.B10|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B10" value="{{ yearReport3.B10|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+            
+                <td>Membership fee received from member organisations</td>
+                <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-A16" value="{{ yearReport1.A16|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A16" value="{{ yearReport2.A16|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A16" value="{{ yearReport3.A16|default:0 }}">
+            </td>
+                
+                <td>CEF Interest on loans Transferred to BRC</td>
+                <td>
+              <input type="number" name="year1-B11" value="{{ yearReport1.B11|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B11" value="{{ yearReport2.B11|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B11" value="{{ yearReport3.B11|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+      
+                <td>Admission/ registration fees received from member organisations</td>
+                <td>
+              <input type="number" name="year1-A17" value="{{ yearReport1.A17|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A17" value="{{ yearReport2.A17|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A17" value="{{ yearReport3.A17|default:0 }}">
+            </td>
+              
+                <td>CEF Laon principal Transferred to BRC</td>
+                <td>
+              <input type="number" name="year1-B12" value="{{ yearReport1.B12|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B12" value="{{ yearReport2.B12|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B12" value="{{ yearReport3.B12|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+          
+                <td> Service Fee received</td>
+                <td>
+              <input type="number" name="year1-A18" value="{{ yearReport1.A18|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A18" value="{{ yearReport2.A18|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A18" value="{{ yearReport3.A18|default:0 }}">
+            </td>
+              
+                <td>VO Portion of CEF Interest Transferred to VO</td>
+                <td>
+              <input type="number" name="year1-B13" value="{{ yearReport1.B13|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B13" value="{{ yearReport2.B13|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B13" value="{{ yearReport3.B13|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+          
+                <td>Recurring grant received from Mission for operational expenditure of CLF</td>
+                <td>
+              <input type="number" name="year1-A19" value="{{ yearReport1.A19|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A19" value="{{ yearReport2.A19|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A19" value="{{ yearReport3.A19|default:0 }}">
+            </td>
+                <td></td>
+                <td>
+              <input type="number" name="year1-B14" value="{{ yearReport1.B14|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B14" value="{{ yearReport2.B14|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B14" value="{{ yearReport3.B14|default:0 }}">
+            </td>
+            </tr>
+                    <tr>
+                <td>Other income</td>
+                <td>
+              <input type="number" name="year1-A20" value="{{ yearReport1.A20|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A20" value="{{ yearReport2.A20|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A20" value="{{ yearReport3.A20|default:0 }}">
+            </td>
+                
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td rowspan="10"> 3. </td>
+                <td colspan="3" style="font-weight: bold;"> Non capital funds /grants received with specific  purpose/ direction  </td>
+                <td >  </td>
+                <td rowspan="10"> 3. </td>
+                <td style="font-weight: bold;">Releases against the grants recevived  </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                        
+            </tr>
+            <tr>
+            
+                <td>Other funds/ grantsreceived with specific purpose directions about its use</td>
+                <td>
+              <input type="number" name="year1-A21" value="{{ yearReport1.A21|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A21" value="{{ yearReport2.A21|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A21" value="{{ yearReport3.A21|default:0 }}">
+            </td>
+              
+                <td>Expenditure against grants received with specific purpose/Release of Start-up Funds to CLF</td>
+                <td>
+              <input type="number" name="year1-B15" value="{{ yearReport1.B15|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B15" value="{{ yearReport2.B15|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B15" value="{{ yearReport3.B15|default:0 }}">
+            </td>
+            </tr>
+
+        </table>
+        <!-- Certification blocks -->
+  </div>
+
+  <!-- Page 6 -->
+  <div class="page">
+        <table class ="table1">
+                <tr>
+                    <td colspan="2" rowspan="2" style="font-weight: bold;">Receipt</td>
+                    <td style="font-weight: bold;">FY {{year1}} </td>
+                    <td style="font-weight: bold;">FY {{year2}}</td>
+                    <td style="font-weight: bold;">FY {{year3}}</td>
+                    <td colspan="2" style="font-weight: bold;">Payment</td>
+                    <td style="font-weight: bold;">FY {{year1}} </td>
+                    <td style="font-weight: bold;">FY {{year2}}</td>
+                    <td style="font-weight: bold;">FY {{year3}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Rs.</td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="3">Rs.</td>
+                </tr> 
+              
+                <tr>
+                    <td rowspan="2"></td>
+                    <td > Start-up Funds to CLF by mission</td>
+                    <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-A22" value="{{ yearReport1.A22|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A22" value="{{ yearReport2.A22|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A22" value="{{ yearReport3.A22|default:0 }}">
+            </td>
+                    <td rowspan="2"></td>
+                    <td>Training / Exposure/CB expenses</td>
+                    <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-B16" value="{{ yearReport1.B16|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B16" value="{{ yearReport2.B16|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B16" value="{{ yearReport3.B16|default:0 }}">
+            </td>
+                </tr>
+                <tr>
+                    
+                    <td>VRF</td>
+                    <!-- Year 1 -->
+            <td>
+              <input type="number" name="year1-A23" value="{{ yearReport1.A23|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A23" value="{{ yearReport2.A23|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A23" value="{{ yearReport3.A23|default:0 }}">
+            </td>
+                  
+                    <td>VRF Released</td>
+                    <td>
+              <input type="number" name="year1-B17" value="{{ yearReport1.B17|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B17" value="{{ yearReport2.B17|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B17" value="{{ yearReport3.B17|default:0 }}">
+            </td>
+                </tr>
+
+                <tr>
+
+                <td></td>
+                <td> General loan receipts (repayment of all loan instalments by member organisations as per loan repayment schedule)</td>
+                <td>
+              <input type="number" name="year1-A24" value="{{ yearReport1.A24|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A24" value="{{ yearReport2.A24|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A24" value="{{ yearReport3.A24|default:0 }}">
+            </td>
+                <td></td>
+                <td> General loan payment (release of fresh loans to member organisations using the repayment of all loan instalments by member organisations)</td>
+                <td>
+              <input type="number" name="year1-B18" value="{{ yearReport1.B18|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B18" value="{{ yearReport2.B18|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B18" value="{{ yearReport3.B18|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+                <td rowspan="5"> 4</td>
+                <td colspan="4" style="font-weight: bold;">Loan Principal amount received</td>
+                <td rowspan="5"> 4</td>
+                <td colspan="4" style="font-weight: bold;">Loans disbursed</td>
+            </tr>
+            <tr>
+          
+                <td>CIF Loan Principal amount received from member organisations</td>
+                <td>
+              <input type="number" name="year1-A25" value="{{ yearReport1.A25|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A25" value="{{ yearReport2.A25|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A25" value="{{ yearReport3.A25|default:0 }}">
+            </td>
+              
+                <td>CIF Loan amount disbursed</td>
+                <td>
+              <input type="number" name="year1-B19" value="{{ yearReport1.B19|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B19" value="{{ yearReport2.B19|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B19" value="{{ yearReport3.B19|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+          
+                <td> CEF Laon principal amount received</td>
+                <td>
+              <input type="number" name="year1-A26" value="{{ yearReport1.A26|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A26" value="{{ yearReport2.A26|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A26" value="{{ yearReport3.A26|default:0 }}">
+            </td>
+              
+                <td>CEF loan amount disbursed</td>
+                <!-- Year 1 -->
+              <td>
+                  <input type="number" name="year1-B20" value="{{ yearReport1.B20|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B20" value="{{ yearReport2.B20|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B20" value="{{ yearReport3.B20|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+            
+                <td>PG loan principle amount received</td>
+              <!-- Year 1 -->
+            <td>
+            <input type="number" name="year1-A27" value="{{ yearReport1.A27|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A27" value="{{ yearReport2.A27|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A27" value="{{ yearReport3.A27|default:0 }}">
+            </td>
+
+                <td>PG loan amount disbursed</td>
+                <!-- Year 1 -->
+            <td>
+            <input type="number" name="year1-B21" value="{{ yearReport1.B21|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B21" value="{{ yearReport2.B21|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B21" value="{{ yearReport3.B21|default:0 }}">
+            </td>
+            </tr>
+            <tr>
+      
+                <td>Loan principal amount received from other grants given for onward lending</td>
+                  <!-- Year 1 -->
+            <td>
+            <input type="number" name="year1-A28" value="{{ yearReport1.A28|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-A28" value="{{ yearReport2.A28|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-A28" value="{{ yearReport3.A28|default:0 }}">
+            </td>
+              
+                <td>Other grants Loan amount disbursed</td>
+              <!-- Year 1 -->
+            <td>
+            <input type="number" name="year1-B22" value="{{ yearReport1.B22|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B22" value="{{ yearReport2.B22|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B22" value="{{ yearReport3.B22|default:0 }}">
+            </td>
+
+            </tr>
+          
+            <tr>
+                <td > 5. </td>
+                <td colspan="4" style="font-weight: bold;"> Refund of grants by member organisation (like SGSY unspent balances and alike which were released earlier under the project)  </td>
+                
+                <td > 5. </td>
+                <td colspan="4" style="font-weight: bold;"> Transfer of refunded grants (Ex. Transferred to SMMU or to the other organisations) (If these are not refunded then these should be shown under liabilities in the balance sheet under   </td>
+              
+            </tr>
+              <tr>
+                <td > 6. </td>
+                <td colspan="4" style="font-weight: bold;"> Refund of Advances  </td>
+            
+                <td rowspan="2"> 6. </td>
+                <td style="font-weight: bold;" >Fresh Advances given during the year/period  </td>
+                    <!-- Year 1 -->
+            <td>
+            <input type="number" name="year1-B23" value="{{ yearReport1.B23|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B23" value="{{ yearReport2.B23|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B23" value="{{ yearReport3.B23|default:0 }}">
+            </td>
+                        
+            </tr>
+            <tr>
+            
+                
+                <td rowspan="5" colspan="5"></td>
+              <td style="font-weight: bold;" > Advances given   </td>
+                  <!-- Year 1 -->
+            <td>
+            <input type="number" name="year1-B24" value="{{ yearReport1.B24|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B24" value="{{ yearReport2.B24|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B24" value="{{ yearReport3.B24|default:0 }}">
+            </td>
+            </tr>
+
+                    
+
+            <tr>
+              <td>7.</td>
+                <td>  Payment of dividends (if permitted)</td>
+                  <!-- Year 1 -->
+            <td>
+            <input type="number" name="year1-B25" value="{{ yearReport1.B25|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B25" value="{{ yearReport2.B25|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B25" value="{{ yearReport3.B25|default:0 }}">
+            </td>
+
+            </tr>
+            <tr>
+              <td rowspan="3">8.</td>
+                <td> Closing balance as per cash book</td>
+                        <!-- Year 1 -->
+            <td>
+            <input type="number" name="year1-B26" value="{{ yearReport1.B26|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B26" value="{{ yearReport2.B26|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B26" value="{{ yearReport3.B26|default:0 }}">
+            </td>
+            
+            </tr>
+            <tr>
+              
+                <td >Cash in hand </td>
+                        <!-- Year 1 -->
+            <td>
+            <input type="number" name="year1-B27" value="{{ yearReport1.B27|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B27" value="{{ yearReport2.B27|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B27" value="{{ yearReport3.B27|default:0 }}">
+            </td>
+            
+            </tr>
+            <tr>
+              
+                <td> Cash at bank</td>
+                        <!-- Year 1 -->
+            <td>
+            <input type="number" name="year1-B28" value="{{ yearReport1.B28|default:0 }}">
+            </td>
+            <!-- Year 2 -->
+            <td>
+              <input type="number" name="year2-B28" value="{{ yearReport2.B28|default:0 }}">
+            </td>
+            <!-- Year 3 -->
+            <td>
+              <input type="number" name="year3-B28" value="{{ yearReport3.B28|default:0 }}">
+            </td>
+            
+            </tr>
+        
+
+
+
+            <tr>
+                <td></td>
+                <td style="font-weight: bold;"> Total</td>
+
+                <td style="font-weight: bold;"> <input type="number" name="year1-A29" value="{{ yearReport1.A29|default:0 }}"></td>
+                <td style="font-weight: bold;"><input type="number" name="year2-A29" value="{{ yearReport2.A29|default:0 }}"></td>
+                <td style="font-weight: bold;"><input type="number" name="year3-A29" value="{{ yearReport3.A29|default:0 }}"></td>
+
+              <td></td>
+                <td style="font-weight: bold;"> Total</td>
+
+                <td style="font-weight: bold;"> <input type="number" name="year1-B29" value="{{ yearReport1.B29|default:0 }}"></td>
+                <td style="font-weight: bold;"><input type="number" name="year2-B29" value="{{ yearReport2.B29|default:0 }}"></td>
+                <td style="font-weight: bold;"><input type="number" name="year3-B29" value="{{ yearReport3.B29|default:0 }}"></td>
+
+
+            </tr>
+        </table>
+            
+        <table style="width: 100%; border: none; border-collapse: collapse;">
+            <tr>
+                <td style="text-align: left;border: none;">CERTIFIED: On behalf of the governing Body We hereby<br>
+                certify that the above Receipts and Payment Account of<br>
+                NRLM gives a complete and correct A/c. of Balance sheet for<br>
+                the year ended 31st March 20{{year}}.</td>
+            
+                <td style="text-align: right;border: none;">AS PER OUR ANNEXED REPORT OF EVEN DATE<br>
+                For' VIJAY CHANDRAKAR & CO.<br>
+                (Chartered Accountants)<br>
+                F.R.N. 029323C</td>
+            </tr>
+        </table>
+
+
+
+    
+        <table style="width: 100%; border: none; border-collapse: collapse;">
+            <tr >
+                <td style="text-align: left;border: none;">
+                    Place: Gariaband<br>
+                    Date : {{ audit.date}} <br>
+                </td>
+            </div>
+
+            <td style="text-align: right;border: none;">
+              
+                    CA Vijay Chandrakar<br>
+                    Proprietor <br>
+                    M.No. 444225 <br>
+                    
+                </td>
+            </tr>
+        </table>
+
+  </div>
+
+  <!-- Page 7 -->
+  <div class="page">                                                  
+    <table class ="table1">
+
+
+             <tr>
+                <td colspan="10"  style="font-weight: bold;">b. Income Expenditure Statement - </td>
+                
+            </tr>
+
+
+            <tr>
+                <td colspan="10"  style="font-weight: bold;">Income and Expenditure Statement of {{audit.customer.nameOfOrganization}},{{audit.customer.address}} For the year 20{{year1}} or for the period from 01-04-20{{ year|add:"-1" }} To 31-03-20{{year}}.</td>
+                
+            </tr>
+
+
+            <tr>
+                <td colspan="2" style="font-weight: bold;">Expenditure</td>
+                
+                <td style="font-weight: bold;">FY {{year1}}</td>
+                <td style="font-weight: bold;">FY {{year2}}</td>
+
+                <td colspan="2" style="font-weight: bold;">Income</td>
+                
+                <td style="font-weight: bold;">FY {{year1}}</td>
+                <td style="font-weight: bold;">FY {{year2}}</td>
+            </tr>
+         
+          
+            <tr>
+                <td rowspan="19"></td>
+            <td style="font-weight: bold;" colspan="3"> Expenditure (Recurring) including settlement of advances
+              during the year</td>
+                <td rowspan="19s"></td>
+                <td style="font-weight: bold;" colspan="3"> Income receipts during the said period</td>
+                
+            </tr>
+            <tr>
+                
+                <td>Remuneration to CBO Staff</td>
+                 <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A30" value="{{ yearReport1.A30|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A30" value="{{ yearReport2.A30|default:0 }}">
+        </td>
+                
+               
+                <td>Bank Interest received</td>
+                        <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-B30" value="{{ yearReport1.B30|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B30" value="{{ yearReport2.B30|default:0 }}">
+        </td>
+            </tr>
+          <tr>
+                <td>Remuneration paid to CRPs/cadres</td>
+         
+                          <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A31" value="{{ yearReport1.A31|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A31" value="{{ yearReport2.A31|default:0 }}">
+        </td>
+                <td> Penalty Collected</td>
+        
+                          <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-B31" value="{{ yearReport1.B31|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B31" value="{{ yearReport2.B31|default:0 }}">
+        </td>
+            </tr>
+
+            <tr>
+      
+            <td>Office rent, water, Electricity, telephone, communication, internet etc.</td>
+       
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A32" value="{{ yearReport1.A32|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A32" value="{{ yearReport2.A32|default:0 }}">
+        </td>
+            
+            <td>Resource fee/ Institutional charges received</td>
+           
+                     <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-B32" value="{{ yearReport1.B32|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B32" value="{{ yearReport2.B32|default:0 }}">
+        </td>
+        </tr>
+        <tr>
+       
+            <td>Stationary purchased</td>
+        
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A33" value="{{ yearReport1.A33|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A33" value="{{ yearReport2.A33|default:0 }}">
+        </td>
+            
+            <td>CIF Interest on loans collected from member Organisations</td>
+   
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-B33" value="{{ yearReport1.B33|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B33" value="{{ yearReport2.B33|default:0 }}">
+        </td>
+        </tr>
+        <tr>
+       
+            <td>Travel expenses</td>
+            <          <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A34" value="{{ yearReport1.A34|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A34" value="{{ yearReport2.A34|default:0 }}">
+        </td>
+          
+           
+            <td> CEF Interest on loans received</td>
+          
+                     <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-B34" value="{{ yearReport1.B34|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B34" value="{{ yearReport2.B34|default:0 }}">
+        </td>
+        </tr>
+        <tr>
+       
+            <td>Bank/commission Charges</td>
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A35" value="{{ yearReport1.A35|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A35" value="{{ yearReport2.A35|default:0 }}">
+        </td>
+         
+          
+            <td>Interest on PG loans collected</td>
+     
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-B35" value="{{ yearReport1.B35|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B35" value="{{ yearReport2.B35|default:0 }}">
+        </td>
+        </tr>
+        <tr>
+        
+            <td>Other expenditures</td>
+                     <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A36" value="{{ yearReport1.A36|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A36" value="{{ yearReport2.A36|default:0 }}">
+        </td>
+          
+            
+            <td>Interest received on loans given from other grants</td>
+        
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-B36" value="{{ yearReport1.B36|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B36" value="{{ yearReport2.B36|default:0 }}">
+        </td>
+        </tr>
+        <tr>
+   
+            <td>Subscription/Fee to paid higher level federations</td>
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A37" value="{{ yearReport1.A37|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A37" value="{{ yearReport2.A37|default:0 }}">
+        </td>
+        
+           
+            <td>Recurring Subscription fee received from member organisations</td>
+           
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-B37" value="{{ yearReport1.B37|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B37" value="{{ yearReport2.B37|default:0 }}">
+        </td>
+        </tr>
+        <tr>
+      
+            <td> Training / Exposure/CB expenses</td>
+
+                     <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A38" value="{{ yearReport1.A38|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A38" value="{{ yearReport2.A38|default:0 }}">
+        </td>
+           
+            <td>Membership fee received from member organisations</td>
+          
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-B38" value="{{ yearReport1.B38|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B38" value="{{ yearReport2.B38|default:0 }}">
+        </td>
+        </tr>
+        <tr>
+      
+            <td> Expenditure against grants received with specific purpose/Release of Start-up Funds to CLF</td>
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A39" value="{{ yearReport1.A39|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A39" value="{{ yearReport2.A39|default:0 }}">
+        </td>
+           
+            <td>Admission/ registration fees received from member organisations</td>
+          
+                     <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-B39" value="{{ yearReport1.B39|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B39" value="{{ yearReport2.B39|default:0 }}">
+        </td>
+        
+              <tr>
+      
+            <td> CEF Interest Transferred to BRC Chhura</td>
+                      <!-- Year 1 -->
+        <td>
+        <input type="number" name="year1-A40" value="{{ yearReport1.A40|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A40" value="{{ yearReport2.A40|default:0 }}">
+        </td>
+           
+            <td>Service Fee received</td>
+           <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B40" value="{{ yearReport1.B40|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B40" value="{{ yearReport2.B40|default:0 }}">
+        </td>
+        </tr>
+              <tr>
+      
+            <td> VO Portion of CEF Interest Transferred to VO</td>
+
+             <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A41" value="{{ yearReport1.A41|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A41" value="{{ yearReport2.A41|default:0 }}">
+        </td>
+           
+            <td> Other income</td>
+          
+               <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B41" value="{{ yearReport1.B41|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B41" value="{{ yearReport2.B41|default:0 }}">
+        </td>
+           
+        </tr>
+              <tr>
+      
+            <td colspan="3"> </td>
+          
+            <td>Income from other grants</td>
+                  <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B42" value="{{ yearReport1.B42|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B42" value="{{ yearReport2.B42|default:0 }}">
+        </td>
+        </tr>
+              <tr>
+        <td colspan="3" style="font-weight: bold;">  Loans loss/ Write off of bad debts</td>
+           
+            <td></td>
+          
+            <td></td>
+            <td></td>
+        </tr>
+              <tr>
+      
+            <td style="font-weight: bold;"> Services charges paid to member organisations</td>
+
+                    <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A42" value="{{ yearReport1.A42|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A42" value="{{ yearReport2.A42|default:0 }}">
+        </td>
+           
+            <td></td>
+          
+            <td></td>
+            <td></td>
+        </tr>
+         </tr>
+              <tr>
+      
+            <td style="font-weight: bold;"> Total expenditure</td>
+                       <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A43" value="{{ yearReport1.A43|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A43" value="{{ yearReport2.A43|default:0 }}">
+        </td>
+            <td style="font-weight: bold;"> Total Income</td>
+          
+                       <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B43" value="{{ yearReport1.B43|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B43" value="{{ yearReport2.B43|default:0 }}">
+        </td>
+        </tr>
+              <tr>
+      
+            <td style="font-weight: bold;"> Excess of income over expenditure (if income is more than expenditure is the balancing figure</td>
+                     <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A44" value="{{ yearReport1.A44|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A44" value="{{ yearReport2.A44|default:0 }}">
+        </td>
+           
+            <td style="font-weight: bold;">Excess of expenditure over income (if expenditure is more than income) is the balancing figure</td>
+                     <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B44" value="{{ yearReport1.B44|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B44" value="{{ yearReport2.B44|default:0 }}">
+        </td>
+        </tr>
+        </table>
+    <table style="width: 100%; border: none; border-collapse: collapse;">
+        <tr>
+            <td style="text-align: left;border: none;">CERTIFIED: On behalf of the governing Body We hereby<br>
+            certify that the above Receipts and Payment Account of<br>
+            NRLM gives a complete and correct A/c. of Balance sheet for<br>
+            the year ended 31st March 20{{year}}.</td>
+        
+            <td style="text-align: right;border: none;">AS PER OUR ANNEXED REPORT OF EVEN DATE<br>
+            For' VIJAY CHANDRAKAR & CO.<br>
+            (Chartered Accountants)<br>
+            F.R.N. 029323C</td>
+        </tr>
+    </table>
+
+
+
+ 
+    <table style="width: 100%; border: none; border-collapse: collapse;">
+        <tr >
+            <td style="text-align: left;border: none;">
+                Place: Gariaband<br>
+                Date : {{audit.date}} <br>
+            </td>
+        </div>
+
+        <td style="text-align: right;border: none;">
+          
+                CA Vijay Chandrakar<br>
+                Proprietor <br>
+                M.No. 444225 <br>
+                
+            </td>
+        </tr>
+    </table>
+
+  </div>
+
+  <!-- Page 8 -->
+  <div class="page">
+    <table class ="table1">
+
+
+             <tr>
+                <td colspan="10"  style="font-weight: bold;"> c. Balance Sheet Statement – for the year ended 31-03-20{{year}} </td>
+                
+            </tr>
+
+
+            <tr>
+                <td colspan="2" style="font-weight: bold;">Liabilities</td>
+                
+                <td style="font-weight: bold;">FY {{year1}} </td>
+                <td style="font-weight: bold;">FY {{year2}}</td>
+                <td colspan="2" style="font-weight: bold;">Assets</td>
+                
+                <td style="font-weight: bold;">FY {{year1}} </td>
+                <td style="font-weight: bold;">FY {{year2}}</td>
+            </tr>
+         <!-- 1-->
+          
+            <tr>
+                <td rowspan="24"></td>
+                <td style="font-weight: bold;" colspan="3">  Capital / Corpus fund</td>
+                <td rowspan="17"></td>
+                <td style="font-weight: bold;" colspan="3">  Fixed Assets (Capital)</td>
+                
+            </tr>
+              <!-- 2-->
+            <tr>
+                
+                <td>Differential Opening balance (if any)</td>
+                           
+                           
+        <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A45" value="{{ yearReport1.A45|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A45" value="{{ yearReport2.A45|default:0 }}">
+        </td>
+                
+               
+                <td> Opening balance</td>
+                
+                <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B45" value="{{ yearReport1.B45|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B45" value="{{ yearReport2.B45|default:0 }}">
+        </td>
+            </tr>
+              <!-- 3-->
+          <tr>
+                <td></td>
+         
+                <td></td>
+                <td></td>
+                <td> Add: Fixed Assets purchased</td>
+        
+                 <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B46" value="{{ yearReport1.B46|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B46" value="{{ yearReport2.B46|default:0 }}">
+        </td>
+
+            </tr>
+            <!-- 4-->
+            <tr>
+      
+            <td>Saving from member organisations</td>
+       
+          <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A46" value="{{ yearReport1.A46|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A46" value="{{ yearReport2.A46|default:0 }}">
+        </td>
+
+            <td>Stock Inventories purchasedand in stock</td>
+           
+          <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B47" value="{{ yearReport1.B47|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B47" value="{{ yearReport2.B47|default:0 }}">
+        </td>
+
+ 
+        </tr>
+        <!-- 5-->
+        <tr>
+       
+            <td>Share capital paid by member organisations</td>
+        
+           <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A47" value="{{ yearReport1.A47|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A47" value="{{ yearReport2.A47|default:0 }}">
+        </td>
+
+ 
+            
+            <td> Fixed deposits done by CLF</td>
+   
+            <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B48" value="{{ yearReport1.B48|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B48" value="{{ yearReport2.B48|default:0 }}">
+        </td>
+
+ 
+        </tr>
+          <!-- 6-->
+        <tr>
+       
+            <td></td>
+            <td></td>
+            <td></td>
+          
+           
+            <td style="font-weight: bold;">  LOAN</td>
+          
+            <td></td>
+            <td></td>
+        </tr>
+         <!-- 7-->
+        <tr>
+       
+            <td>CIF grant received from mission</td>
+            <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A49" value="{{ yearReport1.A49|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A49" value="{{ yearReport2.A49|default:0 }}">
+        </td>
+          
+            <td>CIF Loan Outstanding with member organisations</td>
+     
+                 <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B49" value="{{ yearReport1.B49|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B49" value="{{ yearReport2.B49|default:0 }}">
+        </td>
+        </tr>
+        <!-- 8-->
+        <tr>
+        
+            <td>CEF grant for Enterprise promotion</td>
+                 <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A50" value="{{ yearReport1.A50|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A50" value="{{ yearReport2.A50|default:0 }}">
+        </td>
+          
+            
+            <td>CEF Loan Outstanding</td>
+        
+               <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B50" value="{{ yearReport1.B50|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B50" value="{{ yearReport2.B50|default:0 }}">
+        </td>
+        </tr>
+        <!-- 9-->
+        <tr>
+   
+            <td>Grant for promotion of PGs (including working capital and infrastructure)</td>
+                       <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A51" value="{{ yearReport1.A51|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A51" value="{{ yearReport2.A51|default:0 }}">
+        </td>
+        
+           
+            <td> PG Loan Outstanding with member organisations</td>
+           
+                      <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B51" value="{{ yearReport1.B51|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B51" value="{{ yearReport2.B51|default:0 }}">
+        </td>
+        </tr>
+        <!-- 10-->
+        <tr>
+      
+            <td> Other grants received for on lending</td>
+                       <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A52" value="{{ yearReport1.A52|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A52" value="{{ yearReport2.A52|default:0 }}">
+        </td>
+           
+            <td>Loan outstanding from the loans given from other grants</td>
+          
+                       <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B52" value="{{ yearReport1.B52|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B52" value="{{ yearReport2.B52|default:0 }}">
+        </td>
+
+        </tr>
+            <!-- 11-->
+        <tr>
+      
+            <td> Other receipts received by CLF as capital grants</td>
+                           <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A53" value="{{ yearReport1.A53|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A53" value="{{ yearReport2.A53|default:0 }}">
+        </td>
+           
+            <td></td>
+          
+            <td></td>
+            <td></td>
+        </tr>
+        <!-- 12-->
+        <tr>
+      
+            <td> Transfer from Reserve (if any)</td>
+                               <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A54" value="{{ yearReport1.A54|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A54" value="{{ yearReport2.A54|default:0 }}">
+        </td>
+            <td></td>
+          
+            <td> </td>
+            <td> </td>
+        </tr>
+        <!-- 13-->
+        <tr>
+      
+            <td colspan="3" style="font-weight: bold;"> Reserve</td>
+        
+           
+            <td colspan="3" style="font-weight: bold;"> Advances (assets)</td>
+          
+           
+        </tr>
+           <!-- 14-->
+        <tr>
+      
+          
+          
+            <td>Opening balance</td>
+                               <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A55" value="{{ yearReport1.A55|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A55" value="{{ yearReport2.A55|default:0 }}">
+        </td>
+                <td>Other advances to be collected </td>
+                               <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B53" value="{{ yearReport1.B53|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B53" value="{{ yearReport2.B53|default:0 }}">
+        </td>
+        </tr>
+              <tr>
+        <td> Excess of income over expenditure (+)</td>
+                                <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A56" value="{{ yearReport1.A56|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A56" value="{{ yearReport2.A56|default:0 }}">
+        </td>
+            <td>Advances against grants to be collected frommission or other organissations</td>
+          
+                                     <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B54" value="{{ yearReport1.B54|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B54" value="{{ yearReport2.B54|default:0 }}">
+        </td>
+        </tr>
+              <tr>
+      
+            <td > Excess of expenditure over income (-)</td>
+                                     <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A57" value="{{ yearReport1.A57|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A57" value="{{ yearReport2.A57|default:0 }}">
+        </td>
+           
+            <td>CEF principle Excess Paid amount</td>
+          
+                                     <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B55" value="{{ yearReport1.B55|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B55" value="{{ yearReport2.B55|default:0 }}">
+        </td>
+        </tr>
+         </tr>
+              <tr>
+      
+            <td> Amount Transferred to Capital (-)</td>
+                                     <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A58" value="{{ yearReport1.A58|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A58" value="{{ yearReport2.A58|default:0 }}">
+        </td>
+           
+            <td></td>
+          
+            <td> </td>
+            <td></td>
+        </tr>
+        <tr>
+      
+            <td   style="font-weight: bold;" colspan="7">Unspent balances of other grants</td>
+        </tr>
+
+         <tr>
+      
+            <td> </td>
+            <td></td>
+        
+            <td></td>
+            <td rowspan="5"></td>
+            <td style="font-weight: bold;">Closing balances</td>
+          
+            <td></td>
+            <td></td>
+        </tr>
+              <tr>
+        <td> CRPs/cadres Remunerationand VO Portion of CEF Interest to be paid</td>
+                                     <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-A59" value="{{ yearReport1.A59|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-A59" value="{{ yearReport2.A59|default:0 }}">
+        </td>
+           <td>  Cash in hand </td>
+                                     <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B56" value="{{ yearReport1.B56|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B56" value="{{ yearReport2.B56|default:0 }}">
+        </td>
+        </tr>
+              <tr>
+      
+            <td ></td>
+            <td></td>
+         
+            <td></td>
+           
+            <td>  Cash at Bank</td>
+          
+                                     <!-- Year 1 -->
+        <td>
+            <input type="number" name="year1-B57" value="{{ yearReport1.B57|default:0 }}">
+        </td>
+        <!-- Year 2 -->
+        <td>
+          <input type="number" name="year2-B57" value="{{ yearReport2.B57|default:0 }}">
+        </td>
+        </tr>
+         </tr>
+              <tr>
+      
+            <td style="font-weight: bold;">Tatal Liabilities</td>
+            <td style="font-weight: bold;"><input type="number" name="year1-A60" value="{{ yearReport1.A60|default:0 }}"></td>
+         
+            <td style="font-weight: bold;"><input type="number" name="year2-A60" value="{{ yearReport2.A60|default:0 }}"></td>
+           
+            <td style="font-weight: bold;"> Total Assets</td>
+          
+            <td style="font-weight: bold;"><input type="number" name="year1-B58" value="{{ yearReport1.B58|default:0 }}"></td>
+            <td style="font-weight: bold;"><input type="number" name="year2-B58" value="{{ yearReport2.B58|default:0 }}"></td>
+        </tr>
+        
+        </table>
+       
+    <table style="width: 100%; border: none; border-collapse: collapse;">
+        <tr>
+            <td style="text-align: left;border: none;">CERTIFIED: On behalf of the governing Body We hereby<br>
+            certify that the above Receipts and Payment Account of<br>
+            NRLM gives a complete and correct A/c. of Balance sheet for<br>
+            the year ended 31st March 20{{year}}.</td>
+        
+            <td style="text-align: right;border: none;">AS PER OUR ANNEXED REPORT OF EVEN DATE<br>
+            For' VIJAY CHANDRAKAR & CO.<br>
+            (Chartered Accountants)<br>
+            F.R.N. 029323C</td>
+        </tr>
+    </table>
+ 
+      <table style="width: 100%; border: none; border-collapse: collapse;">
+          <tr >
+              <td style="text-align: left;border: none;">
+                  Place: Gariaband<br>
+                  Date : {{audit.date}} <br>
+              </td>
+          </div>
+
+          <td style="text-align: right;border: none;">
+            
+                  CA Vijay Chandrakar<br>
+                  Proprietor <br>
+                  M.No. 444225 <br>
+                  
+              </td>
+          </tr>
+      </table>
+  
+
+  </div>
+   <!-- Page 9 -->
+  <div class="page">
+    <div>
+     <br>
+        <br>
+        <br>
+        <br>
+        <h2 style="text-align:center">NOTES ANNEXED TO BALANCE SHEET AND FORMING PART OF ACCOUNTS </h2>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h2 style="text-align:left">(A) PRINCIPAL ACCOUNTING POLICIES : </h2>
+      
+        <h3 style="padding-left:15px;">(i) Basis of Accounting :  </h3>
+        <h4 style="padding-left:18px;">The financial statements are prepared on historical cost convention. Keeping in view 
+        the objectives and nature of activities the CLF has followed cash system of 
+        accounting. </h4>
+        
+         <h3 style="padding-left:15px;">(ii) Fixed Assets :   </h3>
+        <h4 style="padding-left:18px;">Fixed assets are stated at cost, which includes all expenses incidental to acquisition / 
+        installation and no depreciation is charged on the fixed assets. </h4>
+        
+        
+        <h2 style="text-align:left">(B) Notes on Accounts : </h2>
+        
+         <h4 style="padding-left:18px;">(i) Contingent liabilities: Contingent liabilities are reported as NIL.  </h4>
+         <h4 style="padding-left:18px;">(ii) There are no such events occurring after balance sheet date if any which are a 
+        material value.  </h4>
+         <h4 style="padding-left:18px;">(iii) Amount shown in Receipt and Payment accounts - Other funds/ grants received with 
+        specific purpose directions about its use: Consist of for training receipt, RBK Mandey 
+        Budget, CRP / ICRP Mandey Budget, AKM and Pashu Sakhi Mandey Budget, MKSP 
+        Tool bank Budget, PG Group Fund, Krishi Saman Related Budget etc. and some Other 
+        funds / grants for specific purpose. </h4>
+         <h4 style="padding-left:18px;">(iv) Other Income and Other Expenses also includes livelihood related income and 
+        Expenses for the year. </h4>
+        
+        <h2 style="text-align:left">(C) Comments: </h2>
+        
+       <h4 style="padding-left:18px;"> (i) There were some idle funds in the last 3 months of the year ended on 31.03.20{{year}}.  
+        Amounts are in the specific points reporting point no (f). </h4>
+        
+        <h4 style="padding-left:18px;">(ii) Our Report is based on the basis of books, records and information provided to us by 
+        the PRP, Accountants and office bearers of the cluster.</h4>
+    </div>
+      <div class="signature"  style="position: absolute;bottom: 120px; width : 90%;">
+        
+            <table style="width: 100%; border: none; border-collapse: collapse;">
+              <tr>
+                  <td style="text-align: left;border: none;"><br><br><br><br><br>
+                  </td>
+              
+                  <td style="text-align: right;border: none;">
+                  <h3>For' VIJAY CHANDRAKAR & CO.</h3>
+                  (Chartered Accountants)<br>
+                  <h3>F.R.N. 029323C</h3></td>
+              </tr>
+            </table>
+
+
+
+    
+          <table style="width: 100%; border: none; border-collapse: collapse;">
+              <tr >
+                  <td style="text-align: left;border: none;padding-left:40px;">
+                      Place: Gariaband<br>
+                      Date : {{audit.date}} <br>
+                  </td>
+              </div>
+
+              <td style="text-align: right;border: none;">
+                
+                      <h3>CA Vijay Chandrakar</h3>
+                      Proprietor <br>
+                      <h2>M.No. 444225 </h2>
+                      <h2>UDIN: {{audit.Udin}} </h2><br>
+
+                  </td>
+              </tr>
+          </table>
+
+      </div>
+   </div>
+<div style="position: fixed; bottom: 20px; right: 20px;">
+      <button type="submit" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px;">
+        Save All Changes
+      </button>
+  </div>
+  <div style="position: fixed; bottom: 20px; left: 20px;">
+      <button style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px;">
+        <a href="{% url 'generate_pdf' %}?audit_id={{ audit.id }}">Print</a>
+      </button>
+  </div>
+  </form>
+</body>
+</html>

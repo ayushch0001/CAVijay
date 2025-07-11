@@ -1,0 +1,74 @@
+{% extends "templates\\base\\base.html" %}
+
+{% block title %}Dynamic Input Fields{% endblock %}
+
+{% block content %}
+    <h2>Enter a Number</h2>
+    
+    <form method="post" action="{% url 'createBackend' %}">
+        {% csrf_token %}
+        
+        <div><label for="auditType">Title:</label>
+            <input type="text" name="title" placeholder="Enter title" required>
+        </div>
+        <div><label for="formula">Formula:</label>
+            <input type="text" name="formula" placeholder="Enter formula" required>
+        </div>
+        
+        <div>
+            <label for="auditType">Select Audit Type:</label>
+            <select name="auditType" id="auditType" required>
+                {% for values in auditTypes %}
+                    <option value="{{ values.id }}">{{ values.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- New Dropdown for cashOrBank -->
+        <div>
+            <label for="cashOrBank">Select Cash or Bank:</label>
+            <select name="cashOrBank" id="cashOrBank" required>
+                <option value="1">Cash</option>
+                <option value="2">Bank</option>
+            </select>
+        </div>
+
+        <!-- New Dropdown for receiptOrPayment -->
+        <div>
+            <label for="receiptOrPayment">Select Receipt or Payment:</label>
+            <select name="receiptOrPayment" id="receiptOrPayment" required>
+                <option value="1">Receipt</option>
+                <option value="2">Payment</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="numberInput">Number of Fields:</label>
+            <input type="number" id="numberInput" min="1" oninput="generateFields()" required>
+        </div>
+        
+        <br>
+        <div id="inputFields"></div> <!-- Dynamic input fields will be inserted here -->
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function generateFields() {
+            let num = document.getElementById("numberInput").value;
+            let container = document.getElementById("inputFields");
+            container.innerHTML = ""; // Clear previous inputs
+
+            for (let i = 1; i <= num; i++) {
+                let div = document.createElement("div");
+                let input = document.createElement("input");
+                input.type = "text";
+                input.name = "values[]"; // Store values in a list format for Django
+                input.placeholder = "Enter value " + i;
+                input.required = true;
+                div.appendChild(input);
+                container.appendChild(div);
+            }
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'templates\base\base.html' %}
+{% block content %}
+<h2>Cluster List</h2>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cluster in clusters %}
+        <tr>
+            <td>{{ cluster.name }}</td>
+            <td>
+                <a href="{% url 'edit_cluster' cluster.pk %}">Edit</a> |
+                <a href="{% url 'delete_cluster' cluster.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

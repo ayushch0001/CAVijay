@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>{% block title %}My Website{% endblock %}</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar h2 {
+            margin: 0 auto;
+        }
+
+        .nav-links {
+            margin-right: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            background: #555;
+        }
+
+        .nav-links a:hover {
+            background: #777;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #444;
+            color: white;
+            position: fixed;
+            left: -250px; /* Initially hidden */
+            top: 0;
+            padding-top: 60px; /* To prevent overlap with navbar */
+            transition: left 0.3s ease-in-out;
+            overflow-y: auto;
+            z-index: 900;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background: #666;
+        }
+
+        /* Sidebar Toggle Button */
+        .sidebar-toggle {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: #555;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 1100;
+        }
+
+        /* Main Content */
+        .content {
+            margin-top: 70px; /* Avoid navbar overlap */
+            padding: 20px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Sidebar Opened */
+        .sidebar-open {
+            left: 0 !important;
+        }
+
+        .content-shift {
+            margin-left: 250px !important;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+            .content-shift {
+                margin-left: 200px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'createCluster' %}">Create Cluster</a></li>
+            <li><a href="{% url 'createCustomer' %}">Create - Customer</a></li>
+            <li><a href="{% url 'createAudit' %}">Create - Audit</a></li>
+            <li><a href="{% url 'list_audits' %}">List Of Audits </a></li>
+            <li><a href="{% url 'list_customers' %}">List Of Customer</a></li>
+            <li><a href="{% url 'list_clusters' %}">List Of Cluster</a></li>
+            <!-- <li><a href="{% url 'createBackend' %}">Create Backreport</a></li> -->
+            
+            <li><a href="{% url 'details' %}">Audit Reports</a></li>
+            {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+        <h2>My Website</h2>
+        <div class="nav-links">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content" id="main-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 My Website</p>
+    </div>
+
+    <!-- JavaScript for Sidebar Toggle -->
+    <script>
+        function toggleSidebar() {
+            let sidebar = document.getElementById("sidebar");
+            let content = document.getElementById("main-content");
+
+            if (sidebar.classList.contains("sidebar-open")) {
+                sidebar.classList.remove("sidebar-open");
+                content.classList.remove("content-shift");
+            } else {
+                sidebar.classList.add("sidebar-open");
+                content.classList.add("content-shift");
+            }
+        }
+    </script>
+
+</body>
+</html>

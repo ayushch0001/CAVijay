@@ -1,0 +1,47 @@
+{% extends 'templates\base\base.html' %}
+
+
+
+{% block title %}Audit Form{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+            <h2 class="mb-0">Audit Form</h2>
+         
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="year" class="form-label fw-semibold">{{ form.year.label }}</label>
+                    {{ form.year }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="customer" class="form-label fw-semibold">{{ form.customer.label }}</label>
+                    <select class="form-select" name="customer" id="customer">
+                        {% for customer in form.customer.field.queryset %}
+                            <option value="{{ customer.id }}">{{ customer.nameOfOrganization }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                <label for="type" class="form-label fw-semibold">Select Type</label>
+                <select class="form-select" name="auditType" id="auditType">
+                     {% for type in types %}
+                            <option value="{{ type.id }}">{{ type.name }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success px-4 py-2">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

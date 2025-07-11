@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modify and Update Reports</title>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    
+    <script>
+        $(document).ready(function() {
+            $("#fetchReportBtn").on("click", function() {
+                fetchReport();
+            });
+
+            function fetchReport() {
+                var year = $("#year").val().trim();
+
+                if (year === "") {
+                    alert("Please enter a valid year.");
+                    return;
+                }
+
+                $.ajax({
+                    url: "/viewBackReport/",
+                    type: "POST",
+                    data: { year: year },
+                    headers: { "X-CSRFToken": getCSRFToken() },
+                    success: function(response) {
+                        displayReport(response);
+                    },
+                    error: function() {
+                        $("#reportContainer").html('<p class="error">Failed to fetch report.</p>');
+                    }
+                });
+            }
+
+            function displayReport(response) {
+                var container = $("#reportContainer");
+                container.html("");
+
+                if (response.error) {
+                    container.html(`<p class="error">${response.error}</p>`);
+                    return;
+                }
+
+                var reports = response.reports;
+                if (!reports || reports.length === 0) {
+                    container.html("<p>No reports found.</p>");
+                    return;
+                }
+
+                let table = $("<table></table>");
+                let thead = $("<thead></thead>");
+                let headerRow1 = $("<tr></tr>");
+                let headerRow2 = $("<tr></tr>");
+
+                // First header row
+                headerRow1.append("<th rowspan='2'>Month</th>");
+                headerRow1.append("<th colspan='4'>Misileneous Ex</th>");
+                headerRow1.append("<th colspan='2'>Stationary Ex</th>");
+                thead.append(headerRow1);
+
+                // Second header row
+                headerRow2.append("<th>A</th>");
+                headerRow2.append("<th>B</th>");
+                headerRow2.append("<th>C</th>");
+                headerRow2.append("<th>D</th>");
+                headerRow2.append("<th>Pencil</th>");
+                headerRow2.append("<th>Pen</th>");
+                thead.append(headerRow2);
+
+                table.append(thead);
+                let tbody = $("<tbody></tbody>");
+
+                reports.forEach(report => {
+                    let row = $("<tr></tr>");
+                    row.append(`<td>${report.month}</td>`);
+                    row.append(`<td><input type='number' name='${report.pk}_A' value='${report.dict['A']}'></td>`);
+                    row.append(`<td><input type='number' name='${report.pk}_B' value='${report.dict['B']}'></td>`);
+                    row.append(`<td><input type='number' name='${report.pk}_C' value='${report.dict['C']}'></td>`);
+                    row.append(`<td><input type='number' name='${report.pk}_D' value='${report.dict['D']}'></td>`);
+                    row.append(`<td><input type='number' name='${report.pk}_Pencil' value='${report.dict['Pencil']}'></td>`);
+                    row.append(`<td><input type='number' name='${report.pk}_Pen' value='${report.dict['Pen']}'></td>`);
+                    tbody.append(row);
+                });
+
+                table.append(tbody);
+                container.append(table);
+            }
+
+            function updateValues() {
+                let inputs = $("#reportContainer input");
+                let updatedData = {};
+
+                inputs.each(function() {
+                    let [pk, key] = $(this).attr("name").split("_");
+                    if (!updatedData[pk]) {
+                        updatedData[pk] = {};
+                    }
+                    updatedData[pk][key] = $(this).val();
+                });
+
+                $.ajax({
+                    url: "/update/",
+                    type: "POST",
+                    headers: { "X-CSRFToken": getCSRFToken() },
+                    contentType: "application/json",
+                    data: JSON.stringify(updatedData),
+                    success: function(data) {
+                        alert(data.message || data.error);
+                        fetchReport();
+                    },
+                    error: function() {
+                        console.error("Error updating data.");
+                    }
+                });
+            }
+
+            function getCSRFToken() {
+                return $("[name=csrfmiddlewaretoken]").val();
+            }
+        });
+    </script>
+</head>
+<body>
+    <h2>Modify and Update Reports</h2>
+    
+    <label for="year">Enter Audit Year:</label>
+    <input type="text" id="year" placeholder="e.g., 2025">
+    <button id="fetchReportBtn">Get Report</button>
+    
+    <div id="reportContainer"></div>
+    
+    <button type="button" onclick="updateValues()">Update All</button>
+</body>
+</html>
