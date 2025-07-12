@@ -16,7 +16,7 @@ def register(request):
     else:
         form = UserRegisterForm()
     
-    return render(request, r'templates\\base\\register.html', {'form': form})
+    return render(request, 'templates/base/register.html', {'form': form})
 
 def login_view(request):
     if request.method == "POST":
@@ -28,14 +28,14 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     
-    return render(request, r'templates\\base\\login.html', {'form': form})
+    return render(request, 'templates/base/login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
     return redirect('home')
 
 def home(request):
-    return render(request, r'templates\\base\\home.html')
+    return render(request, 'templates/base/home.html')
 
 
 
@@ -45,7 +45,7 @@ def process_values(request):
         values = request.POST.getlist("values[]")  # Retrieve values as a list
         print(values)
         return JsonResponse({"message": "Data received!", "values": values})
-    return render(request, r"templates\\module\\form.html")
+    return render(request, "templates/module/form.html")
 
 
 from django.http import JsonResponse
@@ -81,4 +81,4 @@ def update_dropdown_data(request):
 
 
 def home2(request):
-    return render(request, r'templates\\module\\dropdown.html')
+    return render(request, 'templates/module/dropdown.html')

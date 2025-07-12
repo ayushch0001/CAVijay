@@ -34,13 +34,13 @@ class backendView:
             print(values)
             return redirect('createBackend')
         auditTypes = AuditType.objects.all()
-        return render(request, r"templates\\module\\backreportform.html",{ 'auditTypes':auditTypes})
+        return render(request, "templates/module/backreportform.html",{ 'auditTypes':auditTypes})
     
     
     def allToAddValue(request):
         if request.methods == "POST":
             
-            return render(request, r"templates\\module\\backreportform.html")
+            return render(request, "templates/module/backreportform.html")
         #  customer se audittype ka id le lenge usse fir back end report ka data le lenge months wise 
         # usko row me bhejenge 
         #  jaab vo post hoga to moths id utha lenge haar row ka uss row se 

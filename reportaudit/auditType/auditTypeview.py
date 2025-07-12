@@ -16,5 +16,5 @@ class auditTypeView :
                 return redirect('home')
         else :
             form = auditTypeForm()
-            return render(request, r'templates\\module\\auditType.html', {'form': form})
+            return render(request, 'templates/module/auditType.html', {'form': form})
         

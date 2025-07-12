@@ -43,13 +43,13 @@ class auditView:
                 print(audits)
                 if yearPresentCheck in audits:
                     error_message = "An audit for this year already exists for the selected customer."
-                    return render(request, r'audit/auditForm.html', {'form': form, 'error_message': error_message,'clusters': clusters})
+                    return render(request, 'audit/auditForm.html', {'form': form, 'error_message': error_message,'clusters': clusters})
 
                 audit = form.save(commit=False)
                 audit.customer = cust
                 audit.save()
                 setAuditFR(audit)
-                return render(request,r'audit/auditForm.html',{'form': form,'status': 'success','clusters': clusters})
+                return render(request,'audit/auditForm.html',{'form': form,'status': 'success','clusters': clusters})
             
             else:
                 error_message = "Please correct the errors in the form."
@@ -57,7 +57,7 @@ class auditView:
         else:
             form = AuditForm()
 
-        return render(request, r'audit/auditForm.html', {'form': form, 'error_message': error_message,'clusters': clusters})
+        return render(request, 'audit/auditForm.html', {'form': form, 'error_message': error_message,'clusters': clusters})
 
 
     def get_customers_by_cluster(request):
@@ -83,7 +83,7 @@ class auditView:
             'clusters': clusters,
             'audits': audits,
         }
-        return render(request, r'templates\\audit\\audit_list.html', context)
+        return render(request, 'templates/audit/audit_list.html', context)
 
     
 
@@ -99,7 +99,7 @@ class auditView:
                 return redirect('list_audits')  # Replace with your actual list view name
         else:
             form = AuditForm(instance=audit)
-        return render(request, r'audit/auditForm.html', {'form': form,'clusters': clusters})
+        return render(request, 'audit/auditForm.html', {'form': form,'clusters': clusters})
        
 
     @login_required
@@ -115,14 +115,14 @@ class auditView:
 
 
     def report_view(request):
-        return render(request, r'templates\\audit\\backreport.html')
+        return render(request, 'templates/audit/backreport.html')
     
 
 
 
     def fetchCusotmerPage(request):
         clusters = Cluster.objects.all()
-        return render(request,r"templates\\audit\\customerSelctionPage.html",{'clusters': clusters})
+        return render(request,"templates/audit/customerSelctionPage.html",{'clusters': clusters})
 
     
 
@@ -210,7 +210,7 @@ class auditView:
         print(yearReport1, yearReport2, yearReport3)
         print(year1, year2, year3)
 
-        html_string = render_to_string( r'templates\\audit\\oneMoreTry.html',
+        html_string = render_to_string( 'templates/audit/oneMoreTry.html',
             {
                 'yearReport1': yearReport1,
                 'yearReport2': yearReport2,
@@ -224,7 +224,7 @@ class auditView:
         )        
         base_url = request.build_absolute_uri('/')[:-1]  
         html_string = html_string.replace('src="/media/', f'src="{base_url}/media/')     
-        config = pdfkit.configuration(wkhtmltopdf=r"packages\wkhtmltopdf\bin\wkhtmltopdf.exe")  # Update this path if necessary
+        config = pdfkit.configuration(wkhtmltopdf="packages/wkhtmltopdf/bin/wkhtmltopdf.exe")  # Update this path if necessary
         options = {
         'page-size': 'A4',
         'margin-top': '17mm',
@@ -361,7 +361,7 @@ class auditView:
                 main_report3 = MainReport.objects.filter(audit=audit3).first()
                 year_report3 = yearReportData.objects.filter(yearReports=main_report3).first() if main_report3 else None
             
-            return render(request, r'templates\\audit\\oneMoreTry.html', {
+            return render(request, r'templates/audit/oneMoreTry.html', {
                 'yearReport1': year_report1, 
                 'yearReport2': year_report2, 
                 'yearReport3': year_report3,
@@ -399,7 +399,7 @@ class auditView:
         yearReport3 = yearReportData.objects.filter(yearReports=mainReport3).first() if mainReport3 else None
         year3 = f"{audit3.yearStart}-{audit3.yearEnd}" if audit3 else ""
 
-        return render(request, r'templates\\audit\\oneMoreTry.html', {
+        return render(request, 'templates/audit/oneMoreTry.html', {
             'yearReport1': yearReport1, 'yearReport2': yearReport2, 'yearReport3': yearReport3,
             'year1': year1, 'year2': year2, 'year3': year3, 'year': year, 'audit': audit
         })

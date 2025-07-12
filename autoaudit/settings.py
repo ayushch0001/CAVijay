@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-(d5g(r!)%umck6flvg4pf0+bxj1a13w=x&ho0vptb7a@#40_bh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.31.37','127.0.0.1']
+ALLOWED_HOSTS = ['cavijay.attendoo.online','185.170.196.189','127.0.0.1']
+CSRF_TRUSTED_ORIGINS = [
+    'http://185.170.196.189:8000','https://cavijay.attendoo.online']
+CSRF_COOKIE_SECURE = True
 
 
 LOGIN_URL = '/login/'  # or whatever your actual login path is
@@ -76,7 +79,7 @@ ROOT_URLCONF = 'autoaudit.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR ,'templates'],
+        'DIRS': [BASE_DIR,'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

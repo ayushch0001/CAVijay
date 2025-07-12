@@ -16,7 +16,7 @@ class customerView :
             return redirect('home')
         else :
             form = customerForm()
-            return render(request, r'templates\\module\\customer.html', {'form': form})
+            return render(request, 'templates/module/customer.html', {'form': form})
         
         
         
@@ -28,7 +28,7 @@ class customerView :
     
     def list_customers(request):
         customers = Customer.objects.select_related('cluster').all()
-        return render(request, r'templates\\module\\list_customers.html', {'customers': customers})
+        return render(request, 'templates/module/list_customers.html', {'customers': customers})
     
     @login_required
     def edit_customer(request, pk):
@@ -40,7 +40,7 @@ class customerView :
                 return redirect('list_customers')  # replace with your actual list page name
         else:
             form = customerForm(instance=customer)
-        return render(request, r'templates\\module\\customer.html', {'form': form})
+        return render(request, 'templates/module/customer.html', {'form': form})
     @login_required
     def delete_customer(request, pk):
         customer = get_object_or_404(Customer, pk=pk)
@@ -49,7 +49,7 @@ class customerView :
        
     def list_clusters(request):
         clusters = Cluster.objects.all()
-        return render(request, r'templates\\module\\list_clusters.html', {'clusters': clusters})
+        return render(request, 'templates/module/list_clusters.html', {'clusters': clusters})
 
 
 
@@ -59,10 +59,10 @@ class customerView :
             
             if form.is_valid():
                     form.save()
-            return render(request,r"templates\\audit\\cluster.html",{'form':form})
+            return render(request,"templates/audit/cluster.html",{'form':form})
         else :
             form = ClusterForm(request.POST)
-            return render(request,r"templates\\audit\\cluster.html",{'form':form})
+            return render(request,"templates/audit/cluster.html",{'form':form})
 
 
     # Edit View
@@ -76,7 +76,7 @@ class customerView :
                 return redirect('list_clusters')
         else:
             form = ClusterForm(instance=cluster)
-        return render(request,r"templates\\audit\\cluster.html",{'form':form})
+        return render(request,"templates/audit/cluster.html",{'form':form})
 
     # Delete View
     @login_required
