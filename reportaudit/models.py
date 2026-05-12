@@ -76,14 +76,14 @@ class Audit(models.Model):
     observations = models.TextField(default="")
     observations2 = models.TextField(default="give a true and fair view:")
     def __str__(self):
-        return str(self.customer.nameOfOrganization)
-    
+        return f"{self.customer.nameOfOrganization} - {self.yearStart} - {self.yearEnd} "
     
     
 
 class MainReport(models.Model):
     audit = models.ForeignKey(Audit,on_delete=models.CASCADE)
-    
+    def __str__(self) -> str:
+         return f"{self.audit.customer} - {self.audit.yearStart} -{self.audit.yearEnd} "
     
     
     
@@ -219,7 +219,7 @@ class yearReportData(models.Model):
     B61 = models.IntegerField(default = 0,null=False)
     B62 = models.IntegerField(default = 0,null=False)
     
-    
+    # this are for the text contents to save s
     EA1 = models.TextField(default="")
     EA2 = models.TextField(default="")
     EA3 = models.TextField(default="")
@@ -258,3 +258,6 @@ class yearReportData(models.Model):
     EB18 = models.TextField(default="")  
     EB19 = models.TextField(default="")
     EB20 = models.TextField(default="")
+
+    def __str__(self) -> str:
+         return f"{self.yearReports.audit.customer} - {self.yearReports.audit.yearStart} -{self.yearReports.audit.yearEnd} "

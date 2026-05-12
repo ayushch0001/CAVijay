@@ -27,7 +27,7 @@ class auditView:
     def createAudit(request):
         error_message = None  # Initialize error message variable
         clusters = Cluster.objects.all()
-        if request.method == 'POST':
+        if request.method == 'POST': # type: ignore
             form = AuditForm(request.POST)
             nameC = request.POST.get("customer")
             # nameC = form.changed_data['customer']
@@ -43,13 +43,13 @@ class auditView:
                 print(audits)
                 if yearPresentCheck in audits:
                     error_message = "An audit for this year already exists for the selected customer."
-                    return render(request, 'audit/auditForm.html', {'form': form, 'error_message': error_message,'clusters': clusters})
+                    return render(request, 'audit/auditForm.html', {'form': form, 'error_message': error_message,'clusters': clusters}) # type: ignore
 
                 audit = form.save(commit=False)
                 audit.customer = cust
                 audit.save()
                 setAuditFR(audit)
-                return render(request,'audit/auditForm.html',{'form': form,'status': 'success','clusters': clusters})
+                return render(request,'audit/auditForm.html',{'form': form,'status': 'success','clusters': clusters}) # type: ignore
             
             else:
                 error_message = "Please correct the errors in the form."
@@ -223,7 +223,9 @@ class auditView:
             }
         )        
         base_url = request.build_absolute_uri('/')[:-1]  
-        html_string = html_string.replace('src="/media/', f'src="{base_url}/media/')     
+        print("while printing",base_url)
+        html_string = html_string.replace('src="/media/', f'src="{base_url}/media/')    
+
         config = pdfkit.configuration(wkhtmltopdf="packages/wkhtmltopdf/bin/wkhtmltopdf.exe")  # Update this path if necessary
         options = {
         'page-size': 'A4',
@@ -245,8 +247,8 @@ class auditView:
     
                 
     
-    def mainReport(request):
-        audit_id = request.GET.get('audit_id')
+    def mainReport(request): # type: ignore
+        audit_id = request.GET.get('audit_id') # type: ignore
         audit = get_object_or_404(Audit, id=audit_id)
 
         year = str(audit.yearEnd)
@@ -258,14 +260,15 @@ class auditView:
 
         # Run formula calculations and ensure they are saved
         for func in [
+            Fromula.openingClosingBalanceForCurrentYear,Fromula.carryFrowordToText,
             Fromula.total1,Fromula.formula35,
             Fromula.formula46, Fromula.formula47, Fromula.formula49, 
             Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
             Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
-            Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52, Fromula.Bformula53,Fromula.total1, Fromula.total2,
+            Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
             Fromula.formulaA44,Fromula.formula55,Fromula.formula35, Fromula.total3,Fromula.formula55
         ]:
-            func(audit)
+            func(audit) # type: ignore
             audit.refresh_from_db()
 
         # Force reload the updated audit data
@@ -286,11 +289,11 @@ class auditView:
                 audit3Id = auditCheck['id']
                 audit3 = Audit.objects.get(id=audit3Id)
 
-        if request.method == "POST":
-            date_str = request.POST.get("date")
-            observations = request.POST.get("observations")
-            observations2 = request.POST.get("observations2")
-            Udin = request.POST.get("Udin")
+        if request.method == "POST": # type: ignore
+            date_str = request.POST.get("date") # type: ignore
+            observations = request.POST.get("observations") # type: ignore
+            observations2 = request.POST.get("observations2") # type: ignore
+            Udin = request.POST.get("Udin") # type: ignore
             
             formatted_date = None
             if date_str:
@@ -308,7 +311,7 @@ class auditView:
                     formatted_date = None
                     
 
-            print(formatted_date)
+            print(audit2)
 
             # Fetch updated reports
             yearReport1 = yearReportData.objects.filter(yearReports__audit=audit).first()
@@ -317,12 +320,15 @@ class auditView:
             year2 = f"{audit2.yearStart}-{audit2.yearEnd}" if audit2 else ""
             year3 = f"{audit3.yearStart}-{audit3.yearEnd}" if audit3 else ""
 
+            print(year1," - ",year2," - ",year3)
             for prefix, report in [('year1', yearReport1), ('year2', yearReport2), ('year3', yearReport3)]:
                 if report:
                     for field in report._meta.fields:
                         if field.name.startswith(('EA', 'EB')):
                             field_name = f"{prefix}-{field.name}"
-                            value = request.POST.get(field_name)
+                            
+                            value = request.POST.get(field_name) # type: ignore
+                           
                             setattr(report, field.name, value if value else "")
                     report.save()
 
@@ -337,14 +343,15 @@ class auditView:
                     report.save()
             
             for func in [
+            Fromula.openingClosingBalanceForCurrentYear,Fromula.carryFrowordToText,
             Fromula.total1,Fromula.formula35,
             Fromula.formula46, Fromula.formula47, Fromula.formula49, 
             Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
             Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
-            Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52, Fromula.Bformula53,Fromula.total1, Fromula.total2,
+            Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
             Fromula.formulaA44,Fromula.formula55,Fromula.formula35, Fromula.total3,Fromula.formula55
-        ]:
-                func(audit)
+            ]:
+                func(audit) # type: ignore
             audit.refresh_from_db()
 
             # Reload year reports to include formula updates
@@ -361,7 +368,7 @@ class auditView:
                 main_report3 = MainReport.objects.filter(audit=audit3).first()
                 year_report3 = yearReportData.objects.filter(yearReports=main_report3).first() if main_report3 else None
             
-            return render(request, r'templates/audit/oneMoreTry.html', {
+            return render(request, r'templates/audit/oneMoreTry.html', { # type: ignore
                 'yearReport1': year_report1, 
                 'yearReport2': year_report2, 
                 'yearReport3': year_report3,
@@ -404,15 +411,173 @@ class auditView:
             'year1': year1, 'year2': year2, 'year3': year3, 'year': year, 'audit': audit
         })
 
+    def mainReport2(request): # type: ignore
+        audit_id = request.GET.get('audit_id') # type: ignore
+        audit = get_object_or_404(Audit, id=audit_id)
 
-    
-    
-    
-    
-    
-    
-    
-    
+        year = str(audit.yearEnd)
+        year1 = f"{audit.yearStart}-{audit.yearEnd}"
+
+        # Fetch main report and year report data
+        mainReport1 = MainReport.objects.select_related('audit').filter(audit=audit).first()
+        yearReport1 = yearReportData.objects.select_related('yearReports').filter(yearReports=mainReport1).first()
+
+        # Run formula calculations and ensure they are saved
+        for func in [
+            Fromula.openingClosingBalanceForCurrentYear,
+            Fromula.total1,Fromula.formula35,
+            Fromula.formula46, Fromula.formula47, Fromula.formula49, 
+            Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
+            Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
+            Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
+            Fromula.formulaA44,Fromula.formula55,Fromula.formula35, Fromula.total3,Fromula.formula55,Fromula.openingClosingBalanceForCurrentYear
+        ]:
+            func(audit) # type: ignore
+            audit.refresh_from_db()
+
+        # Force reload the updated audit data
+        audit.refresh_from_db()
+
+        audit2Id = None
+        audit3Id = None
+        audits = list(Audit.objects.filter(customer=audit.customer).values('id', 'yearStart', 'yearEnd'))
+        
+        audit2, audit3 = None, None
+
+        # Finding previous audits
+        for auditCheck in audits:
+            if audit.yearStart == auditCheck['yearEnd']:
+                audit2Id = auditCheck['id']
+                audit2 = Audit.objects.get(id=audit2Id)
+            elif audit2 and auditCheck['yearEnd'] == audit2.yearStart:
+                audit3Id = auditCheck['id']
+                audit3 = Audit.objects.get(id=audit3Id)
+
+        if request.method == "POST": # type: ignore
+            date_str = request.POST.get("date") # type: ignore
+            observations = request.POST.get("observations") # type: ignore
+            observations2 = request.POST.get("observations2") # type: ignore
+            Udin = request.POST.get("Udin") # type: ignore
+            
+            formatted_date = None
+            if date_str:
+                try:
+                    formatted_date = datetime.strptime(date_str, r"%Y-%m-%d").date()
+                    audit.date = formatted_date
+                    audit.observations = observations
+                    audit.observations2 = observations2
+                    audit.Udin = Udin
+                    audit.save(update_fields=["date"])  # Ensure immediate commit
+                    audit.save(update_fields=["observations"])
+                    audit.save(update_fields=["observations2"])# Ensure immediate commit
+                    audit.save(update_fields=["Udin"])
+                except ValueError:
+                    formatted_date = None
+                    
+
+            print(audit2)
+
+            # Fetch updated reports
+            yearReport1 = yearReportData.objects.filter(yearReports__audit=audit).first()
+            yearReport2 = yearReportData.objects.filter(yearReports__audit=audit2).first() if audit2 else None
+            yearReport3 = yearReportData.objects.filter(yearReports__audit=audit3).first() if audit3 else None
+            year2 = f"{audit2.yearStart}-{audit2.yearEnd}" if audit2 else ""
+            year3 = f"{audit3.yearStart}-{audit3.yearEnd}" if audit3 else ""
+
+            print(year1," - ",year2," - ",year3)
+            for prefix, report in [('year1', yearReport1), ('year2', yearReport2), ('year3', yearReport3)]:
+                if report:
+                    for field in report._meta.fields:
+                        if field.name.startswith(('EA', 'EB')):
+                            field_name = f"{prefix}-{field.name}"
+                            value = request.POST.get(field_name) # type: ignore
+                            setattr(report, field.name, value if value else "")
+                    report.save()
+
+            for prefix, report in [('year1', yearReport1), ('year2', yearReport2), ('year3', yearReport3)]:
+                if report:
+                    for field in report._meta.fields:
+                        if field.name.startswith(('A', 'B')):
+                            field_name = f"{prefix}-{field.name}"
+                            value = request.POST.get(field_name)
+                            # print(field_name,'--',value)
+                            setattr(report, field.name, int(value) if value else 0)
+                    report.save()
+            
+            for func in [
+            Fromula.openingClosingBalanceForCurrentYear,
+            Fromula.total1,Fromula.formula35,
+            Fromula.formula46, Fromula.formula47, Fromula.formula49, 
+            Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
+            Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
+            Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
+            Fromula.formulaA44,Fromula.formula55,Fromula.formula35, Fromula.total3,Fromula.formula55,Fromula.openingClosingBalanceForCurrentYear
+            ]:
+                func(audit) # type: ignore
+            audit.refresh_from_db()
+
+            # Reload year reports to include formula updates
+            main_report1 = MainReport.objects.filter(audit=audit).first()
+            year_report1 = yearReportData.objects.filter(yearReports=main_report1).first() if main_report1 else None
+
+            year_report2 = None
+            if audit2:
+                main_report2 = MainReport.objects.filter(audit=audit2).first()
+                year_report2 = yearReportData.objects.filter(yearReports=main_report2).first() if main_report2 else None
+
+            year_report3 = None
+            if audit3:
+                main_report3 = MainReport.objects.filter(audit=audit3).first()
+                year_report3 = yearReportData.objects.filter(yearReports=main_report3).first() if main_report3 else None
+            
+            return render(request, r'templates/audit/newTry.html', { # type: ignore
+                'yearReport1': year_report1, 
+                'yearReport2': year_report2, 
+                'yearReport3': year_report3,
+                'year1': year1, 'year2': year2, 'year3': year3, 
+                'year': year, 'audit': audit
+            })
+        # Ensure audits are properly assigned
+        if not audit2Id and not audit3Id:
+            setAuditFR(audit)
+            for auditCheck in audits:
+                if auditCheck['yearEnd'] == audit.yearStart:
+                    audit2Id = auditCheck['id']
+                    audit2 = Audit.objects.get(id=audit2Id)
+                elif audit2 and auditCheck['yearEnd'] == audit2.yearStart:
+                    audit3Id = auditCheck['id']
+                    audit3 = Audit.objects.get(id=audit3Id)
+                    
+        elif audit2Id and not audit3Id:
+            setAuditFRSingleYear(audit)
+            audits = list(Audit.objects.filter(customer=audit.customer).values('id', 'yearStart', 'yearEnd'))
+            for auditCheck in audits:
+                if auditCheck['yearEnd'] == audit.yearStart:
+                    audit2Id = auditCheck['id']
+                    audit2 = Audit.objects.get(id=audit2Id)
+                elif audit2 and auditCheck['yearEnd'] == audit2.yearStart:
+                    audit3Id = auditCheck['id']
+                    audit3 = Audit.objects.get(id=audit3Id)
+
+        # Fetch second and third year data
+        mainReport2 = MainReport.objects.filter(audit=audit2).first() if audit2 else None
+        yearReport2 = yearReportData.objects.filter(yearReports=mainReport2).first() if mainReport2 else None
+        year2 = f"{audit2.yearStart}-{audit2.yearEnd}" if audit2 else ""
+
+        mainReport3 = MainReport.objects.filter(audit=audit3).first() if audit3 else None
+        yearReport3 = yearReportData.objects.filter(yearReports=mainReport3).first() if mainReport3 else None
+        year3 = f"{audit3.yearStart}-{audit3.yearEnd}" if audit3 else ""
+
+        return render(request, 'templates/audit/newTry.html', {
+            'yearReport1': yearReport1, 'yearReport2': yearReport2, 'yearReport3': yearReport3,
+            'year1': year1, 'year2': year2, 'year3': year3, 'year': year, 'audit': audit
+        })
+
+   
+        
+        
+        
+        
     
     
     

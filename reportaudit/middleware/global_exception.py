@@ -8,4 +8,4 @@ class GlobalExceptionMiddleware(MiddlewareMixin):
         print("Exception caught by middleware:", exception)
         traceback.print_exc()
 
-        return render(request, r'templates\\error\\500.html', status=500)
+        return render(request, 'templates/error/500.html', status=500)
