@@ -61,7 +61,6 @@ class Fromula():
     
     def carryFrowordToText(audit): # type: ignore
          yearReport1,yearReport2,yearReport3 = Fromula.checkForYear(audit)
-         print("dikhega re baba",yearReport2.EA1,yearReport2.EB1)
          if yearReport2.EA1 :
               print("getting A")
               yearReport1.EA1 = yearReport2.EA1
@@ -92,14 +91,11 @@ class Fromula():
         yearReport1,yearReport2,yearReport3 = Fromula.checkForYear(audit)
         
         yearReport2.A46 = yearReport3.A46 + yearReport2.A2
-        print(yearReport3.A46,"formula46")
         yearReport2.save()
-        print(yearReport2.A46,"formula46")
         yearReport1.A46 = yearReport2.A46 + yearReport1.A2 
-        
         yearReport1.save()
-        print(yearReport1.A46,"formula46")
-        
+
+
     def formula47(audit):
         yearReport1,yearReport2,yearReport3 = Fromula.checkForYear(audit)
         
@@ -141,11 +137,9 @@ class Fromula():
         yearReport1,yearReport2,yearReport3 = Fromula.checkForYear(audit)
         
         yearReport2.A55 = yearReport3.A55 +  yearReport3.B44 -  yearReport3.A44
-        print( yearReport2.A55 , " = ",yearReport3.A55 ,"+",  yearReport3.B44, "-",  yearReport3.A44 )
         yearReport2.save()
 
         yearReport1.A55 = yearReport2.A55 +    yearReport2.B44 - yearReport2.A44
-        print( yearReport1.A55, "=" ,yearReport2.A55, "+ " ,  yearReport2.B44, "-" ,yearReport2.A44 )
         yearReport1.save()
      
          
