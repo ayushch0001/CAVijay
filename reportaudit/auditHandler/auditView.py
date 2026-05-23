@@ -261,12 +261,12 @@ class auditView:
         # Run formula calculations and ensure they are saved
         for func in [
             Fromula.openingClosingBalanceForCurrentYear,Fromula.carryFrowordToText,
-            Fromula.total1,Fromula.formula35,
-            Fromula.formula46, Fromula.formula47, Fromula.formula49, 
+            Fromula.total1,
+            Fromula.formula48, Fromula.formula47, Fromula.formula49, 
             Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
             Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
             Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
-            Fromula.formulaA44,Fromula.formula55,Fromula.formula35, Fromula.total3,Fromula.formula55
+            Fromula.formulaA44,Fromula.formula55, Fromula.total3,Fromula.formula55
         ]:
             func(audit) # type: ignore
             audit.refresh_from_db()
@@ -344,12 +344,12 @@ class auditView:
             
             for func in [
             Fromula.openingClosingBalanceForCurrentYear,Fromula.carryFrowordToText,
-            Fromula.total1,Fromula.formula35,
-            Fromula.formula46, Fromula.formula47, Fromula.formula49, 
+            Fromula.total1,
+            Fromula.formula48, Fromula.formula47, Fromula.formula49, 
             Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
             Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
             Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
-            Fromula.formulaA44,Fromula.formula55,Fromula.formula35, Fromula.total3,Fromula.formula55
+            Fromula.formulaA44,Fromula.formula55,Fromula.total3,Fromula.formula55
             ]:
                 func(audit) # type: ignore
             audit.refresh_from_db()
@@ -425,12 +425,12 @@ class auditView:
         # Run formula calculations and ensure they are saved
         for func in [
             Fromula.openingClosingBalanceForCurrentYear,
-            Fromula.total1,Fromula.formula35,
-            Fromula.formula46, Fromula.formula47, Fromula.formula49, 
+            Fromula.total1,
+            Fromula.formula48, Fromula.formula49, Fromula.formula49, 
             Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
             Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
             Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
-            Fromula.formulaA44,Fromula.formula55,Fromula.formula35, Fromula.total3,Fromula.formula55,Fromula.openingClosingBalanceForCurrentYear
+            Fromula.formulaA44,Fromula.formula55,Fromula.total3,Fromula.formula55,Fromula.openingClosingBalanceForCurrentYear
         ]:
             func(audit) # type: ignore
             audit.refresh_from_db()
@@ -506,12 +506,12 @@ class auditView:
             
             for func in [
             Fromula.openingClosingBalanceForCurrentYear,
-            Fromula.total1,Fromula.formula35,
-            Fromula.formula46, Fromula.formula47, Fromula.formula49, 
+            Fromula.total1,
+            Fromula.formula48, Fromula.formula49, Fromula.formula49, 
             Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
             Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
             Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
-            Fromula.formulaA44,Fromula.formula55,Fromula.formula35, Fromula.total3,Fromula.formula55,Fromula.openingClosingBalanceForCurrentYear
+            Fromula.formulaA44,Fromula.formula55, Fromula.total3,Fromula.formula55,Fromula.openingClosingBalanceForCurrentYear
             ]:
                 func(audit) # type: ignore
             audit.refresh_from_db()

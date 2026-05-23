@@ -154,7 +154,14 @@ class yearReportData(models.Model):
     A60 = models.IntegerField(default = 0,null=False)
     A61 = models.IntegerField(default = 0,null=False)
     A62 = models.IntegerField(default = 0,null=False)
-    
+    A63 = models.IntegerField(default = 0,null=False)
+    A64 = models.IntegerField(default = 0,null=False)
+    A65 = models.IntegerField(default = 0,null=False)
+    A66 = models.IntegerField(default = 0,null=False)
+    A67 = models.IntegerField(default = 0,null=False)
+    A68 = models.IntegerField(default = 0,null=False)
+    A69 = models.IntegerField(default = 0,null=False)
+    A70 = models.IntegerField(default = 0,null=False)
     
     B1 = models.IntegerField(default = 0,null=False)
     B2 = models.IntegerField(default = 0,null=False)
@@ -218,7 +225,17 @@ class yearReportData(models.Model):
     B60 = models.IntegerField(default = 0,null=False)
     B61 = models.IntegerField(default = 0,null=False)
     B62 = models.IntegerField(default = 0,null=False)
-    
+    B63 = models.IntegerField(default = 0,null=False)
+    B64 = models.IntegerField(default = 0,null=False)
+    B65 = models.IntegerField(default = 0,null=False)
+    B66 = models.IntegerField(default = 0,null=False)
+    B67 = models.IntegerField(default = 0,null=False)
+    B68 = models.IntegerField(default = 0,null=False)
+    B69 = models.IntegerField(default = 0,null=False)
+    B70 = models.IntegerField(default = 0,null=False)
+
+
+
     # this are for the text contents to save s
     EA1 = models.TextField(default="")
     EA2 = models.TextField(default="")
