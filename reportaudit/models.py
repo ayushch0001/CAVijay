@@ -93,30 +93,30 @@ class Audit(models.Model):
     observationValue6 = models.TextField(default="")
 
 
-    table1Row1 = models.BooleanField(default=False)
-    table1Row2 = models.BooleanField(default=False)
-    table1Row3 = models.BooleanField(default=False)
-    table1Row4 = models.BooleanField(default=False)
-    table1Row5 = models.BooleanField(default=False)
-    table1Row6 = models.BooleanField(default=False)        
-    table1Row7 = models.BooleanField(default=False)
-    table1Row8 = models.BooleanField(default=False)
-    table1Row9 = models.BooleanField(default=False)
-    table1Row10 = models.BooleanField(default=False)
+    table1Row1B = models.BooleanField(default=False)
+    table1Row2B = models.BooleanField(default=False)
+    table1Row3B = models.BooleanField(default=False)
+    table1Row4B = models.BooleanField(default=False)
+    table1Row5B = models.BooleanField(default=False)
+    table1Row6B = models.BooleanField(default=False)        
+    table1Row7B = models.BooleanField(default=False)
+    table1Row8B = models.BooleanField(default=False)
+    table1Row9B = models.BooleanField(default=False)
+    table1Row10B = models.BooleanField(default=False)
 
 
 
 
-    table2Row1 = models.BooleanField(default=False)
-    table2Row2 = models.BooleanField(default=False)
-    table2Row3 = models.BooleanField(default=False)
-    table2Row4 = models.BooleanField(default=False)
-    table2Row5 = models.BooleanField(default=False)
-    table2Row6 = models.BooleanField(default=False)
-    table2Row7 = models.BooleanField(default=False)
-    table2Row8 = models.BooleanField(default=False)
-    table2Row9 = models.BooleanField(default=False)
-    table2Row10 = models.BooleanField(default=False)
+    table2Row1B = models.BooleanField(default=False)
+    table2Row2B = models.BooleanField(default=False)
+    table2Row3B = models.BooleanField(default=False)
+    table2Row4B = models.BooleanField(default=False)
+    table2Row5B = models.BooleanField(default=False)
+    table2Row6B = models.BooleanField(default=False)
+    table2Row7B = models.BooleanField(default=False)
+    table2Row8B = models.BooleanField(default=False)
+    table2Row9B = models.BooleanField(default=False)
+    table2Row10B = models.BooleanField(default=False)
 
 
 
@@ -133,6 +133,7 @@ class ObservationTablerows(models.Model) :
     col2 = models.TextField(default="")
     col3 = models.TextField(default="")
     col4 = models.TextField(default="")
+    col5 = models.TextField(default="")
 
     def __str__(self) -> str:
          return f"{self.audit}-{self.audit.customer.nameOfOrganization}"

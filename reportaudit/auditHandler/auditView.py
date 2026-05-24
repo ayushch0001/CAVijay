@@ -412,10 +412,8 @@ class auditView:
         audit_id = request.GET.get('audit_id') # type: ignore
         audit = get_object_or_404(Audit, id=audit_id)
 
-
         observationTable1 = {}
         observationTable2 = {}
-
 
         year = str(audit.yearEnd)
         year1 = f"{audit.yearStart}-{audit.yearEnd}"
@@ -425,19 +423,20 @@ class auditView:
         yearReport1 = yearReportData.objects.select_related('yearReports').filter(yearReports=mainReport1).first()
 
         # Run formula calculations and ensure they are saved
-        for func in [
-            Fromula.openingClosingBalanceForCurrentYear,Fromula.carryFrowordToText,
-            Fromula.total1,
-            Fromula.formula48, Fromula.formula49, 
-            Fromula.formula50, Fromula.formula51, Fromula.formula52,Fromula.formula53,Fromula.formula54, Fromula.formula55,Fromula.formula56,Fromula.formula57,Fromula.formula58,
-            Fromula.formula59,Fromula.formula60,Fromula.formula61,Fromula.formula62,
-            Fromula.Bformula47, Fromula.Bformula50, Fromula.Bformula51, 
-            Fromula.Bformula52, Fromula.Bformula53, Fromula.Bformula54, Fromula.Bformula55,Fromula.total1, Fromula.total2,Fromula.formula46,Fromula.formula67,Fromula.Bformula58,Fromula.Bformula59,Fromula.formula62,Fromula.total3
-            ]:
+        formula_list = [
+            Fromula.openingClosingBalanceForCurrentYear, Fromula.carryFrowordToText, Fromula.total1,
+            Fromula.formula48, Fromula.formula49, Fromula.formula50, Fromula.formula51, Fromula.formula52, 
+            Fromula.formula53, Fromula.formula54, Fromula.formula55, Fromula.formula56, Fromula.formula57, 
+            Fromula.formula58, Fromula.formula59, Fromula.formula60, Fromula.formula61, Fromula.formula62,
+            Fromula.Bformula47, Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52, Fromula.Bformula53, 
+            Fromula.Bformula54, Fromula.Bformula55, Fromula.total1, Fromula.total2, Fromula.formula46, 
+            Fromula.formula67, Fromula.Bformula58, Fromula.Bformula59, Fromula.formula62, Fromula.total3
+        ]
+
+        for func in formula_list:
             func(audit) # type: ignore
             audit.refresh_from_db() # type: ignore
 
-        # Force reload the updated audit data
         audit.refresh_from_db() # type: ignore
 
         audit2Id = None
@@ -460,56 +459,50 @@ class auditView:
             observations = request.POST.get("observations") # type: ignore
             observations2 = request.POST.get("observations2") # type: ignore
             Udin = request.POST.get("Udin") # type: ignore
-            obs_select_1 = request.POST.get("obs_select_1")  # type: ignore
-            obs_select_2 = request.POST.get("obs_select_2") # type: ignore
-            obs_select_3 = request.POST.get("obs_select_3") # type: ignore
-            obs_select_4 = request.POST.get("obs_select_4") # type: ignore
-            obs_select_5 = request.POST.get("obs_select_5") # type: ignore
-            obs_select_6 = request.POST.get("obs_select_6") # type: ignore
-            obs_select_7 = request.POST.get("obs_select_7") # type: ignore
-            obs_select_8 = request.POST.get("obs_select_8") # type: ignore
+            obs_select_1 = request.POST.get("obs_select_1") == "True" # type: ignore
+            obs_select_2 = request.POST.get("obs_select_2") == "True" # type: ignore
+            obs_select_3 = request.POST.get("obs_select_3") == "True" # type: ignore
+            obs_select_4 = request.POST.get("obs_select_4") == "True" # type: ignore
+            obs_select_5 = request.POST.get("obs_select_5") == "True" # type: ignore
+            obs_select_6 = request.POST.get("obs_select_6") == "True" # type: ignore
+            obs_select_7 = request.POST.get("obs_select_7") == "True" # type: ignore
+            obs_select_8 = request.POST.get("obs_select_8") == "True" # type: ignore
 
+            print(obs_select_1," observation nai ara kyu")
 
-            if obs_select_1 : audit.observationRequired = obs_select_1
+            # DYNAMIC EXTRACTION & ASSIGNMENT FOR ROW B CHECKBOXES
+            for i in range(1, 11):
+                t1_key = f"table1Row{i}B"
+                t1_val = request.POST.get(t1_key) # type: ignore
+                setattr(audit, t1_key, True if t1_val == "True" else False)
 
-            if obs_select_2 : 
+                t2_key = f"table2Row{i}B"
+                t2_val = request.POST.get(t2_key) # type: ignore
+                setattr(audit, t2_key, True if t2_val == "True" else False)
+
+            audit.observationRequired = obs_select_1
+            if obs_select_2: 
                 audit.observationP1 = obs_select_2
-                table1row1 = ObservationTablerows.objects.create(audit = audit,observationTable = 1,name = 'table1row1')
-                audit.table1Row1 = True
+                table1row1 = ObservationTablerows.objects.create(audit=audit, observationTable=1, name='table1row1')
+                audit.table1Row1B = True
                 table1row1.save()
-                table1row2 = ObservationTablerows.objects.create(audit = audit, observationTable = 1,name = 'table1row2')
-                audit.table1Row2 = True
-                table1row2.save()
-                table1row3 = ObservationTablerows.objects.create(audit = audit, observationTable = 1,name = 'table1row3')
-                audit.table1Row3 = True
-                table1row3.save()
-
                 observationTable1['table1row1'] = table1row1
-                observationTable1['table1row2'] = table1row2
-                observationTable1['table1row3'] = table1row3
-
-            if obs_select_3 : audit.observationP2 = obs_select_3
-            if obs_select_4 : audit.observationP3 = obs_select_4
-            if obs_select_5 : audit.observationP4 = obs_select_5
-            if obs_select_6 : audit.observationP5 = obs_select_6
-            if obs_select_7 : audit.observationP6 = obs_select_7
-            if obs_select_8 : 
-                audit.observationP7 = obs_select_8
-                table2row1 = ObservationTablerows.objects.create(audit = audit ,observationTable = 2,name = 'table2row1')
-                audit.table2Row1 = True
-                table2row1.save()
-                table2row2 = ObservationTablerows.objects.create(audit = audit ,observationTable = 2,name = 'table2row2')
-                audit.table2Row2 = True
-                table2row2.save()
-                table2row3 = ObservationTablerows.objects.create(audit = audit ,observationTable = 2,name = 'table2row3')
-                audit.table2Row3 = True
-                table2row3.save()
-
-                observationTable2['table2row1'] = table2row1
-                observationTable2['table2row2'] = table2row2
-                observationTable2['table2row3'] = table2row3
+            else : audit.observationP1 = False
                 
-
+            audit.observationP2 = obs_select_3
+            audit.observationP3 = obs_select_4
+            audit.observationP4 = obs_select_5
+            audit.observationP5 = obs_select_6
+            audit.observationP6 = obs_select_7
+            if obs_select_8: 
+                audit.observationP7 = obs_select_8
+                table2row1 = ObservationTablerows.objects.create(audit=audit, observationTable=2, name='table2row1')
+                audit.table2Row1B = True
+                table2row1.save()
+                observationTable2['table2row1'] = table2row1
+            
+            else : audit.observationP7 = False
+            audit.save()
             observationValue1 = request.POST.get("observationValue1") # type: ignore
             observationValue2 = request.POST.get("observationValue2") # type: ignore
             observationValue3 = request.POST.get("observationValue3") # type: ignore
@@ -517,114 +510,86 @@ class auditView:
             observationValue5 = request.POST.get("observationValue5") # type: ignore
             observationValue6 = request.POST.get("observationValue6") # type: ignore
 
-            if observationValue1 : audit.observationValue1 = observationValue1
-            if observationValue2 : audit.observationValue2 = observationValue2
-            if observationValue3 : audit.observationValue3 = observationValue3
-            if observationValue4 : audit.observationValue4 = observationValue4
-            if observationValue5 : audit.observationValue5 = observationValue5
-            if observationValue6 : audit.observationValue6 = observationValue6
+            if observationValue1: audit.observationValue1 = observationValue1
+            if observationValue2: audit.observationValue2 = observationValue2
+            if observationValue3: audit.observationValue3 = observationValue3
+            if observationValue4: audit.observationValue4 = observationValue4
+            if observationValue5: audit.observationValue5 = observationValue5
+            if observationValue6: audit.observationValue6 = observationValue6
 
-            # for getting boolean value for table  1
+            # for getting boolean value for table 1
             for i in range(1, 11):
                 key_name = f"table1Row{i}"
-                
-                # Check if the specific row has submitted data by targeting its first column input
-                col_avil = request.POST.get(f"{key_name}") # type: ignore
-                
+                col_avil = request.POST.get(key_name) # type: ignore
                 if col_avil:
-                    try:
-                       setattr(audit, key_name, col_avil)
-                        
-                    except ObservationTablerows.DoesNotExist:
-                        # Optional: handle missing rows or create them if needed
-                        pass
+                    setattr(audit, key_name, col_avil)
 
-            # for getting boolean value for table  2
+            # for getting boolean value for table 2
             for i in range(1, 11):
                 key_name = f"table2Row{i}"
-                
-                # Check if the specific row has submitted data by targeting its first column input
-                col_avil = request.POST.get(f"{key_name}") # type: ignore
-                
+                col_avil = request.POST.get(key_name) # type: ignore
                 if col_avil:
-                    try:
-                       setattr(audit, key_name, col_avil)
-                        
-                    except ObservationTablerows.DoesNotExist:
-                        # Optional: handle missing rows or create them if needed
-                        pass
+                    setattr(audit, key_name, col_avil)
 
             # for getting the row value for table 1
             for i in range(1, 11):
                 row_name = f"table1Row{i}"
-                
                 col1_data = request.POST.get(f"{row_name}_col1") # type: ignore
-                print(col1_data, "message")
-                
                 if col1_data:
-                    # Pass the missing required object (observationTable) so Django can safely create new rows
                     obj, created = ObservationTablerows.objects.get_or_create(
-                        audit=audit, 
-                        name=row_name,
-                        observationTable = 1
+                        audit=audit, name=row_name, observationTable=1
                     )
-                    
-                    # If the object already existed but belongs to a different/null table parent, update it just in case
                     if not created:
                         obj.observationTable = 1
-                        
-                    # Map the submitted form data to your model fields
                     obj.col1 = col1_data
                     obj.col2 = request.POST.get(f"{row_name}_col2") # type: ignore
                     obj.col3 = request.POST.get(f"{row_name}_col3") # type: ignore
-                    
-                    # Save the updated database record
                     obj.save()
 
             # for getting the row value for table 2
             for i in range(1, 11):
                 row_name = f"table2Row{i}"
-                
                 col1_data = request.POST.get(f"{row_name}_col1") # type: ignore
-                
                 if col1_data:
-
                     obj, created = ObservationTablerows.objects.get_or_create(
-                        audit=audit, 
-                        name=row_name,
-                        observationTable =  2  
+                        audit=audit, name=row_name, observationTable=2
                     )
-                    
                     if not created:
                         obj.observationTable = 2
-                        
-                    # Map the submitted form data to your model fields
                     obj.col1 = col1_data
                     obj.col2 = request.POST.get(f"{row_name}_col2") # type: ignore
                     obj.col3 = request.POST.get(f"{row_name}_col3") # type: ignore
-                    
-                    # Save the updated database record
+                    obj.col4 = request.POST.get(f"{row_name}_col4") # type: ignore
+                    obj.col5 = request.POST.get(f"{row_name}_col5") # type: ignore
                     obj.save()
-             
-
+            
             audit.save()
             
+            # for getting 1st table data (POST)
+            for i in range(1, 11):
+                row_name = f"table1Row{i}"
+                try:
+                    observationTable1[row_name] = ObservationTablerows.objects.get(audit=audit, observationTable=1, name=row_name)
+                except ObservationTablerows.DoesNotExist:
+                    observationTable1[row_name] = None
 
-            formatted_date = None
+            # for getting 2nd table data (POST)
+            for i in range(1, 11):
+                row_name = f"table2Row{i}"
+                try:
+                    observationTable2[row_name] = ObservationTablerows.objects.get(audit=audit, observationTable=2, name=row_name)
+                except ObservationTablerows.DoesNotExist:
+                    observationTable2[row_name] = None        
+
             if date_str:
                 try:
-                    formatted_date = datetime.strptime(date_str, r"%Y-%m-%d").date()
-                    audit.date = formatted_date
+                    audit.date = datetime.strptime(date_str, r"%Y-%m-%d").date()
                     audit.observations = observations
                     audit.observations2 = observations2
                     audit.Udin = Udin
-                    audit.save(update_fields=["date"])  # Ensure immediate commit
-                    audit.save(update_fields=["observations"])
-                    audit.save(update_fields=["observations2"])# Ensure immediate commit
-                    audit.save(update_fields=["Udin"])
+                    audit.save(update_fields=["date", "observations", "observations2", "Udin"])
                 except ValueError:
-                    formatted_date = None
-                    
+                    pass
 
             yearReport1 = yearReportData.objects.filter(yearReports__audit=audit).first()
             yearReport2 = yearReportData.objects.filter(yearReports__audit=audit2).first() if audit2 else None
@@ -632,39 +597,25 @@ class auditView:
             year2 = f"{audit2.yearStart}-{audit2.yearEnd}" if audit2 else ""
             year3 = f"{audit3.yearStart}-{audit3.yearEnd}" if audit3 else ""
 
-  
             for prefix, report in [('year1', yearReport1), ('year2', yearReport2), ('year3', yearReport3)]:
                 if report:
                     for field in report._meta.fields:
                         if field.name.startswith(('EA', 'EB')):
-                            field_name = f"{prefix}-{field.name}"
-                            value = request.POST.get(field_name) # type: ignore
-                            setattr(report, field.name, value if value else "")
+                            setattr(report, field.name, request.POST.get(f"{prefix}-{field.name}", ""))
                     report.save()
 
             for prefix, report in [('year1', yearReport1), ('year2', yearReport2), ('year3', yearReport3)]:
                 if report:
                     for field in report._meta.fields:
                         if field.name.startswith(('A', 'B')):
-                            field_name = f"{prefix}-{field.name}"
-                            value = request.POST.get(field_name)
-                            # print(field_name,'--',value)
-                            setattr(report, field.name, int(value) if value else 0)
+                            val = request.POST.get(f"{prefix}-{field.name}") # type: ignore
+                            setattr(report, field.name, int(val) if val else 0)
                     report.save()
             
-            for func in [
-            Fromula.openingClosingBalanceForCurrentYear,Fromula.carryFrowordToText,
-            Fromula.total1,
-            Fromula.formula48, Fromula.formula49, 
-            Fromula.formula50, Fromula.formula51, Fromula.formula52,Fromula.formula53,Fromula.formula54, Fromula.formula55,Fromula.formula56,Fromula.formula57,Fromula.formula58,
-            Fromula.formula59,Fromula.formula60,Fromula.formula61,
-            Fromula.Bformula47, Fromula.Bformula50, Fromula.Bformula51, 
-            Fromula.Bformula52, Fromula.Bformula53, Fromula.Bformula54, Fromula.Bformula55,Fromula.total1, Fromula.total2,Fromula.formula46,Fromula.formula67,Fromula.Bformula58,Fromula.Bformula59,Fromula.formula62,Fromula.total3
-            ]:
+            for func in formula_list:
                 func(audit) # type: ignore
             audit.refresh_from_db()
 
-            # Reload year reports to include formula updates
             main_report1 = MainReport.objects.filter(audit=audit).first()
             year_report1 = yearReportData.objects.filter(yearReports=main_report1).first() if main_report1 else None
 
@@ -679,15 +630,13 @@ class auditView:
                 year_report3 = yearReportData.objects.filter(yearReports=main_report3).first() if main_report3 else None
             
             return render(request, r'templates/audit/newTry.html', { # type: ignore
-                'yearReport1': year_report1, 
-                'yearReport2': year_report2, 
-                'yearReport3': year_report3,
-                'year1': year1, 'year2': year2, 'year3': year3, 
-                'year': year, 'audit': audit,
-                'observationTable1' : observationTable1,
-                'observationTable2' : observationTable2,
+                'yearReport1': year_report1, 'yearReport2': year_report2, 'yearReport3': year_report3,
+                'year1': year1, 'year2': year2, 'year3': year3, 'year': year, 'audit': audit,
+                'observationTable1': observationTable1,
+                'observationTable2': observationTable2,
             })
-        # Ensure audits are properly assigned
+
+        # Ensure audits are properly assigned (GET Path Setup)
         if not audit2Id and not audit3Id:
             setAuditFR(audit)
             for auditCheck in audits:
@@ -697,7 +646,6 @@ class auditView:
                 elif audit2 and auditCheck['yearEnd'] == audit2.yearStart:
                     audit3Id = auditCheck['id']
                     audit3 = Audit.objects.get(id=audit3Id)
-                    
         elif audit2Id and not audit3Id:
             setAuditFRSingleYear(audit)
             audits = list(Audit.objects.filter(customer=audit.customer).values('id', 'yearStart', 'yearEnd'))
@@ -709,42 +657,36 @@ class auditView:
                     audit3Id = auditCheck['id']
                     audit3 = Audit.objects.get(id=audit3Id)
 
+        # for getting get type table 1 (GET)
         for i in range(1, 11):
             row_name = f"table1Row{i}"
             try:
-                # Fetch the specific row using the exact matching name format
-                row_obj = ObservationTablerows.objects.get(
-                    audit=audit, 
-                    observationTable=1, 
-                    name=row_name
-                )
-                # Store it dynamically in your dictionary
-                observationTable1[row_name] = row_obj
+                observationTable1[row_name] = ObservationTablerows.objects.get(audit=audit, observationTable=1, name=row_name)
             except ObservationTablerows.DoesNotExist:
-                # Prevent the page from crashing if a row hasn't been created yet
                 observationTable1[row_name] = None
 
+        # for getting get type table 2 (GET) - FIXED: Target changed from table1 to table2
+        for i in range(1, 11):
+            row_name = f"table2Row{i}"
+            try:
+                observationTable2[row_name] = ObservationTablerows.objects.get(audit=audit, observationTable=2, name=row_name)
+            except ObservationTablerows.DoesNotExist:
+                observationTable2[row_name] = None
 
-    
-        # Fetch second and third year data
-        mainReport2 = MainReport.objects.filter(audit=audit2).first() if audit2 else None
-        yearReport2 = yearReportData.objects.filter(yearReports=mainReport2).first() if mainReport2 else None
+        mainReport2_obj = MainReport.objects.filter(audit=audit2).first() if audit2 else None
+        yearReport2 = yearReportData.objects.filter(yearReports=mainReport2_obj).first() if mainReport2_obj else None
         year2 = f"{audit2.yearStart}-{audit2.yearEnd}" if audit2 else ""
 
-        mainReport3 = MainReport.objects.filter(audit=audit3).first() if audit3 else None
-        yearReport3 = yearReportData.objects.filter(yearReports=mainReport3).first() if mainReport3 else None
+        mainReport3_obj = MainReport.objects.filter(audit=audit3).first() if audit3 else None
+        yearReport3 = yearReportData.objects.filter(yearReports=mainReport3_obj).first() if mainReport3_obj else None
         year3 = f"{audit3.yearStart}-{audit3.yearEnd}" if audit3 else ""
-
-        
 
         return render(request, 'templates/audit/newTry.html', {
             'yearReport1': yearReport1, 'yearReport2': yearReport2, 'yearReport3': yearReport3,
             'year1': year1, 'year2': year2, 'year3': year3, 'year': year, 'audit': audit,
-            'observationTable1' : observationTable1,
-            'observationTable2' : observationTable2,
+            'observationTable1': observationTable1,
+            'observationTable2': observationTable2,
         })
-
-   
 
     @csrf_exempt
     def save_report_value(request):
@@ -796,15 +738,15 @@ class auditView:
     
     @csrf_exempt
     def viewBackReportcomplete(request):
-        if request.method == 'POST':
-            audityear = request.POST.get('year')
+        if request.method == 'POST': # type: ignore
+            audityear = request.POST.get('year') # type: ignore
 
             # Validate the audit record
             audit = Audit.objects.filter(year=audityear).first()
             if not audit:
                 return JsonResponse({'error': 'Audit record not found'}, status=404)
 
-            months = Month.objects.filter(collectionId=audit.collection.id)
+            months = Month.objects.filter(collectionId=audit.collection.id) # type: ignore
             Coll = []
 
             for month in months:

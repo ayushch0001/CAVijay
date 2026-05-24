@@ -302,31 +302,52 @@
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
                     <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid #ddd; text-align: center;">Sr. No</th>
-                        <th style="border: 1px solid #ddd; text-align: center;">Nature of Payments</th>
-                        <th style="border: 1px solid #ddd; text-align: center;">Amount</th>
-                        <th style="border: 1px solid #ddd; text-align: center;">Remarks</th>
+                        <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 8%;">Sr. No</th>
+                        <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 42%;">Nature of Payments</th>
+                        <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 25%;">Amount</th>
+                        <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 25%;">Remarks</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;"></td>
-                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
-                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
-                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;"></td>
-                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
-                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
-                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;"></td>
-                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
-                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
-                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
-                    </tr>
+                    {% if observationTable1 %}
+                        {% for row in observationTable1.values %}
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">
+                                    {{ forloop.counter }}
+                                </td>
+                                
+                                <td style="border: 1px solid #ddd; padding: 5px;">
+                                    <input type="text" 
+                                        name="table1Row{{ forloop.counter }}_col1" 
+                                        value="{{ row.col1|default_if_none:'' }}" 
+                                        style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                </td>
+                                
+                                <td style="border: 1px solid #ddd; padding: 5px;">
+                                    <input type="text" 
+                                        name="table1Row{{ forloop.counter }}_col2" 
+                                        value="{{ row.col2|default_if_none:'' }}" 
+                                        style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
+                                </td>
+                                
+                                <td style="border: 1px solid #ddd; padding: 5px;">
+                                    <input type="text" 
+                                        name="table1Row{{ forloop.counter }}_col3" 
+                                        value="{{ row.col3|default_if_none:'' }}" 
+                                        style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        {% for i in "123" %}
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">{{ forloop.counter }}</td>
+                                <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table1Row{{ forloop.counter }}_col1" style="width: 100%; border: none; padding: 5px;"></td>
+                                <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table1Row{{ forloop.counter }}_col2" style="width: 100%; border: none; padding: 5px; text-align: right;"></td>
+                                <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table1Row{{ forloop.counter }}_col3" style="width: 100%; border: none; padding: 5px;"></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
 
