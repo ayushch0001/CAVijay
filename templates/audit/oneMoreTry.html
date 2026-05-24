@@ -214,9 +214,9 @@
             </div>
             <br> <br>
             <div class="content" style="position: absolute;padding-top:120px">
-                <p>We have audited the attached Balance Sheet of {{audit.customer.nameOfOrganization}},
+                <p>We have audited the attached Balance Sheet of <strong>{{audit.customer.nameOfOrganization}},
                     {{audit.customer.address}}, Cluster: {{audit.customer.cluster}}, Block: {{audit.customer.block}}, DIST –
-                    {{audit.customer.district}} (C.G.) as at 31st March, 20{{year}} and also the Income & Expenditure
+                    {{audit.customer.district}} (C.G.)</strong> as at 31st March, 20{{year}} and also the Income & Expenditure
                     Account of the office for the period ended on that date annexed there to. These financial statements are
                     the responsibility of the entity’s management. Our responsibility is to express an opinion on these
                     financial statements based on our audit.</p>
@@ -229,15 +229,6 @@
                     evaluating the overall financial statement presentation. We believe that our audit provides a reasonable
                     basis for our opinion.<input style="width:90%;border:none;font-size: 16px;" type="text" name="observations" value="{{ audit.observations }}">
                 </p>
-
-                <p>1. The Books of Accounts of Village Organization (VO) are maintained on Cash Basis. Statements of
-                    accounts are prepared on the basis of information given in the Cash Book and Bank Pass Book
-                    and information provided to us by the office bearers of the VO.</p>
-                <ul>
-                    <li>i. Keeping in view the objectives and nature of activities the VO has followed cash system of accounting. </li><br>
-                    <li>ii. Fixed assets are stated at cost, which includes all expenses incidental to acquisition / installation and no depreciation is charged on the fixed assets. </li> <br>
-                    <li>iii. We have not done physical verification of assets.</li> <br>
-                </ul>
 
                 <p>Further we report that:</p>
                 <ul>
@@ -288,7 +279,145 @@
             <hr>
             <h2 style="text-align:center;position: absolute;bottom: 50px;padding-left: 240px;">Near SBI, Main Road Gariaband, Gariaband (C.G.)</h2>
             <h5 style="text-align:center;position: absolute;bottom: 20px;padding-left: 280px;FONT-SIZE: 13PX;">Mobile: 97541-19991 , Email: cavijay1018@gmail.com</h5>
+
         </div>
+
+         {% comment %} observation  {% endcomment %}
+      {% if  audit.observationRequired %}
+       
+        <div class="page" style=" line-height: 1.8; color: #333;">
+            <h2 style="text-align: center; text-decoration: underline;">ANNEXURE 1 TO THE AUDITORS REPORT</h2>
+            <h3 style="text-align: center; ">
+              Name of VO: {{audit.customer.nameOfOrganization}},{{audit.customer.address}} 
+              Cluster: {{audit.customer.cluster}}, Block: {{audit.customer.block}}, District: {{audit.customer.district}}, Chhattisgarh</h3>
+           
+            
+            <h3 style="border-bottom: 1px solid #000;">Observations :</h3>
+            <ul> {% if  audit.observationP1 %}
+              <li> Cash book was not written regularly and was updated subsequently.Overwriting / alterations were observed in certain records. Certain balances, advances and loan balances are subject to reconcipation and verification.</li> {% endif %}
+              <ul> {% if audit.observationP2 %}
+              <li> Supporting bills and relevant documents in respect of certain expenses and transactions were not produced for verification during the course of audit. Details of major unsupported expenses are provided here:</li>
+            
+
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color: #f2f2f2;">
+                        <th style="border: 1px solid #ddd; text-align: center;">Sr. No</th>
+                        <th style="border: 1px solid #ddd; text-align: center;">Nature of Payments</th>
+                        <th style="border: 1px solid #ddd; text-align: center;">Amount</th>
+                        <th style="border: 1px solid #ddd; text-align: center;">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;"></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;"></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;"></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {% endif %}
+
+             {% if audit.observationP3 %}
+            <li>
+                 It was observed that negative balances were reflected in the cash book during certain periods of the financial year, indicating reconciliation or accounting discrepancies.(Case 1)
+            </li>
+            {% endif %}
+             {% if audit.observationP4 %}
+            <li>
+                 It was observed that negative balances were reflected in the cash book during certain periods of the financial year including as on the Balance Sheet date, indicating reconciliation or accounting discrepancies. (Case 2)
+            </li>
+            {% endif %}
+            {% if audit.observationP5 %}
+            <li>
+                 It was observed that during the financial year, amounts aggregating to Rs. <input style="border : none;"  type="text" name="observationValue1" value="{{ audit.observationValue1 }}"> handed over to Smt. <input style="border : none;" type="text" name="observationValue2" value="{{ audit.observationValue2 }}">, the then office bearer of the VO, for deposit into the bank account of the VO were not deposited into the bank account. The aggregate outstanding amount including previous years stood at Rs. <input style="border : none;"  type="text" name="observationValue3" value="{{ audit.observationValue3 }}"> as on the Balance Sheet date. The said amount has been reflected in the books of accounts as loan / advance recoverable from him / her.
+            </li>
+            {% endif %}
+            {% if audit.observationP6 %}
+            <li>
+               It was observed that during the financial year, amounts aggregating to Rs. <input style="border : none;"  type="text" name="observationValue4" value="{{ audit.observationValue4 }}"> handed over to Smt. <input style="border : none;"  type="text" name="observationValue5" value="{{ audit.observationValue5 }}">, the then office bearer of the VO, for deposit into the bank account of the VO were not deposited into the bank account. The aggregate outstanding amount including previous years stood at Rs. <input style="border : none;"  type="text" name="observationValue6" value="{{ audit.observationValue6 }}"> as on the Balance Sheet date. The said amount has not been reflected in the books of accounts as loan / advance recoverable.
+            </li>
+            {% endif %}
+            {% if audit.observationP7 %}
+            <li>
+                 It was observed that certain SHGs did not repay loan installments regularly and loan balances remained overdue / unrecovered as on the Balance Sheet date. Details of such SHGs, including outstanding amount, loan disbursement period and last repayment details, are provided here:
+            </li>
+            <table style="width: 100%; border-collapse: collapse; ">
+                <thead>
+                    <tr style="background-color: #f2f2f2;">
+                        <th style="border: 1px solid ; padding: 8px; text-align: center;">Sr.No</th>
+                        <th style="border: 1px solid ; padding: 8px; text-align: left;">Name of SHG</th>
+                        <th style="border: 1px solid ; padding: 8px; text-align: center;">Loan Disbursement Date</th>
+                        <th style="border: 1px solid ; padding: 8px; text-align: right;">Loan Disbursement Amount</th>
+                        <th style="border: 1px solid ; padding: 8px; text-align: right;">Outstanding Amount</th>
+                        <th style="border: 1px solid ; padding: 8px; text-align: left;">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid ; text-align: center;">1</td>
+                        <td style="border: 1px solid ;">Sharda SHG, Kharhari</td>
+                        <td style="border: 1px solid ; text-align: center;">09.10.2020</td>
+                        <td style="border: 1px solid ; text-align: right;">15,000</td>
+                        <td style="border: 1px solid ; text-align: right;">10,000</td>
+                        <td style="border: 1px solid ;"></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid ; text-align: center;">2</td>
+                        <td style="border: 1px solid ;">Sharda SHG, Kharhari</td>
+                        <td style="border: 1px solid ; text-align: center;">09.06.2021</td>
+                        <td style="border: 1px solid ; text-align: right;">10,000</td>
+                        <td style="border: 1px solid ; text-align: right;">10,000</td>
+                        <td style="border: 1px solid ;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            {% endif %}
+          </ul>
+            <div class="signature" style="position: absolute; width : 90%;">
+                <table style="width: 100%; border: none; border-collapse: collapse;">
+                    <tr>
+                        <td style="text-align: left;border: none;"><br><br><br><br><br></td>
+                        <td style="text-align: right;border: none;">
+                            <h3>For' VIJAY CHANDRAKAR & CO.</h3>
+                            (Chartered Accountants)<br>
+                            <h3>F.R.N. 029323C</h3>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width: 100%; border: none; border-collapse: collapse;">
+                    <tr>
+                        <td style="text-align: left; border: none; padding-left: 40px;">
+                            Place: Gariaband<br>
+                            <label for="date">Date:</label>
+                            {{ audit.date|date:'Y-m-d' }}
+                        </td>
+                        <td style="text-align: right;border: none;">
+                            <h3>CA Vijay Chandrakar</h3>
+                            Proprietor <br>
+                            <h2>M.No. 444225 </h2>
+                            <h2>UDIN:{{audit.Udin}}</h2><br>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+      {% endif %}
 
         <!-- Page 3 (First Table Page) -->
         <div class="page">
@@ -384,8 +513,8 @@
                     <td><input type="number" name="year3-A4" value="{{ yearReport3.A4|default:0 }}"></td>
                     <td>Share capital paid to CLF </td>
                     <td><input type="number" name="year1-B3" value="{{ yearReport1.B3|default:0 }}"></td>
-                    <td> <input type="number" name="year1-B3" value="{{ yearReport1.B3|default:0 }}"></td>
-                    <td> <input type="number" name="year1-B3" value="{{ yearReport1.B3|default:0 }}"></td>
+                    <td> <input type="number" name="year2-B3" value="{{ yearReport2.B3|default:0 }}"></td>
+                    <td> <input type="number" name="year3-B3" value="{{ yearReport3.B3|default:0 }}"></td>
                 </tr>
                 <tr>
                     <td>CEF grant for Enterprise promotion</td>
@@ -394,8 +523,8 @@
                     <td><input type="number" name="year3-A5" value="{{ yearReport3.A5|default:0 }}"></td>
                     <td>Saving Amount paid to CLF </td>
                     <td><input type="number" name="year1-B4" value="{{ yearReport1.B4|default:0 }}"></td>
-                    <td> <input type="number" name="year1-B4" value="{{ yearReport1.B4|default:0 }}"></td>
-                    <td> <input type="number" name="year1-B4" value="{{ yearReport1.B4|default:0 }}"></td>
+                    <td> <input type="number" name="year2-B4" value="{{ yearReport2.B4|default:0 }}"></td>
+                    <td> <input type="number" name="year3-B4" value="{{ yearReport3.B4|default:0 }}"></td>
                 </tr>
                 <tr>
                     <td>Grant for promotion of PGs (including working capital and infrastructure)</td>
@@ -905,14 +1034,14 @@
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;"> Total</td>
-                    <td class="tdclass" style="font-weight: bold;"> {{ yearReport1.A32}}</td>
-                    <td class="tdclass" style="font-weight: bold;">{{ yearReport2.A32}}</td>
-                    <td class="tdclass" style="font-weight: bold;">{{ yearReport3.A32}}</td>
+                    <td class="tdclass" style="font-weight: bold;"> {{ yearReport1.A42}}</td>
+                    <td class="tdclass" style="font-weight: bold;">{{ yearReport2.A42}}</td>
+                    <td class="tdclass" style="font-weight: bold;">{{ yearReport3.A42}}</td>
                     <td></td>
                     <td style="font-weight: bold;"> Total</td>
-                    <td style="font-weight: bold;"> {{ yearReport1.B32}}</td>
-                    <td style="font-weight: bold;">{{ yearReport2.B32}}</td>
-                    <td style="font-weight: bold;">{{ yearReport3.B32}}</td>
+                    <td style="font-weight: bold;"> {{ yearReport1.B42}}</td>
+                    <td style="font-weight: bold;">{{ yearReport2.B42}}</td>
+                    <td style="font-weight: bold;">{{ yearReport3.B42}}</td>
                 </tr>
             </table>
            <table style="width: 100%; border: none; border-collapse: collapse;">
@@ -943,98 +1072,6 @@
             </table>
         </div>
 
-        {% comment %} <!-- Page 6 -->
-        <div class="page">
-            <table class="table1">
-                <tr>
-                    <td> 5. </td>
-                    <td colspan="4" style="font-weight: bold;"> Refund of grants by member organisation (like SGSY unspent balances and alike which were released earlier under the project) </td>
-                    <td> 5. </td>
-                    <td colspan="4" style="font-weight: bold;"> Transfer of refunded grants (Ex. Transferred to SMMU or to the other organisations) (If these are not refunded then these should be shown under liabilities in the balance sheet under </td>
-                </tr>
-                <tr>
-                    <td> 6. </td>
-                    <td class="tdclass" colspan="4" style="font-weight: bold;"> Refund of Advances </td>
-                    <td rowspan="2"> 6. </td>
-                    <td style="font-weight: bold;">Fresh Advances given during the year/period </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td rowspan="5" colspan="5"></td>
-                    <td style="font-weight: bold;"> Advances given </td>
-                    <td><input type="number" name="year1-B28" value="{{ yearReport1.B28|default:0 }}"></td>
-                    <td><input type="number" name="year2-B28" value="{{ yearReport2.B28|default:0 }}"></td>
-                    <td><input type="number" name="year3-B28" value="{{ yearReport3.B28|default:0 }}"></td>
-                </tr>
-                <tr>
-                    <td>7.</td>
-                    <td> Payment of dividends (if permitted)</td>
-                    <td><input type="number" name="year1-B29" value="{{ yearReport1.B29|default:0 }}"></td>
-                    <td><input type="number" name="year2-B29" value="{{ yearReport2.B29|default:0 }}"></td>
-                    <td><input type="number" name="year3-B29" value="{{ yearReport3.B29|default:0 }}"></td>
-                </tr>
-                <tr>
-                    <td rowspan="3">8.</td>
-                    <td> Closing balance as per cash book</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Cash in hand </td>
-                    <td><input type="number" name="year1-B30" value="{{ yearReport1.B30|default:0 }}"></td>
-                    <td><input type="number" name="year2-B30" value="{{ yearReport2.B30|default:0 }}"></td>
-                    <td><input type="number" name="year3-B30" value="{{ yearReport3.B30|default:0 }}"></td>
-                </tr>
-                <tr>
-                    <td> Cash at bank</td>
-                    <td><input type="number" name="year1-B31" value="{{ yearReport1.B31|default:0 }}"></td>
-                    <td><input type="number" name="year2-B31" value="{{ yearReport2.B31|default:0 }}"></td>
-                    <td><input type="number" name="year3-B31" value="{{ yearReport3.B31|default:0 }}"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td style="font-weight: bold;"> Total</td>
-                    <td class="tdclass" style="font-weight: bold;"> {{ yearReport1.A32}}</td>
-                    <td class="tdclass" style="font-weight: bold;">{{ yearReport2.A32}}</td>
-                    <td class="tdclass" style="font-weight: bold;">{{ yearReport3.A32}}</td>
-                    <td></td>
-                    <td style="font-weight: bold;"> Total</td>
-                    <td style="font-weight: bold;"> {{ yearReport1.B32}}</td>
-                    <td style="font-weight: bold;">{{ yearReport2.B32}}</td>
-                    <td style="font-weight: bold;">{{ yearReport3.B32}}</td>
-                </tr>
-            </table>
-
-            <table style="width: 100%; border: none; border-collapse: collapse;">
-                <tr>
-                    <td style="text-align: left;border: none;">CERTIFIED: On behalf of the governing Body We hereby<br>
-                        certify that the above Receipts and Payment Account of<br>
-                        NRLM gives a complete and correct A/c. of Receipts and <br>
-                        Payment for the year ended 31st March 20{{year}}.</td>
-                    <td style="text-align: right;border: none;">AS PER OUR ANNEXED REPORT OF EVEN DATE<br>
-                        For' VIJAY CHANDRAKAR & CO.<br>
-                        (Chartered Accountants)<br>
-                        F.R.N. 029323C</td>
-                </tr>
-            </table>
-
-            <table style="width: 100%; border: none; border-collapse: collapse;">
-                <tr>
-                    <td style="text-align: left;border: none;">
-                        Place: Gariaband<br>
-                        Date : {{ audit.date|date:'d-m-Y'}} <br>
-                    </td>
-                    <td style="text-align: right;border: none;">
-                        CA Vijay Chandrakar<br>
-                        Proprietor <br>
-                        M.No. 444225 <br>
-                    </td>
-                </tr>
-            </table>
-        </div> {% endcomment %}
 
         <!-- Page 7 -->
         <div class="page">
@@ -1266,8 +1303,8 @@
                     <td><input type="number" name="year1-A47" value="{{ yearReport1.A47|default:0 }}"></td>
                     <td><input type="number" name="year2-A47" value="{{ yearReport2.A47|default:0 }}"></td>
                     <td> Opening balance</td>
-                    <td><input type="number" name="year1-B47" value="{{ yearReport1.B47|default:0 }}"></td>
-                    <td><input type="number" name="year2-B47" value="{{ yearReport2.B47|default:0 }}"></td>
+                    <td>{{ yearReport1.B47 }}</td>
+                    <td>{{ yearReport2.B47 }}</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -1334,9 +1371,17 @@
                     <td>{{ yearReport2.B53}}</td>
                 </tr>
                 <tr>
+                    <td> VRF Budget</td>
+                    <td>{{ yearReport1.A67}}</td>
+                    <td>{{ yearReport2.A67}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td>MKSP / CMSA Tool Bank Fund</td>
                     <td>{{ yearReport1.A54}}</td>
-                    <td>{{ yearReport1.A54}}</td>
+                    <td>{{ yearReport2.A54}}</td>
                     <td>VRF Loan Outstanding with member organisations</td>
                     <td>{{ yearReport1.B54}}</td>
                     <td>{{ yearReport2.B54}}</td>
@@ -1344,7 +1389,7 @@
                 <tr>
                     <td>NPM Shop Budget </td>
                     <td>{{ yearReport1.A55}}</td>
-                    <td>{{ yearReport1.A55}}</td>
+                    <td>{{ yearReport2.A55}}</td>
                     <td>PMFME Loan Outstanding with member organisations</td>
                     <td>{{ yearReport1.B55}}</td>
                     <td>{{ yearReport2.B55}}</td>
@@ -1352,14 +1397,16 @@
                 <tr>
                     <td>PMFME Budget</td>
                     <td>{{ yearReport1.A56}}</td>
-                    <td>{{ yearReport1.A56}}</td>
+                    <td>{{ yearReport2.A56}}</td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                    
                 </tr>
                 <tr>
                     <td>Livelihood (Ajivika) Budget</td>
                     <td>{{ yearReport1.A57}}</td>
-                    <td>{{ yearReport1.A57}}</td>
+                    <td>{{ yearReport2.A57}}</td>
                     <td>Remuneration paid to CRPs/cadres as Advance</td>
                     <td>{{ yearReport1.B57}}</td>
                     <td>{{ yearReport2.B57}}</td>
@@ -1367,7 +1414,7 @@
                 <tr>
                     <td>RF Budge</td>
                     <td>{{ yearReport1.A58}}</td>
-                    <td>{{ yearReport1.A58}}</td>
+                    <td>{{ yearReport2.A58}}</td>
                     <td>Saving Amount paid to CLF</td>
                     <td>{{ yearReport1.B58}}</td>
                     <td>{{ yearReport2.B58}}</td>
@@ -1375,7 +1422,7 @@
                 <tr>
                     <td> Remuneration Payable to CRPs/cadres </td>
                     <td>{{ yearReport1.A59}}</td>
-                    <td>{{ yearReport1.A59}}</td>
+                    <td>{{ yearReport2.A59}}</td>
                     <td>Share capital paid to CLF </td>
                     <td>{{ yearReport1.B59}}</td>
                     <td>{{ yearReport2.B59}}</td>
@@ -1383,7 +1430,7 @@
                 <tr>
                     <td>Members MGNREGA Amount Payable by VO</td>
                     <td>{{ yearReport1.A60}}</td>
-                    <td>{{ yearReport1.A60}}</td>
+                    <td>{{ yearReport2.A60}}</td>
                     <td>CEF (SVEP) Interest Payable to CLF</td>
                     <td>{{ yearReport1.B60}}</td>
                     <td>{{ yearReport2.B60}}</td>
@@ -1391,7 +1438,7 @@
                 <tr>
                     <td>CEF (SVEP) Interest Receivables</td>
                     <td>{{ yearReport1.A61}}</td>
-                    <td>{{ yearReport1.A61}}</td>
+                    <td>{{ yearReport2.A61}}</td>
                     <td></td>
                     <td>{{ yearReport1.B61}}</td>
                     <td>{{ yearReport2.B61}}</td>
@@ -1500,6 +1547,86 @@
                 </tr>
             </table>
         </div>
+
+        <!-- Notes pages 9-->
+        <div class="page" style="page-break-after: always; font-family: Arial, sans-serif; padding: 40px; line-height: 1.6;">
+            <h2 style="text-align: center; text-decoration: underline;">NOTES ANNEXED TO BALANCE SHEET AND FORMING PART OF ACCOUNTS</h2>
+            
+            <li><h3 style="margin-top: 20px; text-decoration: underline;">(A).  Significant Accounting Policies</h3></li>
+            
+            <ul><strong  style="text-decoration: underline;">(i)  Basis of Accounting:</strong> The financial statements have been prepared on historical cost convention and on cash basis of accounting, considering the nature and objectives of the activities of the Village Organization (VO).</ul>
+            
+            <ul><strong  style="margin-top: 20px; text-decoration: underline;">(ii) Fixed Assets:</strong> Fixed assets are stated at cost of acquisition / installation including incidental expenses relating thereto. No depreciation has been provided on fixed assets.</ul>
+            
+            <hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">
+            
+            <li><h3 style=" text-decoration: underline;">(B) Notes on Accounts:</h3></li>
+            
+            <ul><p><strong>(i) Direct Benefit Transfers:</strong> Certain scheme funds / benefits have been transferred directly to the accounts of SHG,s or members without routing through the bank account of the VO and have been considered based on information provided by the VO.</p></ul>
+            
+            <ul><p><strong>(ii) Start-up Fund:</strong> Start-up Fund received by the VO for meeting initial operational and administrative requirements has been treated as income and recognized in the Income & Expenditure Account. Expenditure incurred out of the fund has been accounted for on actual basis. Capital expenditure has been capitalized, whereas revenue expenditure has been charged to the Income & Expenditure Account under respective heads.</p></ul>
+            
+            <ul><p><strong>(iii) Vulnerability Reduction Fund (VRF):</strong> If VRF received by the VO for providing financial assistance to vulnerable members has been accounted for separately wherever proper records were maintained. In absence of proper records, related disbursements and receivables have been considered along with CIF loan transactions, subject to reconciliation and verification.</p></ul>
+            
+            <ul><p><strong>(iv) MKSP & CMSA Tool Bank Fund:</strong> If Funds received by the VO under MKSP & CMSA for Tool Bank purposes have been utilized for procurement of agricultural tools and equipment. The utilized amount has been reflected under Fixed Assets.</p></ul>
+            
+            <ul><p><strong>(v) Pass-through Receipts & Payments:</strong> Receipts and payments such as CRP / Cadre remuneration, SVEP principal and interest, etc., received by the VO and subsequently transferred or disbursed further, have not been considered in the Income & Expenditure Account. Such transactions have been directly reflected in the Balance Sheet as receivable or payable, as the case may be.</p></ul>
+            
+            <ul><p><strong>(vi) Contingent liabilities:</strong> Contingent liabilities are reported as NIL.</p></ul>
+            
+            <ul><p><strong>(vii) Events Occurring After Balance Sheet Date:</strong> No material events having financial impact on the financial statements have occurred after the Balance Sheet date.</p></ul>
+            
+            <ul><p><strong>(viii) Cash & Bank Balances:</strong> Cash and bank balances are subject to reconciliation and confirmation, wherever applicable.</p></ul>
+            
+            <ul><p><strong>(ix) Loan Balances:</strong> Balances relating to CIF, VRF and other scheme loans are subject to confirmation and reconciliation.</p></ul>
+            
+            <ul><p><strong>(x) Grants & Scheme Funds:</strong> Grants and scheme-based funds have been accounted for on the basis of records and utilization details made available by the VO.</p></ul>
+            
+
+          
+        </div>
+        
+        {% comment %} notes 2 {% endcomment %}
+        <div class="page" style="page-break-after: always; font-family: Arial, sans-serif; padding: 40px; line-height: 1.6;">
+                      <ul><p><strong>(xi) Previous Year Figures:</strong> Previous year figures have been regrouped / rearranged wherever considered necessary.</p></ul>
+            
+            <ul><p><strong>(xii) Unverified Balances:</strong> Certain balances appearing under receivables, payables, advances and member loan accounts are subject to reconciliation and verification.</p></ul>
+            
+            <li><p><strong style=" text-decoration: underline;">(C) General Remarks:</strong></p></li>
+            <ul><p>(i) The audit has been conducted on the basis of books of accounts, records, and information produced before us by the Accountant and office bearers of the VO.</p></ul>
+            
+            <br><br>
+            <div class="signature" style="position: absolute;bottom: 700px; width : 90%;">
+                <table style="width: 100%; border: none; border-collapse: collapse;">
+                    <tr>
+                        <td style="text-align: left;border: none;"><br><br><br><br><br></td>
+                        <td style="text-align: right;border: none;">
+                            <h3>For' VIJAY CHANDRAKAR & CO.</h3>
+                            (Chartered Accountants)<br>
+                            <h3>F.R.N. 029323C</h3>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width: 100%; border: none; border-collapse: collapse;">
+                    <tr>
+                        <td style="text-align: left; border: none; padding-left: 40px;">
+                            Place: Gariaband<br>
+                            <label for="date">Date:</label>
+                            {{ audit.date|date:'Y-m-d' }}
+                        </td>
+                        <td style="text-align: right;border: none;">
+                            <h3>CA Vijay Chandrakar</h3>
+                            Proprietor <br>
+                            <h2>M.No. 444225 </h2>
+                            <h2>UDIN:{{audit.Udin}}</h2><br>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
     </form>
 </body>
 

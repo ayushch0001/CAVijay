@@ -13,7 +13,7 @@ from django.core import serializers
 import pdfkit
 from reportaudit.auditHandler.auditServices import setAuditFR, setAuditFRSingleYear
 from reportaudit.forms import AuditForm, ClusterForm
-from reportaudit.models import BackendReport, Cluster ,Customer ,AuditType ,Audit, MainReport, Month, yearReportData
+from reportaudit.models import BackendReport, Cluster ,Customer ,AuditType ,Audit, MainReport, Month, ObservationTablerows, yearReportData
 from reportaudit.auditHandler.formulas import  Fromula
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -157,8 +157,6 @@ class auditView:
         return JsonResponse({'audits': list(audits)})   # need to cahange this as per the fr logic 
     
             
-
-
     def generate_pdf(request):
         # Render HTML template to string
         audit_id = request.GET.get('audit_id')
@@ -244,8 +242,7 @@ class auditView:
         response['Content-Disposition'] = 'inline; filename="output.pdf"'
 
         return response
-    
-                
+          
     
     def mainReport(request): # type: ignore
         audit_id = request.GET.get('audit_id') # type: ignore
@@ -262,12 +259,12 @@ class auditView:
         for func in [
             Fromula.openingClosingBalanceForCurrentYear,Fromula.carryFrowordToText,
             Fromula.total1,
-            Fromula.formula48, Fromula.formula47, Fromula.formula49, 
-            Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
-            Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
-            Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
-            Fromula.formulaA44,Fromula.formula55, Fromula.total3,Fromula.formula55
-        ]:
+            Fromula.formula48, Fromula.formula49, 
+            Fromula.formula50, Fromula.formula51, Fromula.formula52,Fromula.formula53,Fromula.formula54, Fromula.formula55,Fromula.formula56,Fromula.formula57,Fromula.formula58,
+            Fromula.formula59,Fromula.formula60,Fromula.formula61,Fromula.formula62,
+            Fromula.Bformula47, Fromula.Bformula50, Fromula.Bformula51, 
+            Fromula.Bformula52, Fromula.Bformula53, Fromula.Bformula54, Fromula.Bformula55,Fromula.total1, Fromula.total2,Fromula.formula46,Fromula.formula67,Fromula.Bformula58,Fromula.Bformula59,Fromula.formula62,Fromula.total3
+            ]:
             func(audit) # type: ignore
             audit.refresh_from_db()
 
@@ -345,11 +342,11 @@ class auditView:
             for func in [
             Fromula.openingClosingBalanceForCurrentYear,Fromula.carryFrowordToText,
             Fromula.total1,
-            Fromula.formula48, Fromula.formula47, Fromula.formula49, 
-            Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
-            Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
-            Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
-            Fromula.formulaA44,Fromula.formula55,Fromula.total3,Fromula.formula55
+            Fromula.formula48, Fromula.formula49, 
+            Fromula.formula50, Fromula.formula51, Fromula.formula52,Fromula.formula53,Fromula.formula54, Fromula.formula55,Fromula.formula56,Fromula.formula57,Fromula.formula58,
+            Fromula.formula59,Fromula.formula60,Fromula.formula61,Fromula.formula62,
+            Fromula.Bformula47, Fromula.Bformula50, Fromula.Bformula51, 
+            Fromula.Bformula52, Fromula.Bformula53, Fromula.Bformula54, Fromula.Bformula55,Fromula.total1, Fromula.total2,Fromula.formula46,Fromula.formula67,Fromula.Bformula58,Fromula.Bformula59,Fromula.formula62,Fromula.total3
             ]:
                 func(audit) # type: ignore
             audit.refresh_from_db()
@@ -415,6 +412,11 @@ class auditView:
         audit_id = request.GET.get('audit_id') # type: ignore
         audit = get_object_or_404(Audit, id=audit_id)
 
+
+        observationTable1 = {}
+        observationTable2 = {}
+
+
         year = str(audit.yearEnd)
         year1 = f"{audit.yearStart}-{audit.yearEnd}"
 
@@ -424,19 +426,19 @@ class auditView:
 
         # Run formula calculations and ensure they are saved
         for func in [
-            Fromula.openingClosingBalanceForCurrentYear,
+            Fromula.openingClosingBalanceForCurrentYear,Fromula.carryFrowordToText,
             Fromula.total1,
-            Fromula.formula48, Fromula.formula49, Fromula.formula49, 
-            Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
-            Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
-            Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
-            Fromula.formulaA44,Fromula.formula55,Fromula.total3,Fromula.formula55,Fromula.openingClosingBalanceForCurrentYear
-        ]:
+            Fromula.formula48, Fromula.formula49, 
+            Fromula.formula50, Fromula.formula51, Fromula.formula52,Fromula.formula53,Fromula.formula54, Fromula.formula55,Fromula.formula56,Fromula.formula57,Fromula.formula58,
+            Fromula.formula59,Fromula.formula60,Fromula.formula61,Fromula.formula62,
+            Fromula.Bformula47, Fromula.Bformula50, Fromula.Bformula51, 
+            Fromula.Bformula52, Fromula.Bformula53, Fromula.Bformula54, Fromula.Bformula55,Fromula.total1, Fromula.total2,Fromula.formula46,Fromula.formula67,Fromula.Bformula58,Fromula.Bformula59,Fromula.formula62,Fromula.total3
+            ]:
             func(audit) # type: ignore
-            audit.refresh_from_db()
+            audit.refresh_from_db() # type: ignore
 
         # Force reload the updated audit data
-        audit.refresh_from_db()
+        audit.refresh_from_db() # type: ignore
 
         audit2Id = None
         audit3Id = None
@@ -458,7 +460,156 @@ class auditView:
             observations = request.POST.get("observations") # type: ignore
             observations2 = request.POST.get("observations2") # type: ignore
             Udin = request.POST.get("Udin") # type: ignore
+            obs_select_1 = request.POST.get("obs_select_1")  # type: ignore
+            obs_select_2 = request.POST.get("obs_select_2") # type: ignore
+            obs_select_3 = request.POST.get("obs_select_3") # type: ignore
+            obs_select_4 = request.POST.get("obs_select_4") # type: ignore
+            obs_select_5 = request.POST.get("obs_select_5") # type: ignore
+            obs_select_6 = request.POST.get("obs_select_6") # type: ignore
+            obs_select_7 = request.POST.get("obs_select_7") # type: ignore
+            obs_select_8 = request.POST.get("obs_select_8") # type: ignore
+
+
+            if obs_select_1 : audit.observationRequired = obs_select_1
+
+            if obs_select_2 : 
+                audit.observationP1 = obs_select_2
+                table1row1 = ObservationTablerows.objects.create(audit = audit,observationTable = 1,name = 'table1row1')
+                audit.table1Row1 = True
+                table1row1.save()
+                table1row2 = ObservationTablerows.objects.create(audit = audit, observationTable = 1,name = 'table1row2')
+                audit.table1Row2 = True
+                table1row2.save()
+                table1row3 = ObservationTablerows.objects.create(audit = audit, observationTable = 1,name = 'table1row3')
+                audit.table1Row3 = True
+                table1row3.save()
+
+                observationTable1['table1row1'] = table1row1
+                observationTable1['table1row2'] = table1row2
+                observationTable1['table1row3'] = table1row3
+
+            if obs_select_3 : audit.observationP2 = obs_select_3
+            if obs_select_4 : audit.observationP3 = obs_select_4
+            if obs_select_5 : audit.observationP4 = obs_select_5
+            if obs_select_6 : audit.observationP5 = obs_select_6
+            if obs_select_7 : audit.observationP6 = obs_select_7
+            if obs_select_8 : 
+                audit.observationP7 = obs_select_8
+                table2row1 = ObservationTablerows.objects.create(audit = audit ,observationTable = 2,name = 'table2row1')
+                audit.table2Row1 = True
+                table2row1.save()
+                table2row2 = ObservationTablerows.objects.create(audit = audit ,observationTable = 2,name = 'table2row2')
+                audit.table2Row2 = True
+                table2row2.save()
+                table2row3 = ObservationTablerows.objects.create(audit = audit ,observationTable = 2,name = 'table2row3')
+                audit.table2Row3 = True
+                table2row3.save()
+
+                observationTable2['table2row1'] = table2row1
+                observationTable2['table2row2'] = table2row2
+                observationTable2['table2row3'] = table2row3
+                
+
+            observationValue1 = request.POST.get("observationValue1") # type: ignore
+            observationValue2 = request.POST.get("observationValue2") # type: ignore
+            observationValue3 = request.POST.get("observationValue3") # type: ignore
+            observationValue4 = request.POST.get("observationValue4") # type: ignore
+            observationValue5 = request.POST.get("observationValue5") # type: ignore
+            observationValue6 = request.POST.get("observationValue6") # type: ignore
+
+            if observationValue1 : audit.observationValue1 = observationValue1
+            if observationValue2 : audit.observationValue2 = observationValue2
+            if observationValue3 : audit.observationValue3 = observationValue3
+            if observationValue4 : audit.observationValue4 = observationValue4
+            if observationValue5 : audit.observationValue5 = observationValue5
+            if observationValue6 : audit.observationValue6 = observationValue6
+
+            # for getting boolean value for table  1
+            for i in range(1, 11):
+                key_name = f"table1Row{i}"
+                
+                # Check if the specific row has submitted data by targeting its first column input
+                col_avil = request.POST.get(f"{key_name}") # type: ignore
+                
+                if col_avil:
+                    try:
+                       setattr(audit, key_name, col_avil)
+                        
+                    except ObservationTablerows.DoesNotExist:
+                        # Optional: handle missing rows or create them if needed
+                        pass
+
+            # for getting boolean value for table  2
+            for i in range(1, 11):
+                key_name = f"table2Row{i}"
+                
+                # Check if the specific row has submitted data by targeting its first column input
+                col_avil = request.POST.get(f"{key_name}") # type: ignore
+                
+                if col_avil:
+                    try:
+                       setattr(audit, key_name, col_avil)
+                        
+                    except ObservationTablerows.DoesNotExist:
+                        # Optional: handle missing rows or create them if needed
+                        pass
+
+            # for getting the row value for table 1
+            for i in range(1, 11):
+                row_name = f"table1Row{i}"
+                
+                col1_data = request.POST.get(f"{row_name}_col1") # type: ignore
+                print(col1_data, "message")
+                
+                if col1_data:
+                    # Pass the missing required object (observationTable) so Django can safely create new rows
+                    obj, created = ObservationTablerows.objects.get_or_create(
+                        audit=audit, 
+                        name=row_name,
+                        observationTable = 1
+                    )
+                    
+                    # If the object already existed but belongs to a different/null table parent, update it just in case
+                    if not created:
+                        obj.observationTable = 1
+                        
+                    # Map the submitted form data to your model fields
+                    obj.col1 = col1_data
+                    obj.col2 = request.POST.get(f"{row_name}_col2") # type: ignore
+                    obj.col3 = request.POST.get(f"{row_name}_col3") # type: ignore
+                    
+                    # Save the updated database record
+                    obj.save()
+
+            # for getting the row value for table 2
+            for i in range(1, 11):
+                row_name = f"table2Row{i}"
+                
+                col1_data = request.POST.get(f"{row_name}_col1") # type: ignore
+                
+                if col1_data:
+
+                    obj, created = ObservationTablerows.objects.get_or_create(
+                        audit=audit, 
+                        name=row_name,
+                        observationTable =  2  
+                    )
+                    
+                    if not created:
+                        obj.observationTable = 2
+                        
+                    # Map the submitted form data to your model fields
+                    obj.col1 = col1_data
+                    obj.col2 = request.POST.get(f"{row_name}_col2") # type: ignore
+                    obj.col3 = request.POST.get(f"{row_name}_col3") # type: ignore
+                    
+                    # Save the updated database record
+                    obj.save()
+             
+
+            audit.save()
             
+
             formatted_date = None
             if date_str:
                 try:
@@ -475,16 +626,13 @@ class auditView:
                     formatted_date = None
                     
 
-            print(audit2)
-
-            # Fetch updated reports
             yearReport1 = yearReportData.objects.filter(yearReports__audit=audit).first()
             yearReport2 = yearReportData.objects.filter(yearReports__audit=audit2).first() if audit2 else None
             yearReport3 = yearReportData.objects.filter(yearReports__audit=audit3).first() if audit3 else None
             year2 = f"{audit2.yearStart}-{audit2.yearEnd}" if audit2 else ""
             year3 = f"{audit3.yearStart}-{audit3.yearEnd}" if audit3 else ""
 
-            print(year1," - ",year2," - ",year3)
+  
             for prefix, report in [('year1', yearReport1), ('year2', yearReport2), ('year3', yearReport3)]:
                 if report:
                     for field in report._meta.fields:
@@ -505,13 +653,13 @@ class auditView:
                     report.save()
             
             for func in [
-            Fromula.openingClosingBalanceForCurrentYear,
+            Fromula.openingClosingBalanceForCurrentYear,Fromula.carryFrowordToText,
             Fromula.total1,
-            Fromula.formula48, Fromula.formula49, Fromula.formula49, 
-            Fromula.formula50, Fromula.formula51, Fromula.formula52, Fromula.formula55,
-            Fromula.Bformula45, Fromula.Bformula47, Fromula.Bformula49, 
-            Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52,Fromula.total1, Fromula.total2,
-            Fromula.formulaA44,Fromula.formula55, Fromula.total3,Fromula.formula55,Fromula.openingClosingBalanceForCurrentYear
+            Fromula.formula48, Fromula.formula49, 
+            Fromula.formula50, Fromula.formula51, Fromula.formula52,Fromula.formula53,Fromula.formula54, Fromula.formula55,Fromula.formula56,Fromula.formula57,Fromula.formula58,
+            Fromula.formula59,Fromula.formula60,Fromula.formula61,
+            Fromula.Bformula47, Fromula.Bformula50, Fromula.Bformula51, 
+            Fromula.Bformula52, Fromula.Bformula53, Fromula.Bformula54, Fromula.Bformula55,Fromula.total1, Fromula.total2,Fromula.formula46,Fromula.formula67,Fromula.Bformula58,Fromula.Bformula59,Fromula.formula62,Fromula.total3
             ]:
                 func(audit) # type: ignore
             audit.refresh_from_db()
@@ -535,7 +683,9 @@ class auditView:
                 'yearReport2': year_report2, 
                 'yearReport3': year_report3,
                 'year1': year1, 'year2': year2, 'year3': year3, 
-                'year': year, 'audit': audit
+                'year': year, 'audit': audit,
+                'observationTable1' : observationTable1,
+                'observationTable2' : observationTable2,
             })
         # Ensure audits are properly assigned
         if not audit2Id and not audit3Id:
@@ -559,6 +709,23 @@ class auditView:
                     audit3Id = auditCheck['id']
                     audit3 = Audit.objects.get(id=audit3Id)
 
+        for i in range(1, 11):
+            row_name = f"table1Row{i}"
+            try:
+                # Fetch the specific row using the exact matching name format
+                row_obj = ObservationTablerows.objects.get(
+                    audit=audit, 
+                    observationTable=1, 
+                    name=row_name
+                )
+                # Store it dynamically in your dictionary
+                observationTable1[row_name] = row_obj
+            except ObservationTablerows.DoesNotExist:
+                # Prevent the page from crashing if a row hasn't been created yet
+                observationTable1[row_name] = None
+
+
+    
         # Fetch second and third year data
         mainReport2 = MainReport.objects.filter(audit=audit2).first() if audit2 else None
         yearReport2 = yearReportData.objects.filter(yearReports=mainReport2).first() if mainReport2 else None
@@ -568,127 +735,17 @@ class auditView:
         yearReport3 = yearReportData.objects.filter(yearReports=mainReport3).first() if mainReport3 else None
         year3 = f"{audit3.yearStart}-{audit3.yearEnd}" if audit3 else ""
 
+        
+
         return render(request, 'templates/audit/newTry.html', {
             'yearReport1': yearReport1, 'yearReport2': yearReport2, 'yearReport3': yearReport3,
-            'year1': year1, 'year2': year2, 'year3': year3, 'year': year, 'audit': audit
+            'year1': year1, 'year2': year2, 'year3': year3, 'year': year, 'audit': audit,
+            'observationTable1' : observationTable1,
+            'observationTable2' : observationTable2,
         })
 
    
-        
-        
-        
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # def createAudit(request):
-    #     if request.method == 'POST':
-    #         auditType = request.POST.get('auditType')
-    #         form = AuditForm(request.POST)
-    #         if form.is_valid():
-    #             audit = form.save(commit=False)
-    #             collectionid = setAudit(auditType)
-    #             audit.collection = collectionid
-    #             audit.save()
-    #         else :
-    #             return JsonResponse({'status': 'error'})
-            
-    #         return JsonResponse({'status': 'success'})
-        
-    #     form = AuditForm()
-     
-    #     return render(request, 'templates\\audit\\auditForm.html', {'form': form,'types': AuditType.objects.all()})
-    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   #  this is written fot the br logic 
-    # @csrf_exempt
-    # def checkDetails(request):
-    #     # if request.method == 'POST':
-    #     # Get the year from the form
-    #         audit_id = request.GET.get('audit_id')
-    #         audit = get_object_or_404(Audit, id=audit_id)
-    #         audityear = audit.year
-            
-    #         # audityear = request.POST.get('year')
-    #         # print(f"Year submitted: {audityear}")  # Debugging
-
-    #         # # Validate the audit record
-    #         # audit = Audit.objects.filter(year=audityear).first()
-    #         if not audit:
-    #             print("Audit record not found")  # Debugging
-    #             return JsonResponse({'error': 'Audit record not found'}, status=404)
-
-    #         # Fetch all months for the given audit year
-    #         months = Month.objects.filter(collectionId=audit.collection.id)
-    #         print(f"Months fetched: {months}")  # Debugging
-
-    #         # Fetch all BackendReport objects for the months
-    #         reports = BackendReport.objects.filter(month__in=months)
-    #         print(f"Reports fetched: {reports}")  # Debugging
-
-    #         # Process the data for the template
-    #         data = {}
-    #         for report in reports:
-    #             month = report.month.month
-    #             title = report.title
-    #             dict_data = report.dict
-    #             pk = report.pk  # Include the primary key
-
-    #             if month not in data:
-    #                 data[month] = {}
-
-    #             # Include the pk in the data structure
-    #             data[month][title] = {
-    #                 'pk': pk,  # Add the primary key
-    #                 'dict': dict_data  # Include the dict data
-    #             }
-
-    #         # Convert data to a list of tuples for the template
-    #         data_items = list(data.items())
-    #         print(f"Data Items: {data_items}")  # Debugging
-
-    #         # Pass the data to the template
-    #         return render(request, 'templates/audit/report.html', {'data_items': data_items, 'year': audityear})
-
-        # return render(request, 'templates/audit/report.html')
-
-# this logic is to save the br 
     @csrf_exempt
     def save_report_value(request):
         if request.method == 'POST':

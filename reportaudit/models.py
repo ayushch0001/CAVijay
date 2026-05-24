@@ -75,10 +75,67 @@ class Audit(models.Model):
     date = models.DateField(null=True)
     observations = models.TextField(default="")
     observations2 = models.TextField(default="give a true and fair view:")
+    
+    observationRequired = models.BooleanField(default=False)
+    observationP1 = models.BooleanField(default=False)
+    observationP2 = models.BooleanField(default=False)
+    observationP3 = models.BooleanField(default=False)
+    observationP4 = models.BooleanField(default=False)
+    observationP5 = models.BooleanField(default=False)
+    observationP6 = models.BooleanField(default=False)
+    observationP7 = models.BooleanField(default=False)
+
+    observationValue1 = models.TextField(default="")
+    observationValue2 = models.TextField(default="")
+    observationValue3 = models.TextField(default="")
+    observationValue4 = models.TextField(default="")
+    observationValue5 = models.TextField(default="")
+    observationValue6 = models.TextField(default="")
+
+
+    table1Row1 = models.BooleanField(default=False)
+    table1Row2 = models.BooleanField(default=False)
+    table1Row3 = models.BooleanField(default=False)
+    table1Row4 = models.BooleanField(default=False)
+    table1Row5 = models.BooleanField(default=False)
+    table1Row6 = models.BooleanField(default=False)        
+    table1Row7 = models.BooleanField(default=False)
+    table1Row8 = models.BooleanField(default=False)
+    table1Row9 = models.BooleanField(default=False)
+    table1Row10 = models.BooleanField(default=False)
+
+
+
+
+    table2Row1 = models.BooleanField(default=False)
+    table2Row2 = models.BooleanField(default=False)
+    table2Row3 = models.BooleanField(default=False)
+    table2Row4 = models.BooleanField(default=False)
+    table2Row5 = models.BooleanField(default=False)
+    table2Row6 = models.BooleanField(default=False)
+    table2Row7 = models.BooleanField(default=False)
+    table2Row8 = models.BooleanField(default=False)
+    table2Row9 = models.BooleanField(default=False)
+    table2Row10 = models.BooleanField(default=False)
+
+
+
+
     def __str__(self):
         return f"{self.customer.nameOfOrganization} - {self.yearStart} - {self.yearEnd} "
     
     
+class ObservationTablerows(models.Model) :
+    audit = models.ForeignKey(Audit,on_delete=models.CASCADE)
+    observationTable = models.IntegerField(choices=[(1,'Table1'),(2,'Table2')])
+    name = models.TextField(default="")
+    col1 = models.TextField(default="")
+    col2 = models.TextField(default="")
+    col3 = models.TextField(default="")
+    col4 = models.TextField(default="")
+
+    def __str__(self) -> str:
+         return f"{self.audit}-{self.audit.customer.nameOfOrganization}"
 
 class MainReport(models.Model):
     audit = models.ForeignKey(Audit,on_delete=models.CASCADE)
