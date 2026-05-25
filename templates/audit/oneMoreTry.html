@@ -142,6 +142,7 @@
             }
         }
     </style>
+
 </head>
 
 <body>
@@ -156,7 +157,7 @@
         </button>
     </div>
 
-    <form method="POST" action="{% url 'try' %}?audit_id={{ audit.id }}">
+    <form method="POST" action="{% url 'report' %}?audit_id={{ audit.id }}">
         <div style="position: fixed; top: 20px; right: 20px;">
             <button type="submit" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px;">
                 Save All Changes
@@ -280,141 +281,179 @@
             <h2 style="text-align:center;position: absolute;bottom: 50px;padding-left: 240px;">Near SBI, Main Road Gariaband, Gariaband (C.G.)</h2>
             <h5 style="text-align:center;position: absolute;bottom: 20px;padding-left: 280px;FONT-SIZE: 13PX;">Mobile: 97541-19991 , Email: cavijay1018@gmail.com</h5>
 
+    
         </div>
 
-         {% comment %} observation  {% endcomment %}
-      {% if  audit.observationRequired %}
-       
-        <div class="page" style=" line-height: 1.8; color: #333;">
+
+        {% comment %} observation {% endcomment %}
+        {% if audit.observationRequired %}
+        <div class="page" style="line-height: 1.8; color: #333;">
+
+            {% comment %} --- TABLE 1 CHECKBOX MAP CONTROLS --- {% endcomment %}
+
             <h2 style="text-align: center; text-decoration: underline;">ANNEXURE 1 TO THE AUDITORS REPORT</h2>
-            <h3 style="text-align: center; ">
-              Name of VO: {{audit.customer.nameOfOrganization}},{{audit.customer.address}} 
-              Cluster: {{audit.customer.cluster}}, Block: {{audit.customer.block}}, District: {{audit.customer.district}}, Chhattisgarh</h3>
-           
-            
+            <h3 style="text-align: center;">
+                Name of VO: {{audit.customer.nameOfOrganization}}, {{audit.customer.address}} 
+                Cluster: {{audit.customer.cluster}}, Block: {{audit.customer.block}}, District: {{audit.customer.district}}, Chhattisgarh
+            </h3>
+        
             <h3 style="border-bottom: 1px solid #000;">Observations :</h3>
-            <ul> {% if  audit.observationP1 %}
-              <li> Cash book was not written regularly and was updated subsequently.Overwriting / alterations were observed in certain records. Certain balances, advances and loan balances are subject to reconcipation and verification.</li> {% endif %}
-              <ul> {% if audit.observationP2 %}
-              <li> Supporting bills and relevant documents in respect of certain expenses and transactions were not produced for verification during the course of audit. Details of major unsupported expenses are provided here:</li>
-            
+            <ul> 
+                {% if audit.observationP1 %}
+                    <li> Cash book was not written regularly and was updated subsequently. Overwriting / alterations were observed in certain records. Certain balances, advances and loan balances are subject to reconciliation and verification.</li> 
+                {% endif %}
 
-            <table style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 8%;">Sr. No</th>
-                        <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 42%;">Nature of Payments</th>
-                        <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 25%;">Amount</th>
-                        <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 25%;">Remarks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if observationTable1 %}
-                        {% for row in observationTable1.values %}
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">
-                                    {{ forloop.counter }}
-                                </td>
-                                
-                                <td style="border: 1px solid #ddd; padding: 5px;">
-                                    <input type="text" 
-                                        name="table1Row{{ forloop.counter }}_col1" 
-                                        value="{{ row.col1|default_if_none:'' }}" 
-                                        style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
-                                </td>
-                                
-                                <td style="border: 1px solid #ddd; padding: 5px;">
-                                    <input type="text" 
-                                        name="table1Row{{ forloop.counter }}_col2" 
-                                        value="{{ row.col2|default_if_none:'' }}" 
-                                        style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
-                                </td>
-                                
-                                <td style="border: 1px solid #ddd; padding: 5px;">
-                                    <input type="text" 
-                                        name="table1Row{{ forloop.counter }}_col3" 
-                                        value="{{ row.col3|default_if_none:'' }}" 
-                                        style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
-                                </td>
+                {% if audit.observationP2 %}
+                    <li> Supporting bills and relevant documents in respect of certain expenses and transactions were not produced for verification during the course of audit. Details of major unsupported expenses are provided here:</li>
+                    
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 8%;">Sr. No</th>
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 42%;">Nature of Payments</th>
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 25%;">Amount</th>
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 25%;">Remarks</th>
                             </tr>
-                        {% endfor %}
-                    {% else %}
-                        {% for i in "123" %}
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">{{ forloop.counter }}</td>
-                                <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table1Row{{ forloop.counter }}_col1" style="width: 100%; border: none; padding: 5px;"></td>
-                                <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table1Row{{ forloop.counter }}_col2" style="width: 100%; border: none; padding: 5px; text-align: right;"></td>
-                                <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table1Row{{ forloop.counter }}_col3" style="width: 100%; border: none; padding: 5px;"></td>
+                        </thead>
+                        <tbody>
+                            {% if observationTable1 %}
+                                {% for row in observationTable1 %}
+                                    <tr class="audit-row-t1" data-row-index="{{ forloop.counter }}">
+                                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">{{ forloop.counter }}</td>
+
+                                        <td style="border: 1px solid #ddd; padding: 5px;">
+                                            <input type="text" 
+                                                name="table1Row{{ forloop.counter }}_col1" 
+                                                value="{{ row.col1|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                        </td>
+
+                                        <td style="border: 1px solid #ddd; padding: 5px;">
+                                            <input type="text" 
+                                                name="table1Row{{ forloop.counter }}_col2" 
+                                                value="{{ row.col2|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
+                                        </td>
+
+                                        <td style="border: 1px solid #ddd; padding: 5px;">
+                                            <input type="text" 
+                                                name="table1Row{{ forloop.counter }}_col3" 
+                                                value="{{ row.col3|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                         
+                            {% else %}
+                                {% for i in "1" %}
+                                    <tr>
+                                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">{{ forloop.counter }}</td>
+                                        <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table1Row{{ forloop.counter }}_col1" style="width: 100%; border: none; padding: 5px;"></td>
+                                        <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table1Row{{ forloop.counter }}_col2" style="width: 100%; border: none; padding: 5px; text-align: right;"></td>
+                                        <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table1Row{{ forloop.counter }}_col3" style="width: 100%; border: none; padding: 5px;"></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if audit.observationP3 %}
+                    <li>It was observed that negative balances were reflected in the cash book during certain periods of the financial year, indicating reconciliation or accounting discrepancies. (Case 1)</li>
+                {% endif %}
+                
+                {% if audit.observationP4 %}
+                    <li>It was observed that negative balances were reflected in the cash book during certain periods of the financial year including as on the Balance Sheet date, indicating reconciliation or accounting discrepancies. (Case 2)</li>
+                {% endif %}
+                
+                {% if audit.observationP5 %}
+                    <li>It was observed that during the financial year, amounts aggregating to Rs. <input style="border : none;" type="text" name="observationValue1" value="{{ audit.observationValue1 }}"> handed over to Smt. <input style="border : none;" type="text" name="observationValue2" value="{{ audit.observationValue2 }}">, the then office bearer of the VO, for deposit into the bank account of the VO were not deposited into the bank account. The aggregate outstanding amount including previous years stood at Rs. <input style="border : none;" type="text" name="observationValue3" value="{{ audit.observationValue3 }}"> as on the Balance Sheet date. The said amount has been reflected in the books of accounts as loan / advance recoverable from him / her.</li>
+                {% endif %}
+                
+                {% if audit.observationP6 %}
+                    <li>It was observed that during the financial year, amounts aggregating to Rs. <input style="border : none;" type="text" name="observationValue4" value="{{ audit.observationValue4 }}"> handed over to Smt. <input style="border : none;" type="text" name="observationValue5" value="{{ audit.observationValue5 }}">, the then office bearer of the VO, for deposit into the bank account of the VO were not deposited into the bank account. The aggregate outstanding amount including previous years stood at Rs. <input style="border : none;" type="text" name="observationValue6" value="{{ audit.observationValue6 }}"> as on the Balance Sheet date. The said amount has not been reflected in the books of accounts as loan / advance recoverable.</li>
+                {% endif %}
+                
+                {% if audit.observationP7 %}
+                    <li>It was observed that certain SHGs did not repay loan installments regularly and loan balances remained overdue / unrecovered as on the Balance Sheet date. Details of such SHGs, including outstanding amount, loan disbursement period and last repayment details, are provided here:</li>
+
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 8%;">Sr. No</th>
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 22%;">Name of SHG</th>
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 18%;">Loan Disbursement Date</th>
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 18%;">Loan Disbursement Amount</th>
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 18%;">Outstanding Amount</th>
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 16%;">Remarks</th>
                             </tr>
-                        {% endfor %}
-                    {% endif %}
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            {% if observationTable2 %}
+                                {% for row in observationTable2 %}
+                                    <tr class="audit-row-t2" data-row-index="{{ forloop.counter }}">
+                                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">{{ forloop.counter }}</td>
 
-            {% endif %}
+                                        <td style="border: 1px solid #ddd; padding: 5px;">
+                                            <input type="text" 
+                                                name="table2Row{{ forloop.counter }}_col1" 
+                                                value="{{ row.col1|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                        </td>
 
-             {% if audit.observationP3 %}
-            <li>
-                 It was observed that negative balances were reflected in the cash book during certain periods of the financial year, indicating reconciliation or accounting discrepancies.(Case 1)
-            </li>
-            {% endif %}
-             {% if audit.observationP4 %}
-            <li>
-                 It was observed that negative balances were reflected in the cash book during certain periods of the financial year including as on the Balance Sheet date, indicating reconciliation or accounting discrepancies. (Case 2)
-            </li>
-            {% endif %}
-            {% if audit.observationP5 %}
-            <li>
-                 It was observed that during the financial year, amounts aggregating to Rs. <input style="border : none;"  type="text" name="observationValue1" value="{{ audit.observationValue1 }}"> handed over to Smt. <input style="border : none;" type="text" name="observationValue2" value="{{ audit.observationValue2 }}">, the then office bearer of the VO, for deposit into the bank account of the VO were not deposited into the bank account. The aggregate outstanding amount including previous years stood at Rs. <input style="border : none;"  type="text" name="observationValue3" value="{{ audit.observationValue3 }}"> as on the Balance Sheet date. The said amount has been reflected in the books of accounts as loan / advance recoverable from him / her.
-            </li>
-            {% endif %}
-            {% if audit.observationP6 %}
-            <li>
-               It was observed that during the financial year, amounts aggregating to Rs. <input style="border : none;"  type="text" name="observationValue4" value="{{ audit.observationValue4 }}"> handed over to Smt. <input style="border : none;"  type="text" name="observationValue5" value="{{ audit.observationValue5 }}">, the then office bearer of the VO, for deposit into the bank account of the VO were not deposited into the bank account. The aggregate outstanding amount including previous years stood at Rs. <input style="border : none;"  type="text" name="observationValue6" value="{{ audit.observationValue6 }}"> as on the Balance Sheet date. The said amount has not been reflected in the books of accounts as loan / advance recoverable.
-            </li>
-            {% endif %}
-            {% if audit.observationP7 %}
-            <li>
-                 It was observed that certain SHGs did not repay loan installments regularly and loan balances remained overdue / unrecovered as on the Balance Sheet date. Details of such SHGs, including outstanding amount, loan disbursement period and last repayment details, are provided here:
-            </li>
-            <table style="width: 100%; border-collapse: collapse; ">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="border: 1px solid ; padding: 8px; text-align: center;">Sr.No</th>
-                        <th style="border: 1px solid ; padding: 8px; text-align: left;">Name of SHG</th>
-                        <th style="border: 1px solid ; padding: 8px; text-align: center;">Loan Disbursement Date</th>
-                        <th style="border: 1px solid ; padding: 8px; text-align: right;">Loan Disbursement Amount</th>
-                        <th style="border: 1px solid ; padding: 8px; text-align: right;">Outstanding Amount</th>
-                        <th style="border: 1px solid ; padding: 8px; text-align: left;">Remarks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid ; text-align: center;">1</td>
-                        <td style="border: 1px solid ;">Sharda SHG, Kharhari</td>
-                        <td style="border: 1px solid ; text-align: center;">09.10.2020</td>
-                        <td style="border: 1px solid ; text-align: right;">15,000</td>
-                        <td style="border: 1px solid ; text-align: right;">10,000</td>
-                        <td style="border: 1px solid ;"></td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid ; text-align: center;">2</td>
-                        <td style="border: 1px solid ;">Sharda SHG, Kharhari</td>
-                        <td style="border: 1px solid ; text-align: center;">09.06.2021</td>
-                        <td style="border: 1px solid ; text-align: right;">10,000</td>
-                        <td style="border: 1px solid ; text-align: right;">10,000</td>
-                        <td style="border: 1px solid ;"></td>
-                    </tr>
-                </tbody>
-            </table>
-            {% endif %}
-          </ul>
-            <div class="signature" style="position: absolute; width : 90%;">
+                                        <td style="border: 1px solid #ddd; padding: 5px;">
+                                            <input type="text" 
+                                                name="table2Row{{ forloop.counter }}_col2" 
+                                                value="{{ row.col2|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                        </td>
+
+                                        <td style="border: 1px solid #ddd; padding: 5px;">
+                                            <input type="text" 
+                                                name="table2Row{{ forloop.counter }}_col3" 
+                                                value="{{ row.col3|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
+                                        </td>
+
+                                        <td style="border: 1px solid #ddd; padding: 5px;">
+                                            <input type="text" 
+                                                name="table2Row{{ forloop.counter }}_col4" 
+                                                value="{{ row.col4|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
+                                        </td>
+
+                                        <td style="border: 1px solid #ddd; padding: 5px;">
+                                            <input type="text" 
+                                                name="table2Row{{ forloop.counter }}_col5" 
+                                                value="{{ row.col5|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                            {% else %}
+                                {% for i in "1" %}
+                                    <tr>
+                                        <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">{{ forloop.counter }}</td>
+                                        <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table2Row{{ forloop.counter }}_col1" style="width: 100%; border: none; padding: 5px;"></td>
+                                        <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table2Row{{ forloop.counter }}_col2" style="width: 100%; border: none; padding: 5px;"></td>
+                                        <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table2Row{{ forloop.counter }}_col3" style="width: 100%; border: none; padding: 5px; text-align: right;"></td>
+                                        <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table2Row{{ forloop.counter }}_col4" style="width: 100%; border: none; padding: 5px; text-align: right;"></td>
+                                        <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table2Row{{ forloop.counter }}_col5" style="width: 100%; border: none; padding: 5px;"></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </ul>
+
+            <div class="signature" style="position: absolute; width: 90%; margin-top: 40px;">
                 <table style="width: 100%; border: none; border-collapse: collapse;">
                     <tr>
-                        <td style="text-align: left;border: none;"><br><br><br><br><br></td>
-                        <td style="text-align: right;border: none;">
-                            <h3>For' VIJAY CHANDRAKAR & CO.</h3>
+                        <td style="text-align: left; border: none;"><br><br><br><br><br></td>
+                        <td style="text-align: right; border: none;">
+                            <h3>For VIJAY CHANDRAKAR & CO.</h3>
                             (Chartered Accountants)<br>
                             <h3>F.R.N. 029323C</h3>
                         </td>
@@ -425,20 +464,21 @@
                     <tr>
                         <td style="text-align: left; border: none; padding-left: 40px;">
                             Place: Gariaband<br>
-                            <label for="date">Date:</label>
-                            {{ audit.date|date:'Y-m-d' }}
+                            <label for="date">Date:</label> {{ audit.date|date:'Y-m-d' }}
                         </td>
-                        <td style="text-align: right;border: none;">
+                        <td style="text-align: right; border: none;">
                             <h3>CA Vijay Chandrakar</h3>
                             Proprietor <br>
                             <h2>M.No. 444225 </h2>
-                            <h2>UDIN:{{audit.Udin}}</h2><br>
+                            <h2>UDIN: {{audit.Udin}}</h2><br>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
-      {% endif %}
+        {% endif %}
+
+    {% comment %} --- SCRIPTS WRAPPED CLEANLY --- {% endcomment %}
 
         <!-- Page 3 (First Table Page) -->
         <div class="page">
@@ -1650,5 +1690,51 @@
 
     </form>
 </body>
+<!-- 2. Pure frontend JavaScript execution block to toggle the visibility of rows -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const table1Visibility = {
+            "1": "{{ audit.table1Row1B }}" === "True",
+            "2": "{{ audit.table1Row2B }}" === "True",
+            "3": "{{ audit.table1Row3B }}" === "True",
+            "4": "{{ audit.table1Row4B }}" === "True",
+            "5": "{{ audit.table1Row5B }}" === "True",
+            "6": "{{ audit.table1Row6B }}" === "True",
+            "7": "{{ audit.table1Row7B }}" === "True",
+            "8": "{{ audit.table1Row8B }}" === "True",
+            "9": "{{ audit.table1Row9B }}" === "True",
+            "10": "{{ audit.table1Row10B }}" === "True"
+        };
+
+        document.querySelectorAll('.audit-row-t1').forEach(row => {
+            const index = row.getAttribute('data-row-index');
+            if (!table1Visibility[index]) {
+                row.style.display = 'none'; 
+            }
+        });
+
+        const table2Visibility = {
+            "1": "{{ audit.table2Row1B }}" === "True",
+            "2": "{{ audit.table2Row2B }}" === "True",
+            "3": "{{ audit.table2Row3B }}" === "True",
+            "4": "{{ audit.table2Row4B }}" === "True",
+            "5": "{{ audit.table2Row5B }}" === "True",
+            "6": "{{ audit.table2Row6B }}" === "True",
+            "7": "{{ audit.table2Row7B }}" === "True",
+            "8": "{{ audit.table2Row8B }}" === "True",
+            "9": "{{ audit.table2Row9B }}" === "True",
+            "10": "{{ audit.table2Row10B }}" === "True"
+        };
+
+        document.querySelectorAll('.audit-row-t2').forEach(row => {
+            const index = row.getAttribute('data-row-index');
+            if (!table2Visibility[index]) {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+
 
 </html>

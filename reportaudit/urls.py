@@ -47,7 +47,7 @@ urlpatterns = [
         #sample one no need of this 
     # path('report/', auditView.checkDetails, name='report'),
     path('report/', auditView.mainReport, name='report'),
-    path('try/', auditView.mainReport2, name='try'),
+    # path('try/', auditView.mainReport2, name='try'),
     path('details/', auditView.fetchCusotmerPage, name='details'),
     path('save-report-value/', auditView.save_report_value, name='save_report_value'),
     path('search-customer/', auditView.search_customer, name='search_customer'),

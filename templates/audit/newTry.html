@@ -157,7 +157,7 @@
         </button>
     </div>
 
-    <form method="POST" action="{% url 'try' %}?audit_id={{ audit.id }}">
+    <form method="POST" action="{% url 'report' %}?audit_id={{ audit.id }}">
         <div style="position: fixed; top: 20px; right: 20px;">
             <button type="submit" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px;">
                 Save All Changes
@@ -321,68 +321,68 @@
             {% comment %} --- TABLE 1 CHECKBOX MAP CONTROLS --- {% endcomment %}
             <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; font-size: 13px; color: #333; margin-bottom:15px;">
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table1Row1B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row1B %}checked{% endif %}> Col 2
+                    <input type="checkbox" name="table1Row1B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row1B %}checked{% endif %}> Col 1
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table1Row2B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row2B %}checked{% endif %}> Col 3
+                    <input type="checkbox" name="table1Row2B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row2B %}checked{% endif %}> Col 2
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table1Row3B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row3B %}checked{% endif %}> Col 4
+                    <input type="checkbox" name="table1Row3B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row3B %}checked{% endif %}> Col 3
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table1Row4B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row4B %}checked{% endif %}> Col 5
+                    <input type="checkbox" name="table1Row4B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row4B %}checked{% endif %}> Col 4
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table1Row5B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row5B %}checked{% endif %}> Col 6
+                    <input type="checkbox" name="table1Row5B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row5B %}checked{% endif %}> Col 5
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table1Row6B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row6B %}checked{% endif %}> Col 7
+                    <input type="checkbox" name="table1Row6B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row6B %}checked{% endif %}> Col 6
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table1Row7B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row7B %}checked{% endif %}> Col 8
+                    <input type="checkbox" name="table1Row7B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row7B %}checked{% endif %}> Col 7
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table1Row8B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row8B %}checked{% endif %}> Col 9
+                    <input type="checkbox" name="table1Row8B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row8B %}checked{% endif %}> Col 8
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table1Row9B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row9B %}checked{% endif %}> Col 10
+                    <input type="checkbox" name="table1Row9B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row9B %}checked{% endif %}> Col 9
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table1Row10B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row10B %}checked{% endif %}> Col 11
+                    <input type="checkbox" name="table1Row10B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table1Row10B %}checked{% endif %}> Col 10
                 </label>
             </div>
 
             {% comment %} --- TABLE 2 CHECKBOX MAP CONTROLS --- {% endcomment %}
             <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; font-size: 13px; color: #333; margin-bottom: 30px;">
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table2Row1B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row1B %}checked{% endif %}> Col 2
+                    <input type="checkbox" name="table2Row1B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row1B %}checked{% endif %}> Col 1
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table2Row2B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row2B %}checked{% endif %}> Col 3
+                    <input type="checkbox" name="table2Row2B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row2B %}checked{% endif %}> Col 2
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table2Row3B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row3B %}checked{% endif %}> Col 4
+                    <input type="checkbox" name="table2Row3B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row3B %}checked{% endif %}> Col 3
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table2Row4B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row4B %}checked{% endif %}> Col 5
+                    <input type="checkbox" name="table2Row4B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row4B %}checked{% endif %}> Col 4
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table2Row5B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row5B %}checked{% endif %}> Col 6
+                    <input type="checkbox" name="table2Row5B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row5B %}checked{% endif %}> Col 5
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table2Row6B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row6B %}checked{% endif %}> Col 7
+                    <input type="checkbox" name="table2Row6B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row6B %}checked{% endif %}> Col 6
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table2Row7B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row7B %}checked{% endif %}> Col 8
+                    <input type="checkbox" name="table2Row7B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row7B %}checked{% endif %}> Col 7
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table2Row8B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row8B %}checked{% endif %}> Col 9
+                    <input type="checkbox" name="table2Row8B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row8B %}checked{% endif %}> Col 8
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table2Row9B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row9B %}checked{% endif %}> Col 10
+                    <input type="checkbox" name="table2Row9B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row9B %}checked{% endif %}> Col 9
                 </label>
                 <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
-                    <input type="checkbox" name="table2Row10B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row10B %}checked{% endif %}> Col 11
+                    <input type="checkbox" name="table2Row10B" value="True" style="margin-right: 6px; cursor: pointer;" {% if audit.table2Row10B %}checked{% endif %}> Col 10
                 </label>
             </div>
 
@@ -412,22 +412,35 @@
                         </thead>
                         <tbody>
                             {% if observationTable1 %}
-                                {% for row in observationTable1.values %}
+                                {% for row in observationTable1 %}
                                     <tr class="audit-row-t1" data-row-index="{{ forloop.counter }}">
                                         <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">{{ forloop.counter }}</td>
+
                                         <td style="border: 1px solid #ddd; padding: 5px;">
-                                            <input type="text" name="table1Row{{ forloop.counter }}_col1" value="{{ row.col1|default_if_none:'' }}" style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                            <input type="text" 
+                                                name="table1Row{{ forloop.counter }}_col1" 
+                                                value="{{ row.col1|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
                                         </td>
+
                                         <td style="border: 1px solid #ddd; padding: 5px;">
-                                            <input type="text" name="table1Row{{ forloop.counter }}_col2" value="{{ row.col2|default_if_none:'' }}" style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
+                                            <input type="text" 
+                                                name="table1Row{{ forloop.counter }}_col2" 
+                                                value="{{ row.col2|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
                                         </td>
+
                                         <td style="border: 1px solid #ddd; padding: 5px;">
-                                            <input type="text" name="table1Row{{ forloop.counter }}_col3" value="{{ row.col3|default_if_none:'' }}" style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                            <input type="text" 
+                                                name="table1Row{{ forloop.counter }}_col3" 
+                                                value="{{ row.col3|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
                                         </td>
                                     </tr>
                                 {% endfor %}
+                         
                             {% else %}
-                                {% for i in "123" %}
+                                {% for i in "1" %}
                                     <tr>
                                         <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">{{ forloop.counter }}</td>
                                         <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table1Row{{ forloop.counter }}_col1" style="width: 100%; border: none; padding: 5px;"></td>
@@ -472,28 +485,49 @@
                         </thead>
                         <tbody>
                             {% if observationTable2 %}
-                                {% for row in observationTable2.values %}
+                                {% for row in observationTable2 %}
                                     <tr class="audit-row-t2" data-row-index="{{ forloop.counter }}">
                                         <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">{{ forloop.counter }}</td>
+
                                         <td style="border: 1px solid #ddd; padding: 5px;">
-                                            <input type="text" name="table2Row{{ forloop.counter }}_col1" value="{{ row.col1|default_if_none:'' }}" style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                            <input type="text" 
+                                                name="table2Row{{ forloop.counter }}_col1" 
+                                                value="{{ row.col1|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
                                         </td>
+
                                         <td style="border: 1px solid #ddd; padding: 5px;">
-                                            <input type="text" name="table2Row{{ forloop.counter }}_col2" value="{{ row.col2|default_if_none:'' }}" style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                            <input type="text" 
+                                                name="table2Row{{ forloop.counter }}_col2" 
+                                                value="{{ row.col2|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
                                         </td>
+
                                         <td style="border: 1px solid #ddd; padding: 5px;">
-                                            <input type="text" name="table2Row{{ forloop.counter }}_col3" value="{{ row.col3|default_if_none:'' }}" style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
+                                            <input type="text" 
+                                                name="table2Row{{ forloop.counter }}_col3" 
+                                                value="{{ row.col3|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
                                         </td>
+
                                         <td style="border: 1px solid #ddd; padding: 5px;">
-                                            <input type="text" name="table2Row{{ forloop.counter }}_col4" value="{{ row.col4|default_if_none:'' }}" style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
+                                            <input type="text" 
+                                                name="table2Row{{ forloop.counter }}_col4" 
+                                                value="{{ row.col4|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; text-align: right; font-size: 14px;">
                                         </td>
+
                                         <td style="border: 1px solid #ddd; padding: 5px;">
-                                            <input type="text" name="table2Row{{ forloop.counter }}_col5" value="{{ row.col5|default_if_none:'' }}" style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
+                                            <input type="text" 
+                                                name="table2Row{{ forloop.counter }}_col5" 
+                                                value="{{ row.col5|default_if_none:'' }}" 
+                                                style="width: 100%; border: none; padding: 5px; box-sizing: border-box; font-size: 14px;">
                                         </td>
                                     </tr>
                                 {% endfor %}
+
                             {% else %}
-                                {% for i in "123" %}
+                                {% for i in "1" %}
                                     <tr>
                                         <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">{{ forloop.counter }}</td>
                                         <td style="border: 1px solid #ddd; padding: 5px;"><input type="text" name="table2Row{{ forloop.counter }}_col1" style="width: 100%; border: none; padding: 5px;"></td>
