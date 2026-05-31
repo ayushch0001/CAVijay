@@ -452,7 +452,7 @@ class auditView:
             Fromula.formula53, Fromula.formula54, Fromula.formula55, Fromula.formula56, Fromula.formula57, 
             Fromula.formula58, Fromula.formula59, Fromula.formula60, Fromula.formula61, Fromula.formula62,
             Fromula.Bformula47, Fromula.Bformula50, Fromula.Bformula51, Fromula.Bformula52, Fromula.Bformula53, 
-            Fromula.Bformula54, Fromula.Bformula55, Fromula.total1, Fromula.total2, Fromula.formula46, 
+            Fromula.Bformula54, Fromula.Bformula55, Fromula.Bformula56, Fromula.total1, Fromula.total2, Fromula.formula46, 
             Fromula.formula67, Fromula.Bformula58, Fromula.Bformula59, Fromula.formula62, Fromula.total3
         ]
 

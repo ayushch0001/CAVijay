@@ -271,7 +271,7 @@
                             <h3>CA Vijay Chandrakar</h3>
                             Proprietor <br>
                             <h2>M.No. 444225 </h2>
-                            <h2>UDIN:<input style="border:none;width:35%;font-weight: bold;FONT-SIZE: 15PX;" type="text" id="Udin" name="Udin" value="{{audit.Udin}}" required></h2><br>
+                            <h2>UDIN:{{audit.Udin}}</h2><br>
                         </td>
                     </tr>
                 </table>
@@ -478,7 +478,7 @@
         </div>
         {% endif %}
 
-    {% comment %} --- SCRIPTS WRAPPED CLEANLY --- {% endcomment %}
+    
 
         <!-- Page 3 (First Table Page) -->
         <div class="page">
@@ -1459,9 +1459,9 @@
                     <td>PMFME Budget</td>
                     <td>{{ yearReport1.A56}}</td>
                     <td>{{ yearReport2.A56}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>NPM Shop Loan Outstanding with member organisations</td>
+                    <td>{{ yearReport1.B56}}</td>
+                    <td>{{ yearReport2.B56}}</td>
                    
                 </tr>
                 <tr>

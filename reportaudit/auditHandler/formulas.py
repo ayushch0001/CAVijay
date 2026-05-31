@@ -362,7 +362,15 @@ class Fromula:
             yearReport1.B59 = yearReport2.B59 + yearReport1.B3
             yearReport1.save()
 
-
+    @staticmethod
+    def Bformula56(audit): #NPM Shop Loan Outstanding with member organisations
+        yearReport1, yearReport2, yearReport3 = Fromula.checkForYear(audit)
+        if yearReport2 and yearReport3:
+            yearReport2.B56 = yearReport3.B56 + yearReport2.B22 - yearReport2.A35
+            yearReport2.save()
+        if yearReport1 and yearReport2:
+            yearReport1.B56 = yearReport2.B56 + yearReport1.B22 - yearReport1.A35
+            yearReport1.save()
 
     @staticmethod
     def total1(audit):
